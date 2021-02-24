@@ -1,0 +1,36 @@
+<nav class="navbar">
+  <a routerLink="/" class="navbar-brand">
+    <h2 class="logo" >VacayCheck</h2>
+  </a>
+
+  <div *ngIf="loggedIn == 'true'">
+    <div class="container">
+      <div class="firstName" (click)="openProfile()">
+        {{ firstName }}
+      </div>
+      <button type="button" class="btn btn-primary" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+  <div *ngIf="loggedIn == 'false' || loggedIn==null">
+    <div>
+      <ul class="nav navbar">
+        <li class="nav-item"></li>
+        <a class="nav-link" routerLink="/signUp">
+          <button type="button" class="btn btn-primary">Sign Up</button>
+        </a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">
+            <button type="button" class="btn btn-primary">Login</button>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" routerLink="/owner-login">
+            <button type="button" class="btn btn-primary">Owner's page</button>
+          </a>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>

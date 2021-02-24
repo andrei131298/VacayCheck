@@ -1,0 +1,87 @@
+<app-header class="header"></app-header>
+<img class="image" src="assets/poza.jpg" />
+<form class="container">
+  <input
+    id="searchBar"
+    type="text"
+    name="search"
+    placeholder="Search a place..."
+    autocomplete="off"
+    [(ngModel)]="searchText"
+  />
+
+  <input
+    id="checkin"
+    type="datetime"
+    bsDaterangepicker
+    class="form-control"
+    placeholder="Check-in  -  Check-out"
+    [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY' }"
+    autocomplete="off"
+    [(ngModel)]="bsRangeValue"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    [ngModelOptions]="{ standalone: true }"
+    onKeyDown="return false"
+    
+  />
+  <input
+    id="numberOfPersons"
+    type="number"
+    min="1"
+    max="30"
+    onKeyDown="return false"
+    placeholder="Number of persons"
+    [(ngModel)]="maxPers"
+    name="maxPers"
+  />
+  <button
+    type="button"
+    id="submit"
+    class="btn btn-primary"
+    (click)="onSubmit()"
+  >
+    Submit
+  </button>
+</form>
+    <div *ngIf="searchText.length > 0" class="row pl-5">
+      <ng-container
+        *ngFor="
+          let property of properties
+            | searchFilter
+              : {
+                  name: searchText
+                };
+          let ind = index
+        "
+      >
+        <div class="view col mb-2 mr-2 hoverable">
+          <img
+            class="pozeCazari"
+            src="{{ property.photo }}"
+            alt="hoverable"
+            (click)="searchText = property.name"
+          />
+
+          <div class="detail">
+            <p id="p1" (click)="searchText = property.name"></p>
+              {{ property.name.toString() }}
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                class="bi bi-three-dots-vertical"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                (click)="showDM(property.id)"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                />
+              </svg>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+<app-detail-modal #detailModal></app-detail-modal>

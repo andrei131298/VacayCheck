@@ -1,0 +1,102 @@
+input {
+  text-align: center;
+}
+#searchBar,
+#numberOfPersons {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-image: url("./searchicon.png");
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 20px;
+}
+#checkin {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 12px 20px 12px 50px;
+  width: auto;
+  height: max-content;
+  background-image: url("calendar.jpg");
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+}
+.container {
+  box-sizing: border-box;
+  font-size: 16px;
+  margin-top: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 300px;
+}
+#numberOfPersons {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
+  padding: 12px 20px 12px 50px;
+  background-image: url("person.png");
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+}
+.image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+}
+#submit {
+  background-color: rgb(23, 87, 143);
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  height: 79px;
+  max-height: 79px;
+  margin-bottom: 0;
+  background-color: rgb(23, 87, 143);
+  color: whitesmoke;
+  border-radius: 7%;
+}
+#p1:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pozeCazari {
+  object-fit: cover;
+  border-radius: 50%;
+  height: 300px;
+  width: 300px;
+}
+.pozeCazari:hover {
+  cursor: pointer;
+}
+.bi:hover {
+  border: 2px solid #ccc;
+  border-radius: 100%;
+}
+.header {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+.view {
+  max-width: 330px;
+}

@@ -1,0 +1,56 @@
+<app-header></app-header>
+<h1>Login</h1>
+<div class="container">
+  <form class="form-container" [formGroup]="loginForm">
+      <div class="form-group">
+          <div class="col-sm-12">
+              <label for="email" class="control-label required">Email</label>
+              <input type="email"
+                     id="email"
+                     class="form-control"
+                     formControlName="email"
+                     autocomplete="off"
+                     pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+              <app-field-error-display [displayError]="isFieldValid('email')"
+                                       errorMsg="Please inform your email">
+              </app-field-error-display>
+              <!-- <div *ngIf="addUserForm.controls['email'].errors?.pattern">
+          Email not valid.
+        </div> -->
+          </div>
+      </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="password" class="control-label required">Password </label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          autocomplete="off"
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+        />
+        <app-field-error-display
+          [displayError]="isFieldValid('password')"
+          errorMsg="Please complete a password"
+        >
+        </app-field-error-display>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="">
+        <button class="btn btn-dark" (click)="onSubmit()">Submit</button>
+      </div>
+    </div>
+
+        <button class="btn btn-dark" (click)="reset()">Reset</button>
+        
+  </form>
+  <p *ngIf="success" style="color: green; font-size: 22px">
+    User found
+  </p>
+  <p *ngIf="success === false" style="color: red; font-size: 22px">
+    Something went wrong
+  </p>
+</div>

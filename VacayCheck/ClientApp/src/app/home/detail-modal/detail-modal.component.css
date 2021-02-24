@@ -1,0 +1,28 @@
+#modal {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 10px;
+  width: 70%;
+  height: 70%;
+  margin: auto;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+}
+.propertyMainPhoto {
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
+  border: 4px solid black;
+  border-radius: 10px;
+}

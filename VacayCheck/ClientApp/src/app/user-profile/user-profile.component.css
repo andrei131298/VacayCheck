@@ -1,0 +1,81 @@
+.profilePhoto {
+  object-fit: cover;
+  height: 300px;
+  width: 300px;
+}
+.profile {
+  margin-top: 20px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#firstName {
+  font-size: 26px;
+}
+.profileDetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.options {
+  margin-top: 50px;
+  background-color: rgb(230, 236, 240);
+  border-bottom: 8px solid rgb(87, 37, 37);
+  border-top: 8px solid rgb(87, 37, 37);
+  border-radius: 15px;
+}
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.opt {
+  color: black;
+  font-size: 30px;
+  border-radius: 10px;
+}
+.opt:hover {
+  color: red;
+}
+
+#title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  font-weight: bold;
+}
+.secondView {
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 96%;
+  display: flex;
+  align-items: center;
+  border: 2px solid rgb(23, 87, 143);
+  border-radius: 7px;
+  background-color: rgb(129, 185, 235);
+  box-shadow: 0 2px 3px rgb(37, 37, 37);
+}
+.btn {
+  background-color: rgb(23, 87, 143);
+}
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 26px;
+}
+.start {
+  color: red;
+}
+.start:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

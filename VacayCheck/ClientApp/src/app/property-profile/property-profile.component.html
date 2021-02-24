@@ -1,0 +1,51 @@
+<app-loader #loader *ngIf="isLoaded == false"></app-loader>
+<div *ngIf="isLoaded == true">
+<app-header></app-header>
+<div class="container">
+  <div class="">
+      <div class="view">
+        <img class="pozeCazari" src="{{ property.photo }}"/>
+        <div class="detaliiProp">
+          <p id="p1" >
+            {{ property.name.toString() }}
+          </p>
+          <p id="p2">
+            {{ property.cityName }}
+          </p>
+          <div class="stele">
+            <img
+              id="stea"
+              src="assets/images/2184499.png"
+              *ngFor="let star of counter(property.numberOfStars)"
+            />
+          </div>
+          <button *ngIf="loggedIn=='true'" class="btn" style="background-color: rgb(240, 226, 226);margin-top: 20px;" [ngClass]="{'followup' : activeFavourite!=null,
+                'unfollow' : activeFavourite == null }"
+                                (click)="changeStyle();addToFavourites()">
+                {{activeFavourite!=null ? 'Remove from favourites' : (activeFavourite == null ? 'Add to favourites' : '')}}
+            </button>
+            <p style="color: red; font-size: 24px;" *ngIf="error == true">You need to login</p>
+        </div>
+      </div>
+      <div class="secondView" *ngFor="let apartment of apartments">
+        <img class="apPhoto" src="{{apartment.photos[0] }}" />
+        <div class="apDetail">
+              <p id="apName" >
+                {{ apartment.apartmentName}}
+              </p>
+                <div class="persoane">
+                  Capacity: <img
+                    id="persoana"
+                    src="assets/person.png"
+                    *ngFor="let person of counter(apartment.maxPersons)"
+                  />
+                </div>
+              <p id="totalPrice" >
+                Total price: {{apartment.pricePerNight*period}}
+              </p>
+              <button type="button" class="btn btn-primary" (click)="check();set(apartment.id);">Reserve</button>
+        </div>  
+      </div>
+  </div>
+</div>
+</div>

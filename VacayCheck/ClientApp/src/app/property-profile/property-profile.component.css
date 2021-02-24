@@ -1,0 +1,81 @@
+.detaliiProp {
+  margin-left: 60px;
+}
+.pozeCazari {
+  object-fit: cover;
+  height: 400px;
+  width: 400px;
+}
+#p1 {
+  font-size: 26px;
+}
+#p2 {
+  font-size: 22px;
+}
+.view {
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 96%;
+  display: flex;
+  align-items: center;
+  border-bottom: 12px solid rgb(75, 75, 75);
+  border-top: 12px solid rgb(75, 75, 75);
+  border-radius: 7px;
+  background-color: rgb(57, 147, 226);
+  box-shadow: 0 2px 3px rgb(37, 37, 37);
+}
+.secondView {
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 96%;
+  display: flex;
+  align-items: center;
+  border: 2px solid rgb(23, 87, 143);
+  border-radius: 7px;
+  background-color: rgb(129, 185, 235);
+  box-shadow: 0 2px 3px rgb(37, 37, 37);
+}
+.stele {
+  display: flex;
+  flex-direction: row;
+}
+#stea {
+  width: 50px;
+}
+.persoane {
+  display: flex;
+  flex-direction: row;
+}
+#persoana {
+  width: 40px;
+}
+.btn {
+  background-color: rgb(23, 87, 143);
+}
+.apDetail {
+  margin-left: 100px;
+}
+.btn:hover {
+  color: #ff7a59;
+  background: #fff;
+}
+#apName:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.apPhoto {
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
+}
+.followup {
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+}
+
+.unfollow {
+  font-size: 20px;
+  font-weight: bold;
+  color: green;
+}

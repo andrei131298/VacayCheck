@@ -1,0 +1,38 @@
+.navbar {
+  background-color: rgb(47, 45, 66);
+  border-bottom: 6px solid black;
+}
+.logo {
+  padding: 10px;
+  color: white;
+  background-color: rgb(23, 87, 143);
+  border-radius: 10px;
+  font-style: oblique;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 100px;
+}
+
+ul {
+  border: none !important;
+  font-size: 20px;
+}
+.btn {
+  background-color: rgb(23, 87, 143);
+}
+
+.btn:hover {
+  color: #ff7a59;
+  background: #fff;
+}
+.active-page {
+  background: #989898;
+}
+.firstName {
+  color: white;
+  margin-right: 30px;
+}
+.firstName:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

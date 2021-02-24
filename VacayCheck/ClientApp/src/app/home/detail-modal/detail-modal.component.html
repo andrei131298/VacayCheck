@@ -1,0 +1,15 @@
+<div
+  bsModal
+  class="row modal fade"
+  #detailModal="bs-modal"
+  tabindex="-1"
+  style="margin-top: 200px"
+>
+  <div id="modal">
+    <h2 class="title">Property details</h2>
+    <div class="details">
+      <img class="propertyMainPhoto" src={{property.photo}}>
+      <p class="mt-4 h5">{{ property.name }} - {{ property.cityName }}</p>
+    </div>
+  </div>
+</div>
