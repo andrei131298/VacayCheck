@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace VacayCheck.Models
 {
-    public class Favourite
+    public class Favourite : BaseEntity
     {
-        public int id { get; set; }
-        public int propertyId { get; set; }
-        public int userId { get; set; }
+        public Guid propertyId { get; set; }
+        public Guid userId { get; set; }
         public virtual Property property { get; set; }
         public virtual User user { get; set; }
     }

@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace VacayCheck.Models
 {
-    public class Owner
+    public class Owner : BaseEntity
     {
-        public int id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string sex { get; set; }

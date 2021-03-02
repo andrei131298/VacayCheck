@@ -9,8 +9,8 @@ namespace VacayCheck.Repositories.ApartmentRepository
     public interface IApartmentRepository
     {
         List<Apartment> GetAll();
-        Apartment Get(int id);
-        IEnumerable<Apartment> GetApartmentsByPropertyId(int propertyId);
+        Apartment Get(Guid id);
+        IEnumerable<Apartment> GetApartmentsByPropertyId(Guid propertyId);
         Apartment Create(Apartment Apartment);
         Apartment Update(Apartment Apartment);
         Apartment Delete(Apartment Apartment);

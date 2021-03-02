@@ -20,7 +20,7 @@ namespace VacayCheck.Repositories.OwnerRepository
             _context.SaveChanges();
             return result.Entity;
         }
-        public Owner Get(int Id)
+        public Owner Get(Guid Id)
         {
             return _context.Owners.SingleOrDefault(x => x.id == Id);
         }

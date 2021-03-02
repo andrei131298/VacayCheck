@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
             this.success = null;
           }, 3000);
           sessionStorage.setItem("isLoggedIn", "true");
-          sessionStorage.setItem("userId", JSON.stringify(this.requestResponse.id));
+          sessionStorage.setItem("userId", this.requestResponse.id);
           this.api.getUser(this.requestResponse.id).subscribe((user: User) => {
             sessionStorage.setItem('firstName',user.firstName);
           });

@@ -25,7 +25,7 @@ namespace VacayCheck.Repositories.UserRepository
             this._appSettings = appSettings.Value;
 
         }
-        public User Get(int Id)
+        public User Get(Guid Id)
         {
             return _context.Users.SingleOrDefault(x => x.id == Id);
         }

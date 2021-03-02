@@ -9,7 +9,7 @@ namespace VacayCheck.Repositories.OwnerRepository
     public interface IOwnerRepository
     {
         List<Owner> GetAll();
-        Owner Get(int id);
+        Owner Get(Guid id);
         Owner Create(Owner Owner);
         Owner Update(Owner Owner);
         Owner Delete(Owner Owner);

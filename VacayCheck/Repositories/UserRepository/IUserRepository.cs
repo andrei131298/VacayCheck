@@ -9,7 +9,7 @@ namespace VacayCheck.Repositories.UserRepository
     public interface IUserRepository
     {
         List<User> GetAll();
-        User Get(int id);
+        User Get(Guid id);
         User Update(User User);
         User Delete(User User);
 

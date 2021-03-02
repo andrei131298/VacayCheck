@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace VacayCheck.Models
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string sex { get; set; }
@@ -17,6 +16,6 @@ namespace VacayCheck.Models
         public string password { get; set; }
         public bool isOwner { get; set; }
         public List<Property> property { get; set; }//one to many
-        public List<Reservation> reservation { get; set; }//one to many
+        public List<Reservation> reservation { get; set; }
     }
 }

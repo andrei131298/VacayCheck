@@ -29,7 +29,7 @@ namespace VacayCheck.Controllers
 
         // GET: api/Photo/5
         [HttpGet("{id}")]
-        public ActionResult<Photo> Get(int id)
+        public ActionResult<Photo> Get(Guid id)
         {
             return IPhotoRepository.Get(id);
         }
@@ -48,14 +48,14 @@ namespace VacayCheck.Controllers
 
         // PUT: api/Photo/5
         [HttpPut("{id}")]
-        public Photo Put(int id, PhotoDTO value)
+        public Photo Put(Guid id, PhotoDTO value)
         {
             Photo model = IPhotoRepository.Get(id);
             if (value.path != null)
             {
                 model.path = value.path;
             }
-            if (value.apartmentId != 0)
+            if (value.apartmentId != null)
             {
                 model.apartmentId = value.apartmentId;
             }
@@ -65,7 +65,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Photo Delete(int id)
+        public Photo Delete(Guid id)
         {
             Photo model = IPhotoRepository.Get(id);
             return IPhotoRepository.Delete(model);

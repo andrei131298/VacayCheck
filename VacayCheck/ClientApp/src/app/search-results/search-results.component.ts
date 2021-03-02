@@ -35,7 +35,7 @@ export class SearchResult implements OnInit {
   counter(i: number) {
     return new Array(i);
   }
-  set(propertyId:number){
+  set(propertyId:string){
     this.router.navigate(["/property-profile"],
     {queryParams:{propertyId:propertyId, dateRange0:this.dateRange0Formatted, dateRange1:this.dateRange1Formatted, persons:this.persons, period:this.period}});
     

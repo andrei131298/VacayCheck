@@ -20,7 +20,7 @@ namespace VacayCheck.Repositories.CityRepository
                 _context.SaveChanges();
                 return result.Entity;
             }
-            public City Get(int Id)
+            public City Get(Guid Id)
             {
                 return _context.Cities.SingleOrDefault(x => x.id == Id);
             }

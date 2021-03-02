@@ -9,9 +9,9 @@ namespace VacayCheck.Repositories.ReservationRepository
     public interface IReservationRepository
     {
         List<Reservation> GetAll();
-        Reservation Get(int id);
+        Reservation Get(Guid id);
         IEnumerable<Reservation> GetAlreadyReservedByDates(DateTime checkIn, DateTime checkOut);
-        IEnumerable<Reservation> GetReservationsByUser(int userId);
+        IEnumerable<Reservation> GetReservationsByUser(Guid userId);
         Reservation Create(Reservation Reservation);
         Reservation Update(Reservation Reservation);
         Reservation Delete(Reservation Reservation);

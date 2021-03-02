@@ -20,11 +20,11 @@ namespace VacayCheck.Repositories.ApartmentRepository
             _context.SaveChanges();
             return result.Entity;
         }
-        public Apartment Get(int Id)
+        public Apartment Get(Guid Id)
         {
             return _context.Apartments.SingleOrDefault(x => x.id == Id);
         }
-        public IEnumerable<Apartment> GetApartmentsByPropertyId(int propertyId)
+        public IEnumerable<Apartment> GetApartmentsByPropertyId(Guid propertyId)
         {
             return _context.Apartments.ToList().Where(ap => ap.propertyId == propertyId);
         }

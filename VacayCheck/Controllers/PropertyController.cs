@@ -38,7 +38,7 @@ namespace VacayCheck.Controllers
 
         // GET: api/Property/5
         [HttpGet("{id}")]
-        public PropertyDetailsDTO Get(int id)
+        public PropertyDetailsDTO Get(Guid id)
         {
             Property Property = IPropertyRepository.Get(id);
             PropertyDetailsDTO MyProperties = new PropertyDetailsDTO()
@@ -61,20 +61,10 @@ namespace VacayCheck.Controllers
                 }
                 MyProperties.cityName = CityNameList;
             }
-            IEnumerable<Owner> Owners = IOwnerRepository.GetAll().Where(x => x.id == Property.userId);
-            if (Owners != null)
-            {
-                List<string> OwnerNameList = new List<string>();
-                foreach (Owner Owner in Owners)
-                {
-                    OwnerNameList.Add(Owner.lastName);
-                }
-                MyProperties.ownerName = OwnerNameList;
-            }
             return MyProperties;
         }
         [HttpGet("GetPropertiesByUser/{userId}")]
-        public IEnumerable<PropertyDTO> GetPropertiesByUser(int userId)
+        public IEnumerable<PropertyDTO> GetPropertiesByUser(Guid userId)
         {
 
             IEnumerable<Property> MyProperties = IPropertyRepository.GetPropertiesByUser(userId);
@@ -119,7 +109,7 @@ namespace VacayCheck.Controllers
 
         // PUT: api/Property/5
         [HttpPut("{id}")]
-        public Property Put(int id, PropertyDTO value)
+        public Property Put(Guid id, PropertyDTO value)
         {
             Property model = IPropertyRepository.Get(id);
             if (value.type != null)
@@ -152,7 +142,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Property Delete(int id)
+        public Property Delete(Guid id)
         {
             Property model = IPropertyRepository.Get(id);
             return IPropertyRepository.Delete(model);

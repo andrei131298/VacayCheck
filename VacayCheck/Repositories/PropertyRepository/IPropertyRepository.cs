@@ -9,8 +9,8 @@ namespace VacayCheck.Repositories.PropertyRepository
     public interface IPropertyRepository
     {
         List<Property> GetAll();
-        Property Get(int id);
-        IEnumerable<Property> GetPropertiesByUser(int userId);
+        Property Get(Guid id);
+        IEnumerable<Property> GetPropertiesByUser(Guid userId);
 
         Property Create(Property Property);
         Property Update(Property Property);

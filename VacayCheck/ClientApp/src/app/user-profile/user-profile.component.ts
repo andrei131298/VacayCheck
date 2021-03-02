@@ -17,7 +17,7 @@ export class UserProfileComponent implements OnInit {
   constructor(private route:ActivatedRoute, private api:ApiService, private router:Router) {
    }
 
-  userId:number;
+  userId:string;
   activeUser:User;
   isLoaded=false;
   options = ['Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties'];
@@ -55,7 +55,7 @@ export class UserProfileComponent implements OnInit {
   changeOption(option){
     this.selectedOption=option;
   }
-  deleteFavourite(propertyId:number){
+  deleteFavourite(propertyId:string){
     console.log(propertyId);
     this.api.deleteFavourite(propertyId,this.activeUser.id).subscribe(() => {
       this.api.getFavouritesByUser(this.userId).subscribe((data: Favourite[]) => {

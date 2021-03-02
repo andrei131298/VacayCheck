@@ -7,8 +7,8 @@ namespace VacayCheck.DTOs
 {
     public class FavouriteDTO
     {
-        public int propertyId { get; set; }
-        public int userId { get; set; }
+        public Guid propertyId { get; set; }
+        public Guid userId { get; set; }
         public string propertyName { get; set; }
     }
 }

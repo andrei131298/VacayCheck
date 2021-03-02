@@ -9,7 +9,7 @@ namespace VacayCheck.Repositories.PhotoRepository
     public interface IPhotoRepository
     {
         List<Photo> GetAll();
-        Photo Get(int id);
+        Photo Get(Guid id);
         Photo Create(Photo Photo);
         Photo Update(Photo Photo);
         Photo Delete(Photo Photo);

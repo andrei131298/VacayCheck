@@ -29,7 +29,7 @@ namespace VacayCheck.Controllers
 
         // GET: api/Owner/5
         [HttpGet("{id}")]
-        public ActionResult<Owner> Get(int id)
+        public ActionResult<Owner> Get(Guid id)
         {
             return IOwnerRepository.Get(id);
         }
@@ -48,7 +48,7 @@ namespace VacayCheck.Controllers
 
         // PUT: api/Owner/5
         [HttpPut("{id}")]
-        public Owner Put(int id, OwnerDTO value)
+        public Owner Put(Guid id, OwnerDTO value)
         {
             Owner model = IOwnerRepository.Get(id);
             if (value.firstName != null)
@@ -65,7 +65,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Owner Delete(int id)
+        public Owner Delete(Guid id)
         {
             Owner model = IOwnerRepository.Get(id);
             return IOwnerRepository.Delete(model);

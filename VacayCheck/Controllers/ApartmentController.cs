@@ -34,7 +34,7 @@ namespace VacayCheck.Controllers
 
         // GET: api/Apartment/5
         [HttpGet("{id}")]
-        public ApartmentDTO Get(int id)
+        public ApartmentDTO Get(Guid id)
         {
             Apartment Apartment = IApartmentRepository.Get(id);
             ApartmentDTO MyApartments = new ApartmentDTO()
@@ -63,7 +63,7 @@ namespace VacayCheck.Controllers
         }
 
         [HttpGet("propertyId/{propertyId}")]
-        public List<ApartmentDTO> GetApartmentsByPropertyId(int propertyId)
+        public List<ApartmentDTO> GetApartmentsByPropertyId(Guid propertyId)
         {
             
                 IEnumerable<Apartment> MyApartments = IApartmentRepository.GetApartmentsByPropertyId(propertyId);
@@ -106,6 +106,7 @@ namespace VacayCheck.Controllers
                 numberOfRooms = value.numberOfRooms,
                 description = value.description,
                 pricePerNight = value.pricePerNight,
+                maxPersons = value.maxPersons,
                 propertyId = value.propertyId
 
             };
@@ -114,7 +115,7 @@ namespace VacayCheck.Controllers
 
         // PUT: api/Apartment/5
         [HttpPut("{id}")]
-        public Apartment Put(int id, ApartmentDTO value)
+        public Apartment Put(Guid id, ApartmentDTO value)
         {
             Apartment model = IApartmentRepository.Get(id);
             if (value.description != null)
@@ -125,7 +126,7 @@ namespace VacayCheck.Controllers
             {
                 model.numberOfRooms = value.numberOfRooms;
             }
-            if (value.propertyId != 0)
+            if (value.propertyId != null)
             {
                 model.propertyId = value.propertyId;
             }
@@ -138,7 +139,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Apartment Delete(int id)
+        public Apartment Delete(Guid id)
         {
             Apartment model = IApartmentRepository.Get(id);
             return IApartmentRepository.Delete(model);

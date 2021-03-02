@@ -1,13 +1,13 @@
 export class Reservation {
-  id?: number;
+  id?: string;
   price: number;
   review: string;
   checkIn: Date;
   checkOut: Date;
-  userId: number;
-  apartmentId: number;
+  userId: string;
+  apartmentId: string;
   numberOfPersons:number;
-  propertyId?:number;
+  propertyId?:string;
   apartmentName?: string;
   propertyName?:string;
 

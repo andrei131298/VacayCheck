@@ -17,12 +17,12 @@ export class DetailModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  initialize(id: number): void {
+  initialize(id: string): void {
     this.getProperty(id);
     this.modal.show();
   }
 
-  getProperty(id: number) {
+  getProperty(id: string) {
     this.api.getProperty(id).subscribe(
       (data: Property) => {
         this.property = data;

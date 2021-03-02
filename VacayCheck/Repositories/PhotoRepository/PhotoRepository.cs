@@ -20,7 +20,7 @@ namespace VacayCheck.Repositories.PhotoRepository
             _context.SaveChanges();
             return result.Entity;
         }
-        public Photo Get(int Id)
+        public Photo Get(Guid Id)
         {
             return _context.Photos.SingleOrDefault(x => x.id == Id);
         }

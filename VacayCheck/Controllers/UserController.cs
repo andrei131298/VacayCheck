@@ -29,14 +29,14 @@ namespace VacayCheck.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<User> Get(Guid id)
         {
             return IUserRepository.Get(id);
         }
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public User Put(int id, UserDTO value)
+        public User Put(Guid id, UserDTO value)
         {
             User model = IUserRepository.Get(id);
             if (value.firstName != null)
@@ -82,7 +82,7 @@ namespace VacayCheck.Controllers
         }
       
         [HttpDelete("{id}")]
-        public User Delete(int id)
+        public User Delete(Guid id)
         {
             User model = IUserRepository.Get(id);
             return IUserRepository.Delete(model);

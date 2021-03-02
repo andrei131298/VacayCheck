@@ -1,7 +1,7 @@
 export class Favourite {
-  id: number;
-  userId: number;
-  propertyId: number;
+  id: string;
+  userId: string;
+  propertyId: string;
   propertyName: string;
 
   constructor(input?: any) {

@@ -36,17 +36,17 @@ namespace VacayCheck.Controllers
 
         // GET: api/Favourite/5
         [HttpGet("{id}")]
-        public ActionResult<Favourite> Get(int id)
+        public ActionResult<Favourite> Get(Guid id)
         {
             return IFavouriteRepository.Get(id);
         }
         [HttpGet("user={userId}/property={propertyId}")]
-        public Favourite GetByPropertyAndUser(int propertyId, int userId)
+        public Favourite GetByPropertyAndUser(Guid propertyId, Guid userId)
         {
             return IFavouriteRepository.GetByPropertyAndUser(propertyId,userId);
         }
         [HttpGet("user/{userId}")]
-        public IEnumerable<FavouriteDTO> GetByUser(int userId)
+        public IEnumerable<FavouriteDTO> GetByUser(Guid userId)
         {
             
             IEnumerable<Favourite> MyFavourites = IFavouriteRepository.GetByUser(userId);
@@ -83,14 +83,14 @@ namespace VacayCheck.Controllers
 
         // PUT: api/Favourite/5
         [HttpPut("{id}")]
-        public Favourite Put(int id, FavouriteDTO value)
+        public Favourite Put(Guid id, FavouriteDTO value)
         {
             Favourite model = IFavouriteRepository.Get(id);
-            if (value.propertyId != 0)
+            if (value.propertyId != null)
             {
                 model.propertyId = value.propertyId;
             }
-            if (value.userId != 0)
+            if (value.userId != null)
             {
                 model.userId = value.userId;
             }
@@ -100,7 +100,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/Favourite/user={id}/property={id}
         [HttpDelete("user={userId}/property={propertyId}")]
-        public Favourite Delete(int propertyId,int userId)
+        public Favourite Delete(Guid propertyId, Guid userId)
         {
             Favourite model = IFavouriteRepository.GetByPropertyAndUser(propertyId,userId);
             return IFavouriteRepository.Delete(model);

@@ -1,5 +1,5 @@
 export class City {
-  id: number;
+  id: string;
   cityName: string;
 
   constructor(input?: any) {

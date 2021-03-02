@@ -38,7 +38,7 @@ namespace VacayCheck.Controllers
 
         // GET: api/Reservation/5
         [HttpGet("{id}")]
-        public ActionResult<Reservation> Get(int id)
+        public ActionResult<Reservation> Get(Guid id)
         {
             return IReservationRepository.Get(id);
         }
@@ -50,7 +50,7 @@ namespace VacayCheck.Controllers
             return IReservationRepository.GetReservationsByUser(userId);
         }
         */
-        public IEnumerable<ReservationDTO> GetReservationsByUser(int userId)
+        public IEnumerable<ReservationDTO> GetReservationsByUser(Guid userId)
         {
 
             IEnumerable<Reservation> MyReservations = IReservationRepository.GetReservationsByUser(userId);
@@ -106,7 +106,7 @@ namespace VacayCheck.Controllers
 
         // PUT: api/Reservation/5
         [HttpPut("{id}")]
-        public Reservation Put(int id, ReservationDTO value)
+        public Reservation Put(Guid id, ReservationDTO value)
         {
             Reservation model = IReservationRepository.Get(id);
             if (value.review != null)
@@ -125,11 +125,11 @@ namespace VacayCheck.Controllers
             {
                 model.checkOut = value.checkOut;
             }
-            if (value.userId != 0)
+            if (value.userId != null)
             {
                 model.userId = value.userId;
             }
-            if (value.apartmentId != 0)
+            if (value.apartmentId != null)
             {
                 model.apartmentId = value.apartmentId;
             }
@@ -142,7 +142,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Reservation Delete(int id)
+        public Reservation Delete(Guid id)
         {
             Reservation model = IReservationRepository.Get(id);
             return IReservationRepository.Delete(model);

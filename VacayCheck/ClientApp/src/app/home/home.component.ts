@@ -32,7 +32,7 @@ export class HomeComponent {
     this.maxDate.setFullYear(this.maxDate.getFullYear()+1);
     
   }
-  showDM(id: number): void {
+  showDM(id: string): void {
     this.detailModal.initialize(id);
   }
 

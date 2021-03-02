@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace VacayCheck.Models
 {
-    public class Photo
+    public class Photo : BaseEntity
     {
-        public int id { get; set; }
-        public int apartmentId { get; set; }
+        public Guid apartmentId { get; set; }
         public string path { get; set; }
         public virtual Apartment apartment { get; set; }
     }

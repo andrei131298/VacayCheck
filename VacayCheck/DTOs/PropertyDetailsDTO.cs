@@ -15,7 +15,6 @@ namespace VacayCheck.DTOs
         public int streetNumber { get; set; }
         public string photo { get; set; }
         public List<String> cityName { get; set; }
-        public List<String> ownerName { get; set; }
         //public int ownerName { get; set; }
     }
 }

@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 export class HeaderComponent implements OnInit {
   loggedIn = sessionStorage.getItem("isLoggedIn");
   firstName: string;
-  userId:number;
+  userId:string;
 
   logout(): void {
     console.log("Logout");
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.firstName = sessionStorage.getItem("firstName");
-    this.userId = parseInt(sessionStorage.getItem("userId"));
+    this.userId = sessionStorage.getItem("userId");
   }
   openProfile(){
     this.router.navigate(["user-profile", this.userId]);

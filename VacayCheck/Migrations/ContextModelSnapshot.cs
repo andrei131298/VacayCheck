@@ -21,10 +21,9 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Apartment", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("apartmentName")
                         .HasColumnType("nvarchar(max)");
@@ -41,8 +40,8 @@ namespace VacayCheck.Migrations
                     b.Property<int>("pricePerNight")
                         .HasColumnType("int");
 
-                    b.Property<int>("propertyId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("propertyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
@@ -53,10 +52,9 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.City", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("cityName")
                         .HasColumnType("nvarchar(max)");
@@ -68,16 +66,15 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Favourite", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("propertyId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("propertyId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
@@ -90,10 +87,9 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Owner", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("bankAccount")
                         .HasColumnType("nvarchar(max)");
@@ -123,13 +119,12 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Photo", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("apartmentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("apartmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("path")
                         .HasColumnType("nvarchar(max)");
@@ -143,13 +138,12 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Property", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("cityId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("cityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
@@ -172,8 +166,8 @@ namespace VacayCheck.Migrations
                     b.Property<string>("type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
@@ -186,13 +180,12 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Reservation", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("apartmentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("apartmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("checkIn")
                         .HasColumnType("datetime2");
@@ -209,8 +202,8 @@ namespace VacayCheck.Migrations
                     b.Property<string>("review")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
@@ -223,10 +216,9 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.User", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("bankAccount")
                         .HasColumnType("nvarchar(max)");

@@ -27,15 +27,15 @@ namespace VacayCheck.Repositories.FavouriteRepository
                 return result.Entity;
             }
         }
-        public Favourite Get(int Id)
+        public Favourite Get(Guid Id)
         {
             return _context.Favourites.SingleOrDefault(x => x.id == Id);
         }
-        public Favourite GetByPropertyAndUser(int propertyId, int userId)
+        public Favourite GetByPropertyAndUser(Guid propertyId, Guid userId)
         {
             return _context.Favourites.SingleOrDefault(x => x.propertyId == propertyId && x.userId == userId);
         }
-        public IEnumerable<Favourite> GetByUser(int userId)
+        public IEnumerable<Favourite> GetByUser(Guid userId)
         {
             return _context.Favourites.ToList().Where(fav => fav.userId == userId);
         }

@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace VacayCheck.Models
 {
-    public class Property
+    public class Property : BaseEntity
     {
-        public int id { get; set; }
         public string name { get; set; }
         public string type { get; set; }
         public string description  { get; set; }
@@ -15,9 +14,9 @@ namespace VacayCheck.Models
         public string street { get; set; }
         public int streetNumber { get; set; }
         public string photo { get; set; }
-        public int cityId { get; set; }
+        public Guid cityId { get; set; }
 
-        public int userId { get; set; }
+        public Guid userId { get; set; }
 
         public virtual City city { get; set; }//many to one
         public virtual User user { get; set; }

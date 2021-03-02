@@ -29,7 +29,7 @@ namespace VacayCheck.Controllers
 
         // GET: api/City/5
         [HttpGet("{id}")]
-        public ActionResult<City> Get(int id)
+        public ActionResult<City> Get(Guid id)
         {
             return ICityRepository.Get(id);
         }
@@ -47,7 +47,7 @@ namespace VacayCheck.Controllers
 
         // PUT: api/City/5
         [HttpPut("{id}")]
-        public City Put(int id, CityDTO value)
+        public City Put(Guid id, CityDTO value)
         {
             City model = ICityRepository.Get(id);
             if (value.cityName != null)
@@ -60,7 +60,7 @@ namespace VacayCheck.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public City Delete(int id)
+        public City Delete(Guid id)
         {
             City model = ICityRepository.Get(id);
             return ICityRepository.Delete(model);

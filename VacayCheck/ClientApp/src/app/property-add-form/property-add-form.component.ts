@@ -19,13 +19,13 @@ export class PropertyAddFormComponent implements OnInit {
   citySearchText:string="";
   isDivShown:boolean;
   success:boolean;
-  cityId:number;
+  cityId:string;
   newProperty=new Property;
-  userId:number;
+  userId:string;
   constructor(public fb: FormBuilder, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userId = parseInt(sessionStorage.getItem("userId"));
+    this.userId = sessionStorage.getItem("userId");
     this.addPropertyForm = this.fb.group({
       propertyName:[null, Validators.required],
       type: [null, Validators.required],

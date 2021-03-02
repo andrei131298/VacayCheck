@@ -22,7 +22,7 @@ namespace VacayCheck.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (isMigration)
-                optionsBuilder.UseSqlServer(@"Server=.\;Database=DBProiectMDS;Trusted_Connection=true;");           
+                optionsBuilder.UseSqlServer(@"Server=.\;Database=VacayCheckDB;Trusted_Connection=true;");           
         }
         public Context() { }
         public Context(DbContextOptions<Context> options) : base(options) { }

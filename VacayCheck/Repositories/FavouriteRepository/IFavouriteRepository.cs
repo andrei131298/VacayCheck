@@ -9,9 +9,9 @@ namespace VacayCheck.Repositories.FavouriteRepository
     public interface IFavouriteRepository
     {
         List<Favourite> GetAll();
-        Favourite GetByPropertyAndUser(int propertyId, int userId);
-        Favourite Get(int id);
-        IEnumerable<Favourite> GetByUser(int userId);
+        Favourite GetByPropertyAndUser(Guid propertyId, Guid userId);
+        Favourite Get(Guid id);
+        IEnumerable<Favourite> GetByUser(Guid userId);
         Favourite Create(Favourite Favourite);
         Favourite Update(Favourite Favourite);
         Favourite Delete(Favourite Favourite);

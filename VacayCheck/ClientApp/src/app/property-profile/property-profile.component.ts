@@ -21,7 +21,7 @@ export class PropertyProfileComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router,private route: ActivatedRoute) {
   }
-  propertyId=parseInt(this.route.snapshot.queryParamMap.get('propertyId'));
+  propertyId=this.route.snapshot.queryParamMap.get('propertyId');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
   dateRange1=new Date(this.route.snapshot.queryParamMap.get('dateRange1'));
   dateRange0Formatted=formatDate(this.dateRange0,'MM/dd/yyyy','en-US');
@@ -36,7 +36,7 @@ export class PropertyProfileComponent implements OnInit {
   isLoaded = false;
   favourite=new Favourite();
   isFollow: boolean = false;
-  userId = parseInt(JSON.parse(sessionStorage.getItem('userId')));
+  userId = sessionStorage.getItem('userId');
   alreadyReserved:Reservation[]=[];
   error:boolean;
   activeFavourite:Favourite;
@@ -101,7 +101,7 @@ export class PropertyProfileComponent implements OnInit {
       });
     }
   }
-  set(apartmentId: number){
+  set(apartmentId: string){
     console.log(apartmentId);
   this.router.navigate(["/reservation"],
     {queryParams:{propertyId:this.propertyId, dateRange0:this.dateRange0Formatted, dateRange1:this.dateRange1Formatted, persons:this.persons, apartmentId: apartmentId, period:this.period}});

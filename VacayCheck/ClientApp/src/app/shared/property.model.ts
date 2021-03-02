@@ -1,5 +1,5 @@
 export class Property {
-  id: number;
+  id: string;
   name: string;
   type: string;
   description: string;
@@ -9,8 +9,8 @@ export class Property {
   street: string;
   streetNumber: number;
   photo: string;
-  cityId: number;
-  userId: number;
+  cityId: string;
+  userId: string;
 
   constructor(input?: any) {
     Object.assign(this, input);

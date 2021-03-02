@@ -17,16 +17,16 @@ export class ReservationComponent implements OnInit {
     private route: ActivatedRoute,
   ) {}
 
-  propertyId=parseInt(this.route.snapshot.queryParamMap.get('propertyId'));
+  propertyId=this.route.snapshot.queryParamMap.get('propertyId');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
   dateRange1=new Date(this.route.snapshot.queryParamMap.get('dateRange1'));
   persons=parseInt(this.route.snapshot.queryParamMap.get('persons'));
   period=parseInt(this.route.snapshot.queryParamMap.get('period'));
-  reservationId=parseInt(this.route.snapshot.queryParamMap.get('reservation'));
-  apartmentId=parseInt(this.route.snapshot.queryParamMap.get('apartmentId'));
+  reservationId=this.route.snapshot.queryParamMap.get('reservation');
+  apartmentId=this.route.snapshot.queryParamMap.get('apartmentId');
   dateRange0Formatted = new Date(formatDate(this.dateRange0,'MM/dd/yyyy','en-US'));
   dateRange1Formatted = new Date(formatDate(this.dateRange1,'MM/dd/yyyy','en-US'));
-  userId = parseInt(JSON.parse(sessionStorage.getItem('userId')));
+  userId = sessionStorage.getItem('userId');
   reservationHistory = JSON.parse(this.route.snapshot.queryParamMap.get('reservationHistory'));
   details = JSON.parse(this.route.snapshot.queryParamMap.get('details'));
   review:string;

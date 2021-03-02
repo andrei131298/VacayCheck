@@ -20,7 +20,7 @@ export class ApiService {
   });
   baseUrl = "https://localhost:44397/api";
 
-  getCity(id: number) {
+  getCity(id: string) {
     return this.http.get(this.baseUrl + "/City/" + id.toString(), {
       headers: this.header,
     });
@@ -31,37 +31,37 @@ export class ApiService {
         headers: this.header, observe: 'response',
     });
 }
-  getFavouriteByUserAndProperty(userId: number,propertyId:number){
-    return this.http.get(this.baseUrl + "/Favourite/user=" + userId.toString() + "/property="+ propertyId.toString(), {
+  getFavouriteByUserAndProperty(userId: string,propertyId:string){
+    return this.http.get(this.baseUrl + "/Favourite/user=" + userId + "/property="+ propertyId, {
       headers: this.header,
     });
   }
 
-  getApartment(id: number) {
+  getApartment(id: string) {
     return this.http.get(this.baseUrl + "/Apartment/" + id.toString());
   }
 
-  getFavouritesByUser(userId: number) {
+  getFavouritesByUser(userId: string) {
     return this.http.get(this.baseUrl + "/Favourite/user/" + userId.toString(), {
       headers: this.header,
     });
   }
-  getOwner(id: number) {
+  getOwner(id: string) {
     return this.http.get(this.baseUrl + "/Owner/" + id.toString(), {
       headers: this.header,
     });
   }
-  getUser(id: number) {
+  getUser(id: string) {
     return this.http.get(this.baseUrl + "/User/" + id.toString(), {
       headers: this.header,
     });
   }
-  getProperty(id: number) {
+  getProperty(id: string) {
     return this.http.get(this.baseUrl + "/Property/" + id.toString(), {
       headers: this.header,
     });
   }
-  getReservation(id: number) {
+  getReservation(id: string) {
     return this.http.get(this.baseUrl + "/Reservation/" + id.toString(), {
       headers: this.header,
     });
@@ -71,12 +71,12 @@ export class ApiService {
       headers: this.header,
     });
   }
-  getReservationsByUser(userId:number){
+  getReservationsByUser(userId:string){
     return this.http.get(this.baseUrl + "/Reservation/user/" + userId.toString(), {
       headers: this.header,
     });
   }
-  getPropertiesByUser(userId:number){
+  getPropertiesByUser(userId:string){
     return this.http.get(this.baseUrl + "/Property/GetPropertiesByUser/" + userId.toString(), {
       headers: this.header,
     });
@@ -90,7 +90,7 @@ export class ApiService {
   getApartments() {
     return this.http.get(this.baseUrl + "/Apartment", { headers: this.header });
   }
-  getApartmentsByPropertyId(propertyId:number) {
+  getApartmentsByPropertyId(propertyId:string) {
     return this.http.get(this.baseUrl + "/Apartment/propertyId/" + propertyId.toString(), {
       headers: this.header,
     });  
@@ -127,7 +127,7 @@ export class ApiService {
       });
     }
 
-    deleteFavourite(propertyId: number,userId:number) {
+    deleteFavourite(propertyId: string,userId:string) {
       return this.http.delete(this.baseUrl + "/Favourite/user=" + userId.toString() + "/property="+ propertyId.toString(), {
         headers: this.header,
       });

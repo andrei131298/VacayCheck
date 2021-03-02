@@ -20,7 +20,7 @@ namespace VacayCheck.Repositories.PropertyRepository
             _context.SaveChanges();
             return result.Entity;
         }
-        public Property Get(int Id)
+        public Property Get(Guid Id)
         {
             return _context.Properties.SingleOrDefault(x => x.id == Id);
         }
@@ -29,7 +29,7 @@ namespace VacayCheck.Repositories.PropertyRepository
         {
             return _context.Properties.ToList();
         }
-        public IEnumerable<Property> GetPropertiesByUser(int userId)
+        public IEnumerable<Property> GetPropertiesByUser(Guid userId)
         {
             return _context.Properties.ToList().Where(res => res.userId == userId);
         }

@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace VacayCheck.DTOs
 {
-    public class PropertyDTO
+    public class PropertyDTO : BaseEntity
     {
-        public int id { get; set; }
 
         public string name { get; set; }
         public string type { get; set; }
@@ -17,7 +16,7 @@ namespace VacayCheck.DTOs
         public int streetNumber { get; set; }
         public string photo { get; set; }
 
-        public int cityId { get; set; }
-        public int userId { get; set; }
+        public Guid cityId { get; set; }
+        public Guid userId { get; set; }
     }
 }

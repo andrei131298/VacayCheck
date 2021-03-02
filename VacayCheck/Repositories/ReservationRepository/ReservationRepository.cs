@@ -20,12 +20,12 @@ namespace VacayCheck.Repositories.ReservationRepository
             _context.SaveChanges();
             return result.Entity;
         }
-        public Reservation Get(int Id)
+        public Reservation Get(Guid Id)
         {
             return _context.Reservations.SingleOrDefault(x => x.id == Id);
         }
 
-        public IEnumerable<Reservation> GetReservationsByUser(int userId)
+        public IEnumerable<Reservation> GetReservationsByUser(Guid userId)
         {
             return _context.Reservations.ToList().Where(res => res.userId == userId);
         }

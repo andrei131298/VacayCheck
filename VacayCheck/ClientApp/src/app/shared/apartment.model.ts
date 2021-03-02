@@ -1,11 +1,11 @@
 export class Apartment {
-  id: number;
+  id: string;
   apartmentName: string;
   numberofRooms: number;
   pricePerNight: number;
   maxPersons: number;
   description: string;
-  propertyId: number;
+  propertyId: string;
   photos: string[];
 
   constructor(input?: any) {
