@@ -104,7 +104,8 @@ namespace VacayCheck.Controllers
                 cityId = value.cityId,
                 userId = value.userId
             };
-            return IPropertyRepository.Create(model);
+            IPropertyRepository.Create(model);
+            return model;
         }
 
         // PUT: api/Property/5

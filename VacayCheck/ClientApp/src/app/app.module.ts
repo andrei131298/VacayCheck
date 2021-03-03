@@ -29,6 +29,7 @@ import { OwnerLoginComponent } from './owner-login/owner-login.component';
 import { PropertyAddFormComponent } from './property-add-form/property-add-form.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ApartmentAddFormComponent } from './apartment-add-form/apartment-add-form.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     CustomColorDirective,
     OwnerLoginComponent,
     PropertyAddFormComponent,
+    ApartmentAddFormComponent,
   ],
   imports: [
     CommonModule,

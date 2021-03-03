@@ -1,68 +1,67 @@
 <app-header></app-header>
-<form id="petitionForm" action="" [formGroup]="addPropertyForm">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputAddress">Property name:</label>
-            <input type="text" class="form-control" formControlName="propertyName">
-            
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputPhoneNr">Type:</label>
-            <select class="typeSelect" formControlName="type" formControlName="type">
-                <option value="" disabled selected>Type</option>
-                <option *ngFor="let type of propertyTypes" value="{{type}}">{{type}}</option>
-              </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="city">City:</label>
-            <input type="text" name="city" class="form-control" id="city" formControlName="city" [(ngModel)]="citySearchText">
-            <div *ngIf="citySearchText.length > 0">
-                <div class="autocomplete" *ngFor="let city of cities| searchFilter: {cityName: citySearchText}">
-                    <a (click)="setCity(city)">{{city.cityName}}</a>
+<h1 class="title">Add your property</h1>
+<form id="addForm" action="" [formGroup]="addPropertyForm">
+    <h3 class="title2">Property details</h3>
+    <div class="formHalfs">
+        <div class="leftHalf">
+            <div class="form-group">
+                <label for="inputAddress">Property name:</label>
+                <input type="text" class="form-control" formControlName="propertyName" pattern="">
+                
+            </div>
+            <div class="form-group">
+                <label for="inputPhoneNr">Type:</label>
+                <select class="typeSelect" formControlName="type" formControlName="type">
+                    <option value="" disabled selected>Type</option>
+                    <option *ngFor="let type of propertyTypes" value="{{type}}">{{type}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" name="city" class="form-control" id="city" formControlName="city" [(ngModel)]="citySearchText"  autocomplete="off">
+                <div *ngIf="citySearchText.length > 0">
+                    <div class="autocomplete" *ngFor="let city of cities| searchFilter: {cityName: citySearchText}">
+                        <a (click)="setCity(city)">{{city.cityName}}</a>
+                    </div>
                 </div>
             </div>
+            <!-- <div class="form-group col-md-9">
+                <input id="notes" placeholder="Notes" formControlName="notes" (focus)="isDivHidden = true" (blur)="isDivHidden = false"/>
+                <div id="another-div" *ngIf="!isDivHidden">Test div which is hidden when notes input is in focus
+                </div>
+            </div> -->
+            <div class="form-group">
+                <label for="streetName">Street name:</label>
+                <input type="text" name="streetName" class="form-control" formControlName="streetName" >
+            </div>
+            <div class="form-group">
+                <label for="inputPhoneNr">Street number:</label>
+                <input type="text" name="streetNumber" class="form-control" formControlName="streetNumber">
+            </div>
+            
+        </div>
+        <div class="rightHalf">
+            <div class="form-group">
+                <label for="description">Description: </label>
+                <br>
+                <textarea id="propertyDescription" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
+                <!-- <app-field-error-display [displayError]="isFieldValid('description')"
+                                            errorMsg="Please inform the description">
+                </app-field-error-display> -->
+            </div>
+            <!-- <div class="form-group">
+                <input type='file' (change)="onSelectFile($event)">
+            </div> -->
+            <label class="custom-file-upload">
+                <input type="file" (change)="onSelectFile($event)"/>
+                Upload Main Photo
+            </label>
+            <img src="{{mainPhoto}}" height="200" > <br/>
         </div>
     </div>
-    <!-- <div class="form-group col-md-9">
-        <input id="notes" placeholder="Notes" formControlName="notes" (focus)="isDivHidden = true" (blur)="isDivHidden = false"/>
-        <div id="another-div" *ngIf="!isDivHidden">Test div which is hidden when notes input is in focus
-        </div>
-    </div> -->
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="streetName">Street name:</label>
-            <input type="text" name="streetName" class="form-control" formControlName="streetName" >
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputPhoneNr">Street number:</label>
-            <input type="text" name="streetNumber" class="form-control" formControlName="streetNumber">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <span>Description: &nbsp;</span>
-            <textarea id="propertyDescription" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
-            <!-- <app-field-error-display [displayError]="isFieldValid('description')"
-                                        errorMsg="Please inform the description">
-              </app-field-error-display> -->
-        </div>
-    </div>
-    <div class="form-group col-md-6">
-        <input type='file' (change)="onSelectFile($event)">
-    </div>
-    <img src="{{mainPhoto}}" height="200"> <br/>
-    <!-- <button type="button" id="submit" class="btn" (click)="onSubmit()">Submit</button> -->
 
-    <!-- <div class="text-center">
-        <button type="button" id="submit" class="btn" (click)="addIssue()">Submit</button>
-    </div>
-    <br> -->
+    <button type="button" id="submit" class="btn" (click)="onSubmit()">Submit</button>
+
     <!-- <p class="text-center" style="color:red;" *ngIf="success==false">Complete all the information</p>
     <p class="text-center" style="color:red;" *ngIf="userIdInvalid==true">You need to login</p>
     <p class="text-center" style="color: green;" *ngIf="successAdd != '' ">{{successAdd}}</p> -->

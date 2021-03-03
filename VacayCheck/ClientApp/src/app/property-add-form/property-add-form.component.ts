@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/services/api.service';
 import { City } from '../shared/city.model';
 import { Property } from '../shared/property.model';
+import { User } from '../shared/user.model';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { Property } from '../shared/property.model';
 })
 export class PropertyAddFormComponent implements OnInit {
   addPropertyForm: FormGroup;
+  addPropertyForm2: FormGroup;
+
   mainPhoto:string;
   propertyTypes=["Vila","House","Hotel","Flat"];
   cities:City[]=[];
@@ -22,6 +25,8 @@ export class PropertyAddFormComponent implements OnInit {
   cityId:string;
   newProperty=new Property;
   userId:string;
+  activeUser:User;
+
   constructor(public fb: FormBuilder, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
@@ -35,9 +40,16 @@ export class PropertyAddFormComponent implements OnInit {
       description: [null, Validators.required],
 
     });
+    this.addPropertyForm2 = this.fb.group({
+      propertyName:[null, Validators.required]
+
+    });
     this.api.getCities().subscribe((orase:City[])=>{
       this.cities = orase;
       console.log(this.cities);
+    });
+    this.api.getUser(this.userId).subscribe((activeUser: User) => {
+      this.activeUser=activeUser;
     });
   }
 
@@ -95,10 +107,13 @@ export class PropertyAddFormComponent implements OnInit {
       this.newProperty.cityId=this.cityId;
       this.newProperty.userId=this.userId;
       console.log(this.newProperty);
-      this.api.addProperty(this.newProperty).subscribe(()=>{
-
+      this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{
+        if(this.activeUser.isOwner==false){
+          this.activeUser.isOwner = true;
+          this.api.editUser(this.activeUser).subscribe();
+        }
+        this.router.navigate(["/apartment-add-form",createdProperty.id]);
       });
-      //this.router.navigate(["/user-profile"]);
     } else {
       this.success = false;
       setTimeout(() => {

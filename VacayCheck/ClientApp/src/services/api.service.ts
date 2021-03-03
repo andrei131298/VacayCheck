@@ -138,4 +138,9 @@ export class ApiService {
         headers: this.header,
       });
     }
+    editUser(user:User){
+      return this.http.put(this.baseUrl + "/User/" + user.id, user, {
+        headers: this.header,
+      });
+    }
 }

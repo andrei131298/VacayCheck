@@ -14,5 +14,7 @@ namespace VacayCheck.DTOs
         public string bankAccount { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        public bool isOwner { get; set; }
+
     }
 }

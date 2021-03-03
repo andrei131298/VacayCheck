@@ -10,6 +10,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthGuard } from "./guards/auth.guard";
 import { OwnerLoginComponent } from "./owner-login/owner-login.component";
 import { PropertyAddFormComponent } from "./property-add-form/property-add-form.component";
+import { ApartmentAddFormComponent } from "./apartment-add-form/apartment-add-form.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'reservation', component: ReservationComponent },
   { path: "user-profile/:id", component: UserProfileComponent },
   { path: "owner-login", component:OwnerLoginComponent},
-  { path:"property-add-form", component:PropertyAddFormComponent}
+  { path:"property-add-form", component:PropertyAddFormComponent},
+  { path:"apartment-add-form/:propertyId", component:ApartmentAddFormComponent}
 
 ];
 

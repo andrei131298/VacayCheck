@@ -67,6 +67,8 @@ namespace VacayCheck.Controllers
             {
                 model.password = value.password;
             }
+          
+            model.isOwner = value.isOwner;
             return IUserRepository.Update(model);
         }
         [HttpPost("register")]

@@ -15,3 +15,59 @@
   border: 1px solid black;
   border-radius: 0.25em;
 }
+.title {
+  font-size: 36px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
+.title2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+#addForm {
+  width: 70%;
+  max-width: 70%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid black;
+  border-radius: 10px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.formHalfs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.rightHalf {
+  margin-top: 15px;
+  margin-left: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.form-group {
+  width: 110%;
+}
+.btn {
+  background-color: rgb(20, 182, 20);
+  color: white;
+}
+input {
+  border: 2px solid rgb(34, 33, 33);
+  border-radius: 4px;
+}
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid rgb(167, 167, 167);
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
