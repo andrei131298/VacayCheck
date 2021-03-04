@@ -107,6 +107,7 @@ export class PropertyAddFormComponent implements OnInit {
       this.newProperty.cityId=this.cityId;
       this.newProperty.userId=this.userId;
       console.log(this.newProperty);
+      
       this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{
         if(this.activeUser.isOwner==false){
           this.activeUser.isOwner = true;

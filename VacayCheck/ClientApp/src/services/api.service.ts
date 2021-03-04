@@ -8,6 +8,7 @@ import { Reservation } from "../app/shared/reservation.model";
 import { User } from "../app/shared/user.model";
 import { Owner } from "../app/shared/owner.model";
 import { LoginRequest } from "../app/shared/loginRequest";
+import { Photo } from "src/app/shared/photo.model";
 
 @Injectable({
   providedIn: "root",
@@ -123,6 +124,18 @@ export class ApiService {
 
     addFavourite(favourite:Favourite) {
       return this.http.post(this.baseUrl + "/Favourite", favourite, {
+        headers: this.header,
+      });
+    }
+
+    addApartment(apartment: Apartment){
+      return this.http.post(this.baseUrl + "/Apartment", apartment, {
+        headers: this.header,
+      });
+    }
+
+    addPhoto(photo: Photo){
+      return this.http.post(this.baseUrl + "/Photo", photo, {
         headers: this.header,
       });
     }

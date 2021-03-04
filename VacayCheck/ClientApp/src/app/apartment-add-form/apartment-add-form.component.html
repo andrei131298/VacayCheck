@@ -1,1 +1,59 @@
 <app-header></app-header>
+<h1 class="title">Add an apartment</h1>
+<form id="addForm" action="" [formGroup]="addApartmentForm">
+    <h3 class="title2">Apartment details</h3>
+    <div class="formHalfs">
+        <div class="leftHalf">
+            <p>{{activeProperty.name}}</p>
+            <div class="form-group">
+                <label for="inputAddress">Apartment name:</label>
+                <input type="text" class="form-control" formControlName="apartmentName">
+                
+            </div>
+            <div class="form-group">
+                <label>Number of Rooms: </label><br>
+                <input id="numberOfRooms" type="number" min="1" max="6" onKeyDown="return false" formControlName="numberOfRooms"/>
+            </div>
+            <div class="form-group">
+                <label>Price per night:</label>
+                <input type="text" name="city" class="form-control" id="city" formControlName="pricePerNight" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Number of persons allowed: </label><br>
+                <input id="numberOfRooms" type="number" min="1" max="10" onKeyDown="return false" formControlName="numberOfPersons"/>
+            </div>
+            <!-- <div class="form-group col-md-9">
+                <input id="notes" placeholder="Notes" formControlName="notes" (focus)="isDivHidden = true" (blur)="isDivHidden = false"/>
+                <div id="another-div" *ngIf="!isDivHidden">Test div which is hidden when notes input is in focus
+                </div>
+            </div> -->
+            
+        </div>
+        <div class="rightHalf">
+            <div class="form-group">
+                <label for="description">Description: </label>
+                <br>
+                <textarea id="propertyDescription" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
+                <!-- <app-field-error-display [displayError]="isFieldValid('description')"
+                                            errorMsg="Please inform the description">
+                </app-field-error-display> -->
+            </div>
+            <!-- <div class="form-group">
+                <input type='file' (change)="onSelectFile($event)">
+            </div> -->
+            <label class="custom-file-upload">
+                <input type="file" (change)="onSelectFile($event)" multiple/>
+                Upload Photos
+            </label>
+            <img *ngFor="let photo of apartmentPhotos" src="{{photo}}" height="200" > <br/>
+        </div>
+    </div>
+
+    <button type="button" id="submit" class="btn" (click)="onSubmit()">Submit</button>
+
+    <!-- <p class="text-center" style="color:red;" *ngIf="success==false">Complete all the information</p>
+    <p class="text-center" style="color:red;" *ngIf="userIdInvalid==true">You need to login</p>
+    <p class="text-center" style="color: green;" *ngIf="successAdd != '' ">{{successAdd}}</p> -->
+
+
+</form>

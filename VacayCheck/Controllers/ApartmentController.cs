@@ -110,7 +110,8 @@ namespace VacayCheck.Controllers
                 propertyId = value.propertyId
 
             };
-            return IApartmentRepository.Create(model);
+            IApartmentRepository.Create(model);
+            return model;
         }
 
         // PUT: api/Apartment/5
