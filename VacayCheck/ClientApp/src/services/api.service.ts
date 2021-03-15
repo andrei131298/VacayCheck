@@ -77,6 +77,11 @@ export class ApiService {
       headers: this.header,
     });
   }
+  getReservationsByApartment(apartmentId:string){
+    return this.http.get(this.baseUrl + "/Reservation/apartment/" + apartmentId, {
+      headers: this.header,
+    });
+  }
   getPropertiesByUser(userId:string){
     return this.http.get(this.baseUrl + "/Property/GetPropertiesByUser/" + userId.toString(), {
       headers: this.header,

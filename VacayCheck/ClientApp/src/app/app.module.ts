@@ -30,6 +30,10 @@ import { PropertyAddFormComponent } from './property-add-form/property-add-form.
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ApartmentAddFormComponent } from './apartment-add-form/apartment-add-form.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MyPropertyComponent } from './my-property/my-property.component';
+import { ApartmentProfileComponent } from './apartment-profile/apartment-profile.component';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +54,8 @@ import { ApartmentAddFormComponent } from './apartment-add-form/apartment-add-fo
     OwnerLoginComponent,
     PropertyAddFormComponent,
     ApartmentAddFormComponent,
+    MyPropertyComponent,
+    ApartmentProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -63,7 +69,8 @@ import { ApartmentAddFormComponent } from './apartment-add-form/apartment-add-fo
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     MatAutocompleteModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FontAwesomeModule
   ],
   exports: [],
   bootstrap: [AppComponent],

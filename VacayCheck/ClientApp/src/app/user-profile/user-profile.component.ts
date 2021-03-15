@@ -6,6 +6,9 @@ import { Property } from '../shared/property.model';
 import { Reservation } from '../shared/reservation.model';
 import { User } from '../shared/user.model';
 import {  DatePipe,formatDate } from '@angular/common';
+import { Apartment } from '../shared/apartment.model';
+import { faPortrait, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'user-profile',
@@ -20,12 +23,19 @@ export class UserProfileComponent implements OnInit {
   userId:string;
   activeUser:User;
   isLoaded=false;
-  options = ['Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties'];
-  selectedOption='Future reservations';
+  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties'];
+  selectedOption='Profile';
   savedProperties:Favourite[]=[];
   userReservations:Reservation[]=[];
   currentDate= new Date();
   userProperties:Property[]=[];
+  selectedPhoto: string;
+  selectedIndex: number;
+  faPortrait = faPortrait;
+  faPlusCircle = faPlusCircle;
+  futureReservations: Reservation[]=[];
+  reservationsHistory: Reservation[]=[];
+  currentReservations: Reservation[]=[];
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.userId = params['id']);
@@ -36,10 +46,30 @@ export class UserProfileComponent implements OnInit {
     });
     this.api.getFavouritesByUser(this.userId).subscribe((data: Favourite[]) => {
       this.savedProperties=data;
+      this.savedProperties.forEach(favourite=>{
+        this.api.getProperty(favourite.propertyId).subscribe((property: Property)=>{
+          favourite.property = property;
+        });
+      });
     });
     this.api.getReservationsByUser(this.userId).subscribe((reservations: Reservation[]) => {
       this.userReservations=reservations;
+      this.userReservations.forEach(reservation =>{
+        this.api.getApartment(reservation.apartmentId).subscribe((apartment:Apartment)=>{
+          reservation.apartment = apartment;
+          if(new Date(reservation.checkIn) > this.currentDate && new Date(reservation.checkOut) > this.currentDate ){
+            this.futureReservations.push(reservation)
+          }
+          if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) < this.currentDate){
+            this.reservationsHistory.push(reservation)
+          }
+          if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) > this.currentDate){
+            this.currentReservations.push(reservation)
+          }
+        });
+      });
     });
+
     this.api.getPropertiesByUser(this.userId).subscribe((myProperties: Property[])=>{
       this.userProperties = myProperties;
       console.log(this.userProperties);
@@ -74,6 +104,39 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(["/reservation"],
     {queryParams:{reservation:reservation.id,reservationHistory:true,apartmentId:reservation.apartmentId,details:true}});
   }
-  
+  goToProperty(property:Property){
+    console.log(property);
+    this.router.navigate(["my-property", property.id]);
+  }
+
+  public setRow(_index: number) {
+    this.selectedIndex = _index;
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                  reader.onload = (event:any) => {
+                  this.selectedPhoto = event.target.result;
+                  console.log(event.target.result);
+                   
+                }
+                reader.readAsDataURL(event.target.files[i]);
+        }
+
+        const editedUser = new User(this.activeUser);
+        setTimeout( () => { 
+          editedUser.profilePhoto = this.selectedPhoto;
+          this.api.editUser(editedUser).subscribe(()=>{
+            this.api.getUser(this.userId).subscribe((activeUser: User) => {
+              this.activeUser = activeUser;
+            });
+          });
+        }, 2000 );
+    }
+  }
   
 }

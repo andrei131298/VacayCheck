@@ -1,0 +1,98 @@
+#modal {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 10px;
+  width: 70%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  padding: 50px 50px 50px 50px;
+}
+.pozeApartament {
+  object-fit: cover;
+  height: 70px;
+  width: 70px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.details {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.mainPhoto {
+  object-fit: cover;
+  height: 250px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+.pozeApartament:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.highlight {
+  border: 3px solid rgb(80, 162, 233);
+  /* border-radius: 10px; */
+}
+.title {
+  margin-bottom: 50px;
+  text-align: center;
+}
+.apartmentProfile {
+  display: flex;
+  flex-direction: row;
+}
+.rightHalf {
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 70px;
+  width: 120%;
+}
+.leftHalf {
+  margin-left: 50px;
+  width: 115%;
+}
+.features {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.persoane {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+}
+#persoana {
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+.issueDescription {
+  background-color: rgb(230, 236, 240);
+  min-height: 200px;
+  border-bottom: 5px solid rgb(87, 37, 37);
+  border-radius: 10px;
+  padding: 20px;
+}
+.reviews {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.review {
+  background-color: rgb(230, 236, 240);
+  border-bottom: 5px solid rgb(87, 37, 37);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  position: relative;
+  max-width: 100%;
+}
+#seeComments {
+  color: rgb(23, 87, 143);
+}
+#seeComments:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

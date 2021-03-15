@@ -11,6 +11,8 @@ import { AuthGuard } from "./guards/auth.guard";
 import { OwnerLoginComponent } from "./owner-login/owner-login.component";
 import { PropertyAddFormComponent } from "./property-add-form/property-add-form.component";
 import { ApartmentAddFormComponent } from "./apartment-add-form/apartment-add-form.component";
+import { MyPropertyComponent } from "./my-property/my-property.component";
+import { ApartmentProfileComponent } from "./apartment-profile/apartment-profile.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -22,9 +24,9 @@ const routes: Routes = [
   { path: 'reservation', component: ReservationComponent },
   { path: "user-profile/:id", component: UserProfileComponent },
   { path: "owner-login", component:OwnerLoginComponent},
-  { path:"property-add-form", component:PropertyAddFormComponent},
-  { path:"apartment-add-form/:propertyId", component:ApartmentAddFormComponent}
-
+  { path: "property-add-form", component:PropertyAddFormComponent},
+  { path: "apartment-add-form/:propertyId", component:ApartmentAddFormComponent},
+  { path: "my-property/:propertyId", component:MyPropertyComponent}
 ];
 
 @NgModule({

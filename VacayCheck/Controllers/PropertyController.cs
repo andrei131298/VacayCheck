@@ -49,6 +49,7 @@ namespace VacayCheck.Controllers
                 numberOfStars = Property.numberOfStars,
                 street = Property.street,
                 streetNumber = Property.streetNumber,
+                userId = Property.userId,
                 photo = Property.photo
             };
             IEnumerable<City> Cities = ICityRepository.GetAll().Where(x => x.id == Property.cityId);
@@ -73,13 +74,16 @@ namespace VacayCheck.Controllers
             {
                 PropertyDTO propertyDTO = new PropertyDTO()
                 {
+                    id = p.id,
+                    cityId = p.cityId,
                     name = p.name,
                     type = p.type,
                     description = p.description,
                     numberOfStars = p.numberOfStars,
                     street = p.street,
                     streetNumber = p.streetNumber,
-                    photo = p.photo
+                    photo = p.photo,
+                    userId = p.userId,
 
                 };
                 PropertiesDTO.Add(propertyDTO);

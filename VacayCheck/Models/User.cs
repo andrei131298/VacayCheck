@@ -15,6 +15,7 @@ namespace VacayCheck.Models
         public string email { get; set; }
         public string password { get; set; }
         public bool isOwner { get; set; }
+        public string profilePhoto { get; set; }
         public List<Property> property { get; set; }//one to many
         public List<Reservation> reservation { get; set; }
     }

@@ -20,7 +20,6 @@ export class SignUpComponent implements OnInit {
   addUserForm: FormGroup;
   success: boolean;
   birthDate: string;
-  returnUrl = "/home";
 
   constructor(
     public fb: FormBuilder,
@@ -63,9 +62,7 @@ export class SignUpComponent implements OnInit {
       }, 3000);
       console.log("addUserForm submitted");
       this.api.addUser(this.addUserForm.value).subscribe();
-      sessionStorage.setItem("isLoggedIn", "true");
-      sessionStorage.setItem("firstName", this.f.firstName.value);
-      this.router.navigate([this.returnUrl]);
+      this.router.navigate(["/login"]);
     } else {
       this.success = false;
       setTimeout(() => {

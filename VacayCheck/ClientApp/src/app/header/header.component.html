@@ -6,7 +6,7 @@
   <div *ngIf="loggedIn == 'true'">
     <div class="container">
       <div class="firstName" (click)="openProfile()">
-        {{ firstName }}
+        <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName }}
       </div>
       <button type="button" class="btn btn-primary" (click)="logout()">
         Logout

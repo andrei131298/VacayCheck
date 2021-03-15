@@ -1,106 +1,144 @@
 <app-loader #loader *ngIf="isLoaded == false"></app-loader>
 <div *ngIf="isLoaded == true">
 <app-header></app-header>
-<div class="profileDetails">
-    <div class="profile">
-        <img class="profilePhoto" src="assets/images/profile.png" />
-        <p id="firstName"> {{activeUser.firstName}} </p>
-    </div>
-    <div class="rank"> Date personale </div>
-</div>
-<h1 id="title">Saved properties and reservations</h1>
-<div class="options">
+<div class="profileHeader">
+  <p id="firstName"> {{activeUser.firstName}} {{activeUser.lastName}} </p>
+  <div class="options">
     <div>
       <ul class="nav">
-        <a *ngFor="let option of options" class="nav-link">
-          <p class="opt" (click)="changeOption(option)">{{option}}</p>
+        <a *ngFor="let option of options; let i = index" class="link">
+          <p class="opt" (click)="changeOption(option);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{option}}</p>
         </a>
       </ul>
     </div>
   </div>
 
 </div>
-<div *ngIf="selectedOption == 'Saved properties'">
-  <div *ngFor="let property of savedProperties">
-        <div class="secondView" >
-          <!-- <img class="apPhoto" src="{{property.photos[0] }}" /> -->
-          <div class="apDetail">
-                <p id="apName" >
-                  {{property.propertyName}}
-                </p>
-                <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="deleteFavourite(property.propertyId)">Remove from favourites</button>
-          </div>  
-        </div>
-      </div>
-</div>
-  <div *ngFor="let reservation of userReservations">
 
-    <div *ngIf="selectedOption == 'Future reservations'">
-      <div *ngIf="reservation.checkIn >currentDate && reservation.checkOut>currentDate ">
+<div *ngIf="selectedOption == 'Profile' ">
+  <div class="profileDetails">
+      <div class="profilePicture">
+        <img class="profilePhoto" src={{activeUser.profilePhoto}} />
+        <label class="custom-file-upload">
+          <input type="file" (change)="onSelectFile($event)"/>
+          <fa-icon [icon]="faPortrait" ></fa-icon> Change profile photo
+        </label>
+      </div>
+      <div class="date"> 
+        
+      </div>
+  </div>
+</div>
+
+<div *ngIf="selectedOption == 'Saved properties'">
+  <div *ngFor="let favourite of savedProperties">
+    <div *ngIf="savedProperties.length>0">
         <div class="secondView" >
-          <!-- <img class="apPhoto" src="{{apartment.photos[0] }}" /> -->
+          <img class="apPhoto" src={{favourite.property.photo}} />
           <div class="apDetail">
                 <p id="apName" >
-                  {{ reservation.propertyName}} - {{ reservation.apartmentName}}
+                  {{favourite.propertyName}}
+                </p>
+                <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="deleteFavourite(favourite.propertyId)">Remove from favourites</button>
+          </div> 
+        </div>
+    </div>    
+  </div>
+  <div *ngIf="savedProperties.length == 0">
+    <p class="nullMessage">You don't have any saved properties</p>
+  </div>
+</div>
+
+
+  <div *ngIf="selectedOption == 'Future reservations'">
+    <div *ngFor="let futureReservation of futureReservations">
+      <div *ngIf="futureReservation.checkIn > currentDate && futureReservation.checkOut > currentDate ">
+        <div class="secondView" >
+          <img class="apPhoto" src={{futureReservation.apartment.photos[0]}} />
+          <div class="apDetail">
+                <p id="apName" >
+                  {{ futureReservation.propertyName}} - {{ futureReservation.apartmentName}}
                 </p>
                 <p>
-                  {{reservation.checkIn | date:'longDate'}} - {{reservation.checkOut | date:'longDate'}}
+                  {{futureReservation.checkIn | date:'longDate'}} - {{futureReservation.checkOut | date:'longDate'}}
                 </p>
                 <p id="totalPrice" >
-                  Price: {{ reservation.price}}
+                  Price: {{ futureReservation.price}}
                 </p>
           </div>  
         </div>
       </div>
+    
     </div>
-    <div *ngIf="selectedOption == 'Reservations history'">
-      <div *ngIf="reservation.checkIn <currentDate && reservation.checkOut<currentDate ">
-        <div class="secondView" >
-          <!-- <img class="apPhoto" src="{{apartment.photos[0] }}" /> -->
-          <div class="apDetail">
-                <p id="apName" >
-                  {{ reservation.propertyName}} - {{ reservation.apartmentName}}
-                </p>
-                <p>
-                  {{reservation.checkIn | date:'longDate'}} - {{reservation.checkOut | date:'longDate'}}
-                </p>
-                <p id="totalPrice" >
-                  Price: {{ reservation.price}}
-                </p>
-                <button *ngIf="reservation.review == '' || reservation.review == null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReviewPage(reservation)">Add a review</button>
-                <button *ngIf="reservation.review != '' && reservation.review != null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toDetailsPage(reservation)">See details</button>
-          </div>  
-        </div>
-      </div>
-    </div>
-    <div *ngIf="selectedOption == 'Current reservations'">
-     
-      <div *ngIf="reservation.checkIn < currentDate && reservation.checkOut>currentDate ">
-        <div class="secondView" >
-          <!-- <img class="apPhoto" src="{{apartment.photos[0] }}" /> -->
-          <div class="apDetail">
-                <p id="apName" >
-                  {{ reservation.propertyName}} - {{ reservation.apartmentName}}
-                </p>
-                <p>
-                  {{reservation.checkIn | date:'longDate'}} - {{reservation.checkOut | date:'longDate'}}
-                </p>
-                <p id="totalPrice" >
-                  Price: {{ reservation.price}}
-                </p>
-          </div>  
-        </div>
-      </div>
+
+    <div *ngIf="futureReservations.length == 0">
+      <p class="nullMessage">No future reservations</p>
     </div>
   </div>
-  
+
+  <div *ngIf="selectedOption == 'Reservations history'">
+    <div *ngFor="let reservationHistory of reservationsHistory">
+      <div *ngIf="reservationHistory.checkIn < currentDate && reservationHistory.checkOut < currentDate ">
+        <div class="secondView" >
+          <img class="apPhoto" src={{reservationHistory.apartment.photos[0]}} />
+          <div class="apDetail">
+                <p id="apName" >
+                  {{ reservationHistory.propertyName}} - {{ reservationHistory.apartmentName}}
+                </p>
+                <p>
+                  {{reservationHistory.checkIn | date:'longDate'}} - {{reservationHistory.checkOut | date:'longDate'}}
+                </p>
+                <p id="totalPrice" >
+                  Price: {{ reservationHistory.price}}
+                </p>
+                <button *ngIf="reservationHistory.review == '' || reservationHistory.review == null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReviewPage(reservationHistory)">Add a review</button>
+                <button *ngIf="reservationHistory.review != '' && reservationHistory.review != null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toDetailsPage(reservationHistory)">See details</button>
+          </div>  
+        </div>
+      </div>
+    
+    </div>
+
+    <div *ngIf="reservationsHistory.length == 0 ">
+      <p class="nullMessage">No reservations history</p>
+    </div>
+
+  </div>
+
+  <div *ngIf="selectedOption == 'Current reservations'">
+    <div *ngFor="let currentReservation of currentReservations">   
+      <div *ngIf="currentReservation.checkIn < currentDate && currentReservation.checkOut > currentDate ">
+        <div class="secondView" >
+          <img class="apPhoto" src={{currentReservation.apartment.photos[0]}} />
+          <div class="apDetail">
+                <p id="apName" >
+                  {{ currentReservation.propertyName}} - {{ currentReservation.apartmentName}}
+                </p>
+                <p>
+                  {{currentReservation.checkIn | date:'longDate'}} - {{currentReservation.checkOut | date:'longDate'}}
+                </p>
+                <p id="totalPrice" >
+                  Price: {{ currentReservation.price}}
+                </p>
+          </div>  
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="currentReservations.length == 0">
+      <p class="nullMessage">No current reservations</p>
+    </div>
+  </div>
+
   <div *ngIf="selectedOption == 'My properties'">
      
     <div *ngIf="activeUser.isOwner == true">
+      <p class="addProperty" routerLink="/property-add-form"><fa-icon [icon]="faPlusCircle" ></fa-icon> Add new property</p>
       <div *ngFor="let prop of userProperties" class="secondView" >
-        <!-- <img class="apPhoto" src="{{apartment.photos[0] }}" /> -->
+        <img class="apPhoto" src={{prop.photo}} />
         <div class="apDetail">
-              <p id="apName" >
+              <p id="propertyName" (click)="goToProperty(prop)">
                 {{prop.name}}
               </p>
         </div>  

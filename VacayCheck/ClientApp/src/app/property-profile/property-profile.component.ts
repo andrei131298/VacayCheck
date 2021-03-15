@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
-import { SearchResult } from '../search-results/search-results.component';
 import { Apartment } from '../shared/apartment.model';
 import { Property } from '../shared/property.model';
 import { Reservation } from '../shared/reservation.model';
 import { LoaderComponent } from '../loader/loader.component';
 import { Favourite } from '../shared/favourite.model';
-import {  formatDate } from '@angular/common';
+import { formatDate } from '@angular/common';
+import { faUser, faBuilding, faStar } from '@fortawesome/free-solid-svg-icons';
+import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 
 
 @Component({
@@ -17,10 +18,7 @@ import {  formatDate } from '@angular/common';
 })
 export class PropertyProfileComponent implements OnInit {
 
-  @ViewChild("loader") detailModal: LoaderComponent;
 
-  constructor(private api: ApiService, private router: Router,private route: ActivatedRoute) {
-  }
   propertyId=this.route.snapshot.queryParamMap.get('propertyId');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
   dateRange1=new Date(this.route.snapshot.queryParamMap.get('dateRange1'));
@@ -40,6 +38,13 @@ export class PropertyProfileComponent implements OnInit {
   alreadyReserved:Reservation[]=[];
   error:boolean;
   activeFavourite:Favourite;
+  faUser = faUser;
+  faBuilding = faBuilding;
+  faStar = faStar;
+
+  @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
+  constructor(private api: ApiService, private router: Router,private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
 
@@ -59,14 +64,20 @@ export class PropertyProfileComponent implements OnInit {
     });
     this.api.getFavouriteByUserAndProperty(this.userId,this.propertyId).subscribe((fav:Favourite)=>{
       this.activeFavourite=fav;
-      console.log(this.activeFavourite);
     });
     this.api.getProperty(this.propertyId).subscribe((property:Property)=>{
       this.property=property;
+      console.log(this.property)
     });
+    console.log(this.userId);
     
   }
   
+  openApartmentModal(id: string){
+    console.log(this.apartmentModal);
+    this.apartmentModal.initialize(id);
+  }
+
   counter(i: number) {
     return new Array(i);
   }
@@ -108,5 +119,9 @@ export class PropertyProfileComponent implements OnInit {
   }
   changeStyle() {
     this.isFollow = !this.isFollow;
+  }
+  goToAddApartment(){
+    console.log(this.propertyId);
+    this.router.navigate(["/apartment-add-form",this.propertyId]);
   }
 }

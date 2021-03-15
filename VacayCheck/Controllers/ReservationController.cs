@@ -44,12 +44,6 @@ namespace VacayCheck.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        /*
-        public IEnumerable<Reservation> GetReservationsByUser(int userId)
-        {
-            return IReservationRepository.GetReservationsByUser(userId);
-        }
-        */
         public IEnumerable<ReservationDTO> GetReservationsByUser(Guid userId)
         {
 
@@ -81,6 +75,32 @@ namespace VacayCheck.Controllers
             }
             return ReservationsDTO;
         }
+
+        [HttpGet("apartment/{apartmentId}")]
+        public IEnumerable<ReservationDTO> GetReservationsByApartment(Guid apartmentId)
+        {
+
+            IEnumerable<Reservation> MyReservations = IReservationRepository.GetReservationsByApartment(apartmentId);
+            List<ReservationDTO> ReservationsDTO = new List<ReservationDTO>();
+            foreach (Reservation r in MyReservations)
+            {
+                ReservationDTO reservationDTO = new ReservationDTO()
+                {
+                    id = r.id,
+                    checkIn = r.checkIn,
+                    checkOut = r.checkOut,
+                    price = r.price,
+                    review = r.review,
+                    userId = r.userId,
+                    apartmentId = r.apartmentId,
+                    numberOfPersons = r.numberOfPersons
+
+                };
+                ReservationsDTO.Add(reservationDTO);
+            }
+            return ReservationsDTO;
+        }
+
         [HttpGet, Route("dates")]
         public IEnumerable<Reservation> GetAlreadyReservedByDates(DateTime checkIn, DateTime checkOut)
         {

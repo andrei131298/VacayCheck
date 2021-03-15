@@ -40,12 +40,7 @@
   flex-direction: row;
 }
 #stea {
-  font-size: 30px;
-  color: rgb(235, 200, 4);
-  margin-right: 3px;
-}
-#faBuilding {
-  color: white;
+  width: 50px;
 }
 .persoane {
   display: flex;
@@ -83,8 +78,4 @@
   font-size: 20px;
   font-weight: bold;
   color: green;
-}
-#apName {
-  font-size: 22px;
-  font-weight: bold;
 }

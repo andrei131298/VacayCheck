@@ -1,0 +1,47 @@
+<div
+  bsModal
+  class="row modal fade"
+  #apartmentModal="bs-modal"
+>
+  <div id="modal">
+    <h2 class="title">{{activeApartment.apartmentName}}</h2>
+    <div class="apartmentProfile">
+      <div class="leftHalf">
+        <img class="mainPhoto" src={{mainPhoto}}>
+        <div class="details">
+            <div class="photos" *ngFor="let photo of activeApartment.photos; let i = index">
+                <img class="pozeApartament" src={{photo}} (click)="becomeMainPhoto(photo);setSelected(i)"
+                [ngClass]="{'highlight': selectedIndex === i}">
+            </div>
+        </div>
+      </div>
+      <div class="rightHalf">
+        <label class="features">Rooms: </label><span> {{activeApartment.numberOfRooms}}</span>
+        <br>
+        <label class="features">Price per night: </label><span> {{activeApartment.pricePerNight}}</span>
+        <div class="persoane">
+          Capacity:
+          <fa-icon *ngFor="let person of counter(activeApartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
+        </div>
+        <label class="features">Description: </label>
+        <div class="issueDescription">
+              {{activeApartment.description}}
+        </div>
+        <div class="reviews">
+          <p><fa-icon [icon]="faComment"></fa-icon> Reviews:</p>
+          <div *ngFor="let reservation of apartmentsReservations | slice:0:showNumber" class="review">
+            <p><fa-icon [icon]="faUser"></fa-icon> {{reservation.userFirstName}} - {{reservation.checkIn | date:'longDate'}}</p>  
+            <p>{{reservation.review}}</p>
+              
+          </div>
+
+          <p id="seeComments" *ngIf="apartmentsReservations.length > 3 && show == false" (click)="show = true; showNumber = apartmentsReservations.length">See more comments</p>
+          <p id="seeComments" *ngIf="show == true" (click)="show = false; showNumber = 3">See less comments</p>
+          <div *ngIf="apartmentsReservations.length == 0">
+            This apartment doesn't have reviews yet
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

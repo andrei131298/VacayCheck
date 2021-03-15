@@ -28,7 +28,6 @@ export class ApartmentAddFormComponent implements OnInit {
 
     this.api.getProperty(this.propertyId).subscribe((property:Property)=>{
       this.activeProperty = property;
-      console.log(this.activeProperty);
     });
 
     this.addApartmentForm = this.fb.group({
@@ -49,7 +48,7 @@ export class ApartmentAddFormComponent implements OnInit {
 
                 reader.onload = (event:any) => {
                   this.apartmentPhotos.push(event.target.result);
-                  console.log(this.apartmentPhotos);
+                  console.log(event.target.result);
                    
                 }
                 reader.readAsDataURL(event.target.files[i]);
@@ -82,7 +81,7 @@ export class ApartmentAddFormComponent implements OnInit {
       console.log("submitted");
 
       this.newApartment.apartmentName = this.f.apartmentName.value;
-      this.newApartment.numberofRooms = this.f.numberOfRooms.value;
+      this.newApartment.numberOfRooms = this.f.numberOfRooms.value;
       this.newApartment.pricePerNight = this.f.pricePerNight.value;
       this.newApartment.maxPersons = this.f.numberOfPersons.value;
       this.newApartment.description = this.f.description.value;

@@ -2,8 +2,8 @@
 <div *ngIf="isLoaded == true">
 <app-header></app-header>
 <div class="period">
-<p id="p3" *ngIf="period == 1 ">Your results for {{period}} day</p>
-<p id="p3" *ngIf="period > 1 ">Your results for {{period}} days</p>
+  <p id="p3" *ngIf="period == 1 ">Your results for {{period}} day</p>
+  <p id="p3" *ngIf="period > 1 ">Your results for {{period}} days</p>
 </div>
 <div class="container">
   <div class="">
@@ -15,17 +15,13 @@
         <img class="pozeCazari" src="{{ property.photo }}" />
         <div class="detaliiProp">
           <p id="p1" (click)="set(property.id)">
-            {{ property.name.toString() }}
+            <fa-icon *ngIf="property.userId == userId" [icon]="faBuilding" id="faBuilding"></fa-icon>{{ property.name.toString() }}
           </p>
           <p id="p2">
             {{ property.cityName }}
           </p>
           <div class="stele">
-            <img
-              id="stea"
-              src="assets/images/2184499.png"
-              *ngFor="let star of counter(property.numberOfStars)"
-            />
+            <fa-icon *ngFor="let star of counter(property.numberOfStars)" id="stea" [icon]="faStar" ></fa-icon>
           </div>
         </div>
       </div>

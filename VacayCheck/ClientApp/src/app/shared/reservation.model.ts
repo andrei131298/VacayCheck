@@ -1,3 +1,5 @@
+import { Apartment } from "./apartment.model";
+
 export class Reservation {
   id?: string;
   price: number;
@@ -10,6 +12,8 @@ export class Reservation {
   propertyId?:string;
   apartmentName?: string;
   propertyName?:string;
+  apartment?:Apartment;
+  userFirstName?: string;
 
   constructor(input?: any) {
     Object.assign(this, input);

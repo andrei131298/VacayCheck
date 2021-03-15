@@ -1,49 +1,56 @@
 .profilePhoto {
   object-fit: cover;
-  height: 300px;
-  width: 300px;
-}
-.profile {
-  margin-top: 20px;
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
 }
 #firstName {
   font-size: 26px;
+  color: rgb(23, 87, 143);
+  margin-left: 70px;
 }
 .profileDetails {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-around;
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
 }
-.rank {
+.date {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.options {
-  margin-top: 50px;
+.profileHeader {
   background-color: rgb(230, 236, 240);
-  border-bottom: 8px solid rgb(87, 37, 37);
-  border-top: 8px solid rgb(87, 37, 37);
-  border-radius: 15px;
+  padding-top: 20px;
+  width: 80%;
+  margin: auto;
+  border-radius: 25px;
 }
 .nav {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 .opt {
   color: black;
-  font-size: 30px;
-  border-radius: 10px;
+  font-size: 20px;
+  margin-left: 20px;
+  padding: 5px 10px 5px 10px;
 }
 .opt:hover {
-  color: red;
+  border-radius: 10px;
+  background-color: rgb(153, 153, 153);
 }
-
+.nullMessage {
+  text-align: center;
+  font-size: 26px;
+  margin-top: 100px;
+  color: crimson;
+}
 #title {
   display: flex;
   flex-direction: column;
@@ -52,14 +59,15 @@
   font-weight: bold;
 }
 .secondView {
+  width: 80%;
+  margin: auto;
+  padding: 20px 0px 20px 20px;
   margin-top: 20px;
-  margin-left: 10px;
-  width: 96%;
   display: flex;
   align-items: center;
   border: 2px solid rgb(23, 87, 143);
   border-radius: 7px;
-  background-color: rgb(129, 185, 235);
+  background-color: rgb(180, 220, 255);
   box-shadow: 0 2px 3px rgb(37, 37, 37);
 }
 .btn {
@@ -78,4 +86,46 @@
 .start:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+#propertyName:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.apPhoto {
+  object-fit: cover;
+  height: 170px;
+  width: 170px;
+}
+.apDetail {
+  margin-left: 50px;
+}
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  display: inline-block;
+  color: rgb(40, 154, 253);
+  cursor: pointer;
+  width: 80%;
+  max-width: 80%;
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+  font-size: larger;
+}
+.addProperty {
+  color: rgb(40, 154, 253);
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: larger;
+  text-align: center;
+}
+.profilePicture {
+  display: flex;
+  flex-direction: column;
+}
+.highlight {
+  border-bottom: 3px solid black;
+  border-radius: 10px;
+  color: rgb(23, 87, 143);
 }

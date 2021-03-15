@@ -67,7 +67,10 @@ namespace VacayCheck.Controllers
             {
                 model.password = value.password;
             }
-          
+            if (value.profilePhoto != null)
+            {
+                model.profilePhoto = value.profilePhoto;
+            }
             model.isOwner = value.isOwner;
             return IUserRepository.Update(model);
         }

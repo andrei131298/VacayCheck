@@ -6,6 +6,8 @@ import { Apartment } from '../shared/apartment.model';
 import { Reservation } from '../shared/reservation.model';
 import { LoaderComponent } from '../loader/loader.component';
 import {  formatDate } from '@angular/common';
+import { faStar, faBuilding } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: "search-results",
@@ -31,6 +33,10 @@ export class SearchResult implements OnInit {
   isLoaded=false;
   alreadyReserved:Reservation[]=[];
   activeProperties:Property[]=[];
+  faStar = faStar;
+  faBuilding = faBuilding;
+  userId = sessionStorage.getItem('userId');
+
 
   counter(i: number) {
     return new Array(i);

@@ -1,7 +1,7 @@
 export class Apartment {
   id: string;
   apartmentName: string;
-  numberofRooms: number;
+  numberOfRooms: number;
   pricePerNight: number;
   maxPersons: number;
   description: string;
