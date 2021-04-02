@@ -16,6 +16,10 @@ namespace VacayCheck.DTOs
         public string password { get; set; }
         public bool isOwner { get; set; }
         public string profilePhoto { get; set; }
+        public string address { get; set; }
+        public string phoneNumber { get; set; }
+        public string country { get; set; }
+        public string city { get; set; }
 
     }
 }

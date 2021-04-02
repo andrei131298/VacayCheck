@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faGlobeEurope} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-header",
@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   firstName: string;
   userId:string;
   faUserCircle = faUserCircle;
+  faGlobeEurope = faGlobeEurope;
 
   logout(): void {
     console.log("Logout");

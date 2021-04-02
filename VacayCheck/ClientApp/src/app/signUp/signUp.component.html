@@ -93,6 +93,7 @@
           [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
           formControlName="birthDate"
           autocomplete="off"
+          onKeyDown="return false"
         />
         <app-field-error-display
           [displayError]="isFieldValid('birthDate')"
@@ -104,15 +105,87 @@
 
     <div class="form-group">
       <div class="col-sm-12">
-        <label for="sex" class="control-label required">Sex</label>
-        <select formControlName="sex">
-          <option value="" disabled selected>Sex</option>
-          <option value="man">Man</option>
-          <option value="woman">Woman</option>
+        <label for="sex" class="control-label required">Gender</label>
+        <select formControlName="sex" class="form-control">
+          <option value="" disabled selected>Gender</option>
+          <option value="man">Male</option>
+          <option value="woman">Female</option>
         </select>
         <app-field-error-display
           [displayError]="isFieldValid('sex')"
           errorMsg="Please inform your sex"
+        >
+        </app-field-error-display>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="address" class="control-label required">Address</label>
+        <input
+          type="text"
+          id="address"
+          class="form-control"
+          formControlName="address"
+          autocomplete="off"
+        />
+        <app-field-error-display
+          [displayError]="isFieldValid('address')"
+          errorMsg="Please inform your address"
+        >
+        </app-field-error-display>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="phoneNumber" class="control-label required">Phone number</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          class="form-control"
+          formControlName="phoneNumber"
+          autocomplete="off"
+        />
+        <app-field-error-display
+          [displayError]="isFieldValid('phoneNumber')"
+          errorMsg="Please inform your phone number"
+        >
+        </app-field-error-display>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="country" class="control-label required">Country</label>
+        <input
+          type="text"
+          id="country"
+          class="form-control"
+          formControlName="country"
+          autocomplete="off"
+        />
+        <app-field-error-display
+          [displayError]="isFieldValid('country')"
+          errorMsg="Please inform your country"
+        >
+        </app-field-error-display>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="city" class="control-label required">City</label>
+        <input
+          type="text"
+          id="city"
+          class="form-control"
+          formControlName="city"
+          autocomplete="off"
+        />
+        <app-field-error-display
+          [displayError]="isFieldValid('city')"
+          errorMsg="Please inform your city"
         >
         </app-field-error-display>
       </div>

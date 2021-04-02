@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Favourite } from '../shared/favourite.model';
@@ -7,7 +7,8 @@ import { Reservation } from '../shared/reservation.model';
 import { User } from '../shared/user.model';
 import {  DatePipe,formatDate } from '@angular/common';
 import { Apartment } from '../shared/apartment.model';
-import { faPortrait, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPortrait, faPlusCircle, faPen, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,9 +18,10 @@ import { faPortrait, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private api:ApiService, private router:Router) {
+  constructor(private route:ActivatedRoute, private api:ApiService, private router:Router, private fb: FormBuilder) {
    }
 
+  editUserForm: FormGroup;
   userId:string;
   activeUser:User;
   isLoaded=false;
@@ -33,17 +35,20 @@ export class UserProfileComponent implements OnInit {
   selectedIndex: number;
   faPortrait = faPortrait;
   faPlusCircle = faPlusCircle;
+  faPen = faPen;
+  faTimes = faTimes;
   futureReservations: Reservation[]=[];
   reservationsHistory: Reservation[]=[];
   currentReservations: Reservation[]=[];
+  edit = false;
+  success: boolean;
+
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.userId = params['id']);
+    
+    this.getCurrentUser()
 
-    this.api.getUser(this.userId).subscribe((activeUser: User) => {
-      this.activeUser=activeUser;
-      console.log(this.activeUser);
-    });
     this.api.getFavouritesByUser(this.userId).subscribe((data: Favourite[]) => {
       this.savedProperties=data;
       this.savedProperties.forEach(favourite=>{
@@ -82,8 +87,54 @@ export class UserProfileComponent implements OnInit {
       }
   }, 1000);
   }
+
+  getCurrentUser(){
+    this.api.getUser(this.userId).subscribe((activeUser: User) => {
+      this.activeUser=activeUser;
+      console.log(this.activeUser);
+      this.editUserForm = this.fb.group({
+        firstName: [this.activeUser.firstName, Validators.required],
+        lastName: [this.activeUser.lastName, Validators.required],
+        email: [this.activeUser.email, Validators.required],
+        birthDate: [new Date(formatDate(this.activeUser.birthDate,'MM/dd/yyyy','en-US')), Validators.required],
+        sex: [this.activeUser.sex, Validators.required],
+        address: [this.activeUser.address, Validators.required],
+        phoneNumber: [this.activeUser.phoneNumber, Validators.required],
+        country: [this.activeUser.country, Validators.required],
+        city: [this.activeUser.city, Validators.required]
+  
+      });
+    });
+  }
+
+  get f() {
+    return this.editUserForm.controls;
+  }
+
+  saveChanges(){
+    if (this.editUserForm.valid) {
+      this.success = true;
+      setTimeout(() => {
+        this.success = null;
+      }, 3000);
+      this.api.updateUserDetails(this.editUserForm.value, this.activeUser.id).subscribe(()=>{
+        this.getCurrentUser()
+      });
+
+      this.edit = false;
+    } else {
+      this.success = false;
+      setTimeout(() => {
+        this.success = null;
+      }, 3000);
+    }
+  }
+
   changeOption(option){
     this.selectedOption=option;
+  }
+  cancelForm(){
+    this.edit = false
   }
   deleteFavourite(propertyId:string){
     console.log(propertyId);
@@ -95,6 +146,9 @@ export class UserProfileComponent implements OnInit {
       (error: Error) => {
         console.log(error);
       });
+  }
+  showEditOption(){
+    this.edit = true;
   }
   toReviewPage(reservation:Reservation){
     this.router.navigate(["/reservation"],

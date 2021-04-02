@@ -9,6 +9,10 @@ export class User {
   password: string;
   isOwner:boolean;
   profilePhoto:string;
+  address: string;
+  phoneNumber: string;
+  country: string;
+  city: string;
 
   constructor(input?: any) {
     Object.assign(this, input);

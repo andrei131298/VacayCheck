@@ -24,8 +24,65 @@
           <fa-icon [icon]="faPortrait" ></fa-icon> Change profile photo
         </label>
       </div>
-      <div class="date"> 
+      <div *ngIf="edit == false" class="date">
+        <p class="hrHeader">Personal details <fa-icon [icon]="faPen" id ="edit" (click)="showEditOption()" ></fa-icon></p>
+        <hr>
         
+        <label class="features">First name: <span class="span"> {{activeUser.firstName}}</span></label>
+        <label class="features">Last name: <span class="span"> {{activeUser.lastName}}</span> </label>  
+        <label class="features">E-mail: <span class="span"> {{activeUser.email}}</span></label> 
+        <label class="features">Address: <span class="span"> {{activeUser.address}}</span></label>  
+        <label class="features">Country: <span class="span"> {{activeUser.country}}</span></label>  
+        <label class="features">City: <span class="span"> {{activeUser.city}}</span>  </label> 
+        <label class="features">Gender: <span class="span"> {{activeUser.sex}}</span>  </label> 
+        <label class="features">Birth date: <span class="span"> {{activeUser.birthDate | date:'longDate'}}</span> </label>    
+        <label class="features">Phone number: <span class="span"> {{activeUser.phoneNumber}}</span>  </label>   
+
+      </div>
+      <div *ngIf="edit == true" class="editData">
+        <h2>Edit personal details </h2>
+        <p id="cancelText" (click)="cancelForm()">Cancel<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
+        <form class="form-container" [formGroup]="editUserForm">
+          <div class="leftHalfForm">
+            <label for="firstName2" class="control-label required">First name</label>
+            <input type="text" id="firstName2" class="form-control" formControlName="firstName"/>
+
+            <label for="lastName" class="control-label required">Last name</label>
+            <input type="text" id="lastName" class="form-control" formControlName="lastName"/>
+
+            <label for="email" class="control-label required">E-mail</label>
+            <input type="text" id="email" class="form-control" formControlName="email" autocomplete="off" disabled />
+
+            <label for="address" class="control-label required">Address</label>
+            <input type="text" id="address" class="form-control" formControlName="address" autocomplete="off"/>
+
+            <label for="country" class="control-label required">Country</label>
+            <input type="text" id="country" class="form-control" formControlName="country" autocomplete="off"/>
+                        
+
+          </div>
+          <div class="rightHalfForm">
+            <label for="city" class="control-label required">City</label>
+            <input type="text" id="city" class="form-control" formControlName="city" autocomplete="off"/>
+
+            <label for="sex" class="control-label required">Gender</label>
+            <br>
+            <select formControlName="sex" class="form-control">
+              <option value="activeUser.sex" disabled selected>Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+
+            <label for="birthdate" class="control-label required">Birth date</label>
+            <input type="datetime" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" onKeyDown="return false" id="birthDate" class="form-control" formControlName="birthDate" autocomplete="off"/>
+
+            <label for="phoneNumber" class="control-label required">Phone number</label>
+            <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" autocomplete="off"/>
+
+            <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
+
+          </div>
+        </form>
       </div>
   </div>
 </div>

@@ -161,4 +161,9 @@ export class ApiService {
         headers: this.header,
       });
     }
+    updateUserDetails(user:User, userId: string){
+      return this.http.put(this.baseUrl + "/User/" + userId, user, {
+        headers: this.header,
+      });
+    }
 }

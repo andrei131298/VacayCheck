@@ -20,5 +20,13 @@ namespace VacayCheck.Models
         public string email { get; set; }
         [Required]
         public string password { get; set; }
+        [Required]
+        public string address { get; set; }
+        [Required]
+        public string phoneNumber { get; set; }
+        [Required]
+        public string country { get; set; }
+        [Required]
+        public Guid city { get; set; }
     }
 }

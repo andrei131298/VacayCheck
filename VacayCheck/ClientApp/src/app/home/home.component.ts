@@ -20,7 +20,6 @@ export class HomeComponent {
   dateRange0Formatted:string;
   dateRange1Formatted:string;
 
-  
 
   @ViewChild("detailModal") detailModal: DetailModalComponent;
   constructor(private api: ApiService, private router: Router) {}

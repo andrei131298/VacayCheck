@@ -71,6 +71,22 @@ namespace VacayCheck.Controllers
             {
                 model.profilePhoto = value.profilePhoto;
             }
+            if (value.address != null)
+            {
+                model.address = value.address;
+            }
+            if (value.city != null)
+            {
+                model.city = value.city;
+            }
+            if (value.country != null)
+            {
+                model.country = value.country;
+            }
+            if (value.phoneNumber != null)
+            {
+                model.phoneNumber = value.phoneNumber;
+            }
             model.isOwner = value.isOwner;
             return IUserRepository.Update(model);
         }
