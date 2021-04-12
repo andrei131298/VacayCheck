@@ -3,39 +3,37 @@
 <app-header></app-header>
 <div class="container">
   <div class="">
-      <div class="view">
+      <div class="view mb-3 mr-3 p-0">
         <img class="pozeCazari" src="{{ property.photo }}"/>
         <div class="detaliiProp">
           <p id="p1" >
-            {{ property.name.toString() }}
+            <fa-icon *ngIf="property.userId == userId" [icon]="faBuilding" id="faBuilding"></fa-icon>{{ property.name.toString() }}
           </p>
           <p id="p2">
             {{ property.cityName }}
           </p>
           <div class="stele">
-            <img
-              id="stea"
-              src="assets/images/2184499.png"
-              *ngFor="let star of counter(property.numberOfStars)"
-            />
+            <fa-icon *ngFor="let star of counter(property.numberOfStars)" id="stea" [icon]="faStar" ></fa-icon>
           </div>
-          <button type="button" class="btn btn-primary" style="margin-top: 20px;" (click)="goToAddApartment()">Add an apartment</button>
+          <button *ngIf="property.userId == userId" class="btn btn-primary" (click)="goToAddApartment()">Add an apartment</button>
         </div>
       </div>
-      <div class="secondView" *ngFor="let apartment of apartments">
-        <img class="apPhoto" src="{{apartment.photos[0] }}" />
-        <div class="apDetail">
-              <p id="apName" (click)="toApartmentPage(apartment)">
-                {{ apartment.apartmentName}}
-              </p>
+
+      <div class="apartmentsContainer mb-3 mr-3 p-0">
+        <div class="secondView" *ngFor="let apartment of apartments">
+          <img class="apPhoto" src="{{apartment.photos[0] }}" />
+          <div class="apDetail">
+                <p id="apName" (click)="openApartmentModal(apartment.id)">
+                  {{ apartment.apartmentName}}
+                </p>
                 <div class="persoane">
                   Capacity:
-                  <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>
-                  
+                  <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
                 </div>
-              
-        </div>  
+          </div>  
+        </div>
       </div>
   </div>
 </div>
 </div>
+<apartment-profile #apartmentModal></apartment-profile>

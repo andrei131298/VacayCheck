@@ -5,6 +5,7 @@ import { ApiService } from 'src/services/api.service';
 import { City } from '../shared/city.model';
 import { Property } from '../shared/property.model';
 import { User } from '../shared/user.model';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class PropertyAddFormComponent implements OnInit {
   newProperty=new Property;
   userId:string;
   activeUser:User;
+  faTimes = faTimes;
 
   constructor(public fb: FormBuilder, private api: ApiService, private router: Router) { }
 
@@ -51,6 +53,12 @@ export class PropertyAddFormComponent implements OnInit {
     this.api.getUser(this.userId).subscribe((activeUser: User) => {
       this.activeUser=activeUser;
     });
+  }
+
+  deletePhoto(){
+
+    this.mainPhoto = null;   
+    
   }
 
   onSelectFile(event) {

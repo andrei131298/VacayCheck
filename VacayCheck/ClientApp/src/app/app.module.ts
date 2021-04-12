@@ -27,13 +27,12 @@ import { CustomColorDirective } from "./core/directives/custom-color.directive";
 import { ErrorInterceptor } from "./core/interceptors/error-interceptor";
 import { OwnerLoginComponent } from './owner-login/owner-login.component';
 import { PropertyAddFormComponent } from './property-add-form/property-add-form.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { ApartmentAddFormComponent } from './apartment-add-form/apartment-add-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MyPropertyComponent } from './my-property/my-property.component';
 import { ApartmentProfileComponent } from './apartment-profile/apartment-profile.component';
-
+import { PaymentComponent } from './reservation/payment/payment.component';
+import { CreditCardDirective } from "./util/cardNumber.directive";
 
 @NgModule({
   declarations: [
@@ -56,6 +55,8 @@ import { ApartmentProfileComponent } from './apartment-profile/apartment-profile
     ApartmentAddFormComponent,
     MyPropertyComponent,
     ApartmentProfileComponent,
+    PaymentComponent,
+    CreditCardDirective
   ],
   imports: [
     CommonModule,
@@ -68,9 +69,7 @@ import { ApartmentProfileComponent } from './apartment-profile/apartment-profile
     FormsModule,
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   exports: [],
   bootstrap: [AppComponent],
@@ -79,7 +78,7 @@ import { ApartmentProfileComponent } from './apartment-profile/apartment-profile
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
-    }
+    }, 
     ],
 })
 export class AppModule {}

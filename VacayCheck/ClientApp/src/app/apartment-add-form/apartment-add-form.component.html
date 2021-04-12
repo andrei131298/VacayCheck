@@ -45,7 +45,12 @@
                 <input type="file" (change)="onSelectFile($event)" multiple/>
                 Upload Photos
             </label>
-            <img *ngFor="let photo of apartmentPhotos" src="{{photo}}" height="200" > <br/>
+            <div class="photos">
+                <div class="img-wrap" *ngFor="let photo of apartmentPhotos">
+                    <fa-icon (click) = "deletePhoto(photo)" class="delete" [icon] = "faTimes"></fa-icon>
+                    <img class="photoToAdd" src={{photo}}>
+                </div>
+            </div>
         </div>
     </div>
 

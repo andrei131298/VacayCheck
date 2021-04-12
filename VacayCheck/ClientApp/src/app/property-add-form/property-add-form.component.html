@@ -56,7 +56,11 @@
                 <input type="file" (change)="onSelectFile($event)"/>
                 Upload Main Photo
             </label>
-            <img src="{{mainPhoto}}" height="200" > <br/>
+            <div *ngIf="mainPhoto != null" class="img-wrap">
+                <fa-icon (click) = "deletePhoto()" class="delete" [icon] = "faTimes"></fa-icon>
+                <img class="mainPhoto" src={{mainPhoto}} height="200">
+              </div>
+              <br/>
         </div>
     </div>
 

@@ -13,6 +13,7 @@ import { PropertyAddFormComponent } from "./property-add-form/property-add-form.
 import { ApartmentAddFormComponent } from "./apartment-add-form/apartment-add-form.component";
 import { MyPropertyComponent } from "./my-property/my-property.component";
 import { ApartmentProfileComponent } from "./apartment-profile/apartment-profile.component";
+import { PaymentComponent } from "./reservation/payment/payment.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },

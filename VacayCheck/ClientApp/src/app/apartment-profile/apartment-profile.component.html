@@ -4,18 +4,26 @@
   #apartmentModal="bs-modal"
 >
   <div id="modal">
-    <h2 class="title">{{activeApartment.apartmentName}}</h2>
+    <h2 class="title">{{activeApartment.apartmentName}} 
+      <fa-icon *ngIf="edit == false && userId == activeProperty.userId" [icon]="faPen" id ="edit" (click)="showEditOption()" ></fa-icon></h2>
     <div class="apartmentProfile">
       <div class="leftHalf">
-        <img class="mainPhoto" src={{mainPhoto}}>
+        <div class="img-wrap">
+          <fa-icon *ngIf="edit == true" (click) = "deletePhoto(mainPhoto)" class="delete" [icon] = "faTimes"></fa-icon>
+          <img class="mainPhoto" src={{mainPhoto.path}}>
+        </div>
         <div class="details">
-            <div class="photos" *ngFor="let photo of activeApartment.photos; let i = index">
-                <img class="pozeApartament" src={{photo}} (click)="becomeMainPhoto(photo);setSelected(i)"
+            <div class="photos" *ngFor="let photo of activeApartment.photoObjects; let i = index">
+                <img class="pozeApartament" src={{photo.path}} (click)="becomeMainPhoto(photo);setSelected(i)"
                 [ngClass]="{'highlight': selectedIndex === i}">
             </div>
         </div>
+        <label *ngIf="edit == true" class="custom-file-upload">
+          <input type="file" (change)="onSelectFile($event)" multiple/>
+          Add Photos
+      </label>
       </div>
-      <div class="rightHalf">
+      <div *ngIf="edit == false" class="rightHalf">
         <label class="features">Rooms: </label><span> {{activeApartment.numberOfRooms}}</span>
         <br>
         <label class="features">Price per night: </label><span> {{activeApartment.pricePerNight}}</span>
@@ -41,6 +49,31 @@
             This apartment doesn't have reviews yet
           </div>  
         </div>
+      </div>
+      <div *ngIf="edit == true" class="rightHalf">
+        <h3>Edit apartment details </h3>
+        <p id="cancelText" (click)="cancelForm()">Done editing<fa-icon [icon]="faCheck" id = "cancel" ></fa-icon></p>
+        <form class="form-container" [formGroup]="editApartmentForm">
+          <div class="leftHalfForm">
+            <label for="apartmentName" class="control-label required">Apartment Name</label>
+            <input type="text" class="form-control" formControlName="apartmentName"/>
+
+            <label for="pricePerNight" class="control-label required">Price per night</label>
+            <input type="text" class="form-control" formControlName="pricePerNight"/>
+
+            <label for="description" class="control-label required">Description</label>
+            <textarea class="form-control" style="resize: none;" rows="8" formControlName="description" autocomplete="off"></textarea>
+
+            <label for="maxPersons" class="control-label required">Maximum capacity</label>
+            <input type="number" class="form-control" min="1" max="30" onKeyDown="return false" formControlName="maxPersons"/>
+            
+            <label for="numberOfRooms" class="control-label required">Number of rooms</label>
+            <input type="number" class="form-control" min="1" max="5" onKeyDown="return false" formControlName="numberOfRooms"/>
+
+            <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
+
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -23,7 +23,7 @@ export class SearchResult implements OnInit {
   
   properties:Property[]=[];
   apartments: Apartment[] = [];
-  period:number;
+  period: number;
   searchText=this.route.snapshot.queryParamMap.get('searchText');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
   dateRange0Formatted=formatDate(this.dateRange0,'MM/dd/yyyy','en-US');
@@ -57,7 +57,6 @@ export class SearchResult implements OnInit {
       this.apartments=apartments;
       this.api.getAlreadyReservedByDates(this.dateRange0Formatted,this.dateRange1Formatted).subscribe((reserved:Reservation[])=>{
         this.alreadyReserved=reserved;
-        console.log(this.alreadyReserved);
         for(let res of this.alreadyReserved){
             this.apartments.forEach((apartment, index) => {
             if(apartment.id === res.apartmentId || apartment.maxPersons<this.persons) this.apartments.splice(index,1);
@@ -68,15 +67,20 @@ export class SearchResult implements OnInit {
           this.api.getProperty(apartment.propertyId).subscribe((property:Property)=>{
             if (this.activeProperties.find((prop) => prop.name === property.name) === undefined) {
               if (property.name.toLowerCase().includes(this.searchText.toLowerCase())) {
-                property.id=apartment.propertyId;
+                property.id = apartment.propertyId;
                 this.activeProperties.push(property);
               }
             }
           });
+
         });
         console.log(this.activeProperties);
+
         this.isLoaded=true;
       });
+      
     });
+
+    
   }
 }

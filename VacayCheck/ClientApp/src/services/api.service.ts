@@ -151,6 +151,18 @@ export class ApiService {
       });
     }
 
+    deletePhoto(photo: Photo){
+      return this.http.delete(this.baseUrl + "/Photo/" + photo.id, {
+        headers: this.header,
+      });
+    }
+
+    editApartment(apartment: Apartment, apartmentId: string){
+      return this.http.put(this.baseUrl + "/Apartment/" + apartmentId, apartment, {
+        headers: this.header,
+      });
+    }
+
     editReservation(res: Reservation) {
       return this.http.put(this.baseUrl + "/Reservation/" + res.id.toString(), res, {
         headers: this.header,

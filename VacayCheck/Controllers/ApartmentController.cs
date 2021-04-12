@@ -37,7 +37,7 @@ namespace VacayCheck.Controllers
         public ApartmentDTO Get(Guid id)
         {
             Apartment Apartment = IApartmentRepository.Get(id);
-            ApartmentDTO MyApartments = new ApartmentDTO()
+            ApartmentDTO MyApartment = new ApartmentDTO()
             {
                 id = Apartment.id,
                 apartmentName = Apartment.apartmentName,
@@ -52,14 +52,17 @@ namespace VacayCheck.Controllers
             if (Photos != null)
             {
                 List<string> PhotosPathsList = new List<string>();
+                List<Photo> PhotoObjectsList = new List<Photo>();
                 foreach (Photo Photo in Photos)
                 {
                     PhotosPathsList.Add(Photo.path);
+                    PhotoObjectsList.Add(Photo);
                 }
-                MyApartments.photos = PhotosPathsList;
+                MyApartment.photos = PhotosPathsList;
+                MyApartment.photoObjects = PhotoObjectsList;
             }
             
-            return MyApartments;
+            return MyApartment;
         }
 
         [HttpGet("propertyId/{propertyId}")]
@@ -119,6 +122,14 @@ namespace VacayCheck.Controllers
         public Apartment Put(Guid id, ApartmentDTO value)
         {
             Apartment model = IApartmentRepository.Get(id);
+            if (value.apartmentName != null)
+            {
+                model.apartmentName = value.apartmentName;
+            }
+            if (value.maxPersons != 0)
+            {
+                model.maxPersons = value.maxPersons;
+            }
             if (value.description != null)
             {
                 model.description = value.description;
@@ -126,10 +137,6 @@ namespace VacayCheck.Controllers
             if (value.numberOfRooms != 0)
             {
                 model.numberOfRooms = value.numberOfRooms;
-            }
-            if (value.propertyId != null)
-            {
-                model.propertyId = value.propertyId;
             }
             if (value.pricePerNight != 0)
             {

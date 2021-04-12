@@ -3,8 +3,8 @@
 }
 .pozeCazari {
   object-fit: cover;
-  height: 350px;
-  width: 350px;
+  height: 300px;
+  width: 300px;
 }
 #p1 {
   font-size: 26px;
@@ -12,28 +12,32 @@
 #p2 {
   font-size: 22px;
 }
+.apartmentsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 .view {
   margin-top: 20px;
   margin-left: 10px;
   width: 96%;
   display: flex;
   align-items: center;
-  border-bottom: 12px solid rgb(75, 75, 75);
-  border-top: 12px solid rgb(75, 75, 75);
+  border-bottom: 6px solid rgb(75, 75, 75);
+  border-top: 6px solid rgb(75, 75, 75);
   border-radius: 7px;
-  background-color: rgb(57, 147, 226);
-  box-shadow: 0 2px 3px rgb(37, 37, 37);
+  background-color: rgb(47, 126, 194);
+  max-height: 300px;
 }
 .secondView {
   margin-top: 20px;
   margin-left: 10px;
-  width: 96%;
   display: flex;
   align-items: center;
   border: 2px solid rgb(23, 87, 143);
   border-radius: 7px;
   background-color: rgb(129, 185, 235);
-  box-shadow: 0 2px 3px rgb(37, 37, 37);
+  width: 48vw;
 }
 .stele {
   display: flex;
@@ -46,6 +50,10 @@
 }
 #faBuilding {
   color: white;
+}
+.description {
+  margin-left: 200px;
+  max-width: 400px;
 }
 .persoane {
   display: flex;

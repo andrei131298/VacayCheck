@@ -35,8 +35,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/chart.js/dist/Chart.js",
               "node_modules/hammerjs/hammer.min.js",
-              "node_modules/jquery/dist/jquery.min.js"
-            ]
+              "node_modules/jquery/dist/jquery.min.js"            ]
           },
           "configurations": {
             "production": {

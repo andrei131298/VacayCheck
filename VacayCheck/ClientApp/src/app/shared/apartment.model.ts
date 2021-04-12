@@ -1,3 +1,5 @@
+import { Photo } from "./photo.model";
+
 export class Apartment {
   id: string;
   apartmentName: string;
@@ -7,6 +9,7 @@ export class Apartment {
   description: string;
   propertyId: string;
   photos: string[];
+  photoObjects: Photo[];
 
   constructor(input?: any) {
     Object.assign(this, input);

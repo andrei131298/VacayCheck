@@ -72,3 +72,22 @@ input[type="file"] {
   cursor: pointer;
   margin-bottom: 30px;
 }
+.img-wrap {
+  position: relative;
+  display: inline-block;
+}
+.delete {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 100;
+  background-color: rgb(202, 5, 5);
+  padding: 0 10px 0 10px;
+  cursor: pointer;
+  opacity: 0.3;
+  font-size: 26px;
+  border-radius: 50%;
+}
+.img-wrap:hover .delete {
+  opacity: 1;
+}

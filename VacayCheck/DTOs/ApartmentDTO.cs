@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VacayCheck.Models;
 
 namespace VacayCheck.DTOs
 {
@@ -14,6 +15,7 @@ namespace VacayCheck.DTOs
         public int maxPersons { get; set; }
         public Guid propertyId { get; set; }
         public List<String> photos { get; set; }
+        public List<Photo> photoObjects { get; set; }
 
     }
 }

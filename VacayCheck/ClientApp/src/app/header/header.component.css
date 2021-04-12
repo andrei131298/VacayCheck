@@ -18,7 +18,8 @@ ul {
   font-size: 20px;
 }
 .btn {
-  background-color: rgb(23, 87, 143);
+  background-color: rgb(47, 45, 66);
+  color: white;
 }
 
 .btn:hover {

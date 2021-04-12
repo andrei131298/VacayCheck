@@ -6,12 +6,11 @@
   <p id="p3" *ngIf="period > 1 ">Your results for {{period}} days</p>
 </div>
 <div class="container">
-  <div class="">
     <!-- <div *ngIf="activeProperties.length == 0">
       <h1>There is no results to show</h1>
     </div> -->
-    <ng-container *ngFor="let property of activeProperties">
-      <div class="view col mb-3 mr-3 p-0 hoverable">
+    <div *ngFor="let property of activeProperties">
+      <div class="view mb-3 mr-3 p-0">
         <img class="pozeCazari" src="{{ property.photo }}" />
         <div class="detaliiProp">
           <p id="p1" (click)="set(property.id)">
@@ -25,7 +24,6 @@
           </div>
         </div>
       </div>
-    </ng-container>
-  </div>
+    </div>
 </div>
 </div>

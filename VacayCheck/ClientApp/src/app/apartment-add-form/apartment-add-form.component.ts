@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ApiService } from 'src/services/api.service';
 import { Apartment } from '../shared/apartment.model';
 import { Photo } from '../shared/photo.model';
 import { Property } from '../shared/property.model';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'apartment-add-form',
@@ -13,7 +15,7 @@ import { Property } from '../shared/property.model';
 })
 export class ApartmentAddFormComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private api:ApiService, public fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private api:ApiService, public fb: FormBuilder, private router: Router) { }
 
   propertyId:string;
   activeProperty:Property;
@@ -22,6 +24,8 @@ export class ApartmentAddFormComponent implements OnInit {
   success:boolean;
   newApartment = new Apartment();
   newPhoto = new Photo();
+  faTimes = faTimes;
+  currentPhoto: string;
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.propertyId = params['propertyId']);
@@ -40,6 +44,12 @@ export class ApartmentAddFormComponent implements OnInit {
     });
   }
 
+  deletePhoto(photo: string){
+    var index = this.apartmentPhotos.indexOf(photo);
+    this.apartmentPhotos.splice(index, 1);
+    
+  }
+
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
         var filesAmount = event.target.files.length;
@@ -47,8 +57,10 @@ export class ApartmentAddFormComponent implements OnInit {
                 var reader = new FileReader();
 
                 reader.onload = (event:any) => {
-                  this.apartmentPhotos.push(event.target.result);
-                  console.log(event.target.result);
+                  this.currentPhoto = event.target.result;
+                  if(!this.apartmentPhotos.includes(this.currentPhoto)){
+                    this.apartmentPhotos.push(this.currentPhoto);
+                  }
                    
                 }
                 reader.readAsDataURL(event.target.files[i]);
@@ -94,7 +106,9 @@ export class ApartmentAddFormComponent implements OnInit {
         this.apartmentPhotos.forEach((photo) => {
           this.newPhoto.apartmentId = apartment.id;
           this.newPhoto.path = photo;
-          this.api.addPhoto(this.newPhoto).subscribe();
+          this.api.addPhoto(this.newPhoto).subscribe(()=>{
+            this.router.navigate(["my-property", this.propertyId]);
+          });
         });
       });
     } else {

@@ -4,7 +4,8 @@ import { ApiService } from '../../services/api.service';
 import { Apartment } from '../shared/apartment.model';
 import { Property } from '../shared/property.model';
 import { LoaderComponent } from '../loader/loader.component';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser,faBuilding, faStar } from '@fortawesome/free-solid-svg-icons';
+import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 
 @Component({
   selector: 'my-property',
@@ -26,6 +27,10 @@ export class MyPropertyComponent implements OnInit {
   isFollow: boolean = false;
   userId = sessionStorage.getItem('userId');
   faUser = faUser;
+  faBuilding = faBuilding;
+  faStar = faStar;
+  @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
+
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => this.propertyId = params['propertyId']);
@@ -39,6 +44,11 @@ export class MyPropertyComponent implements OnInit {
     });
     console.log(this.userId);
     
+  }
+
+  openApartmentModal(id: string){
+    console.log(this.apartmentModal);
+    this.apartmentModal.initialize(id);
   }
   
   counter(i: number) {

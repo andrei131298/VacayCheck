@@ -3,6 +3,11 @@
   height: 300px;
   width: 300px;
 }
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 .h1 {
   display: flex;
   align-items: center;
@@ -34,13 +39,12 @@
 .view {
   margin-top: 20px;
   margin-left: 10px;
-  width: 96%;
   display: flex;
   align-items: center;
   border: 2px solid rgb(23, 87, 143);
   border-radius: 7px;
   background-color: rgb(129, 185, 235);
-  box-shadow: 0 2px 3px rgb(37, 37, 37);
+  width: 48vw;
 }
 .stele {
   display: flex;

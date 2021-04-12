@@ -47,10 +47,10 @@
         <button class="btn btn-dark" (click)="reset()">Reset</button>
         
   </form>
-  <p *ngIf="success" style="color: green; font-size: 22px">
+  <p *ngIf="success" class="text-center" style="color: green; font-size: 22px; margin-top: 20px;">
     User found
   </p>
-  <p *ngIf="success === false" style="color: red; font-size: 22px">
+  <p *ngIf="success === false" class="text-center" style="color: red; font-size: 22px; margin-top: 20px;">
     Something went wrong
   </p>
 </div>

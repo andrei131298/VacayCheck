@@ -3,7 +3,7 @@
 <app-header></app-header>
 <div class="container">
   <div class="">
-      <div class="view">
+      <div class="view mb-3 mr-3 p-0">
         <img class="pozeCazari" src="{{ property.photo }}"/>
         <div class="detaliiProp">
           <p id="p1" >
@@ -22,22 +22,30 @@
             </button>
             <p style="color: red; font-size: 24px;" *ngIf="error == true">You need to login</p>
         </div>
+        <!-- <div class="description">
+          <p >
+            Description: <br>{{property.description}}  
+          </p>
+          
+        </div> -->
       </div>
-      <div class="secondView" *ngFor="let apartment of apartments">
-        <img class="apPhoto" src="{{apartment.photos[0] }}" />
-        <div class="apDetail">
-              <p id="apName" (click)="openApartmentModal(apartment.id)">
-                {{ apartment.apartmentName}}
-              </p>
-              <div class="persoane">
-                Capacity:
-                <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
-              </div>
-              <p *ngIf="property.userId != userId" id="totalPrice" >
-                Total price: {{apartment.pricePerNight*period}}
-              </p>
-              <button *ngIf="property.userId != userId" type="button" class="btn btn-primary" (click)="check();set(apartment.id);">Reserve</button>
-        </div>  
+      <div class="apartmentsContainer">
+        <div class="secondView" *ngFor="let apartment of apartments">
+          <img class="apPhoto" src="{{apartment.photos[0] }}" />
+          <div class="apDetail">
+                <p id="apName" (click)="openApartmentModal(apartment.id)">
+                  {{ apartment.apartmentName}}
+                </p>
+                <div class="persoane">
+                  Capacity:
+                  <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
+                </div>
+                <p *ngIf="property.userId != userId" id="totalPrice" >
+                  Total price: {{apartment.pricePerNight*period}}
+                </p>
+                <button *ngIf="property.userId != userId" type="button" class="btn btn-primary" (click)="check();set(apartment.id);">Reserve</button>
+          </div>  
+        </div>
       </div>
   </div>
 </div>

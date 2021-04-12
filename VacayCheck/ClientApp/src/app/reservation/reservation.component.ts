@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../services/api.service";
 import { Apartment } from '../shared/apartment.model';
 import { DatePipe, formatDate } from '@angular/common';
 import { Reservation } from '../shared/reservation.model';
+import { PaymentComponent } from "./payment/payment.component";
 
 @Component({
   selector: "reservation",
@@ -33,6 +34,8 @@ export class ReservationComponent implements OnInit {
   reservation=new Reservation();
   isLoaded=false;
   error:boolean;
+  @ViewChild("payment") payment: PaymentComponent;
+
 
   ngOnInit(): void {
     this.api.getApartment(this.apartmentId).subscribe((data:Apartment) => {
@@ -46,7 +49,7 @@ export class ReservationComponent implements OnInit {
      });
     }
 }
-  reserve(){
+  goToPayment(){
     if(JSON.parse(sessionStorage.getItem('isLoggedIn')) == false ||
     JSON.parse(sessionStorage.getItem('isLoggedIn')) == null){
       this.error=true;
@@ -55,15 +58,17 @@ export class ReservationComponent implements OnInit {
     }, 2000);
     }
     else{
-      var reservation:Reservation=
+      this.reservation =
         {price:this.apartment.pricePerNight*this.period,
           review:"",checkIn:this.dateRange0Formatted,checkOut:this.dateRange1Formatted,
         userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons}
-          console.log(reservation);
-      this.api.addReservation(reservation).subscribe();
-      this.router.navigate(["user-profile", this.userId]).then(() => {
-        window.location.reload();
-      });
+          console.log(this.reservation);
+       this.payment.initialize();
+      
+      // this.api.addReservation(this.reservation).subscribe();
+      // this.router.navigate(["user-profile", this.userId]).then(() => {
+      //   window.location.reload();
+      // });
     }
   }
   addReview(){

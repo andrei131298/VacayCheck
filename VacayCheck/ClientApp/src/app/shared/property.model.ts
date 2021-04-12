@@ -11,6 +11,7 @@ export class Property {
   photo: string;
   cityId: string;
   userId: string;
+  startingPrice?: number;
 
   constructor(input?: any) {
     Object.assign(this, input);

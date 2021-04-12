@@ -63,21 +63,18 @@ export class LoginComponent implements OnInit {
       this.request.password = this.f.password.value;
       this.api.getLoginToken(this.request).subscribe((data) => {
           this.requestResponse = data.body as RequestResponse;
+          if (this.requestResponse == null){
+            this.success = false;
+            setTimeout(() => {
+              this.success = null;
+            }, 3000);
+          }
           console.log(this.requestResponse.token)
       }, error => {
           console.log(error);
-
       },
 
       () => {
-
-        if (this.requestResponse.token==null){
-          this.success = false;
-          setTimeout(() => {
-            this.success = null;
-          }, 3000);
-        }
-        else {
 
           this.success = true;
           setTimeout(() => {
@@ -99,7 +96,6 @@ export class LoginComponent implements OnInit {
             }, 3000);
           }
         }
-      }
       );
     } 
     else {
