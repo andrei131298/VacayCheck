@@ -1,0 +1,12 @@
+<div
+  bsModal
+  class="row modal fade"
+  #confirmationModal="bs-modal"
+>
+  <div id="modal">      
+    <p class="text-center h4" style="margin-top: 40px;">Are you sure that you want to cancel your reservation? <br> Click the button to confirm.</p>
+    <button class="btn" style="margin-top: 30px; margin-bottom: 20px;" (click)="cancelReservation()">Confirm cancellation</button>
+    <!-- <p style="margin-top: 50px;" class="text-center" style="color: green;" *ngIf="success != '' ">{{success}}</p>
+    <p style="margin-top: 50px;" class="text-center" style="color: red;" *ngIf="errorAdd == true">You already signed this petition</p> -->
+  </div>
+</div>

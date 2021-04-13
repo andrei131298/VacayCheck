@@ -5,6 +5,7 @@ export class Property {
   description: string;
   numberOfStars: number;
   cityName: string;
+  country: string;
   ownerName: string;
   street: string;
   streetNumber: number;

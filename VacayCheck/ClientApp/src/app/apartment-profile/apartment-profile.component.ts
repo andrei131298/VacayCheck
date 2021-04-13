@@ -40,7 +40,7 @@ export class ApartmentProfileComponent implements OnInit {
 
 
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private fb: FormBuilder) { }
+  constructor(private api: ApiService, private fb: FormBuilder) { }
 
   ngOnInit(): void {  
   }

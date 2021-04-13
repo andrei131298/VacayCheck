@@ -49,6 +49,7 @@ namespace VacayCheck.Controllers
                 numberOfStars = Property.numberOfStars,
                 street = Property.street,
                 streetNumber = Property.streetNumber,
+                country = Property.country,
                 userId = Property.userId,
                 photo = Property.photo
             };
@@ -117,6 +118,10 @@ namespace VacayCheck.Controllers
         public Property Put(Guid id, PropertyDTO value)
         {
             Property model = IPropertyRepository.Get(id);
+            if (value.name != null)
+            {
+                model.name = value.name;
+            }
             if (value.type != null)
             {
                 model.type = value.type;
@@ -136,6 +141,10 @@ namespace VacayCheck.Controllers
             if (value.streetNumber != 0)
             {
                 model.streetNumber = value.streetNumber;
+            }
+            if (value.country != null)
+            {
+                model.country = value.country;
             }
             if (value.photo != null)
             {

@@ -51,9 +51,9 @@ namespace VacayCheck.Controllers
             {
                 model.sex = value.sex;
             }
-            if (value.birthDate != null)
+            if (value.birthDate.ToLocalTime() != null)
             {
-                model.birthDate = value.birthDate;
+                model.birthDate = value.birthDate.ToLocalTime();
             }
             if (value.bankAccount != null)
             {

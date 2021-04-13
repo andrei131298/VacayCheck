@@ -33,6 +33,7 @@ import { MyPropertyComponent } from './my-property/my-property.component';
 import { ApartmentProfileComponent } from './apartment-profile/apartment-profile.component';
 import { PaymentComponent } from './reservation/payment/payment.component';
 import { CreditCardDirective } from "./util/cardNumber.directive";
+import { ConfirmationModalComponent } from './reservation/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CreditCardDirective } from "./util/cardNumber.directive";
     MyPropertyComponent,
     ApartmentProfileComponent,
     PaymentComponent,
-    CreditCardDirective
+    CreditCardDirective,
+    ConfirmationModalComponent
   ],
   imports: [
     CommonModule,

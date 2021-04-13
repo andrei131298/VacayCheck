@@ -5,6 +5,8 @@ import { Apartment } from '../shared/apartment.model';
 import { DatePipe, formatDate } from '@angular/common';
 import { Reservation } from '../shared/reservation.model';
 import { PaymentComponent } from "./payment/payment.component";
+import { User } from "../shared/user.model";
+import { Property } from "../shared/property.model";
 
 @Component({
   selector: "reservation",
@@ -29,23 +31,41 @@ export class ReservationComponent implements OnInit {
   dateRange1Formatted = new Date(formatDate(this.dateRange1,'MM/dd/yyyy','en-US'));
   userId = sessionStorage.getItem('userId');
   reservationHistory = JSON.parse(this.route.snapshot.queryParamMap.get('reservationHistory'));
+  futureReservation = JSON.parse(this.route.snapshot.queryParamMap.get('futureReservation'));
   details = JSON.parse(this.route.snapshot.queryParamMap.get('details'));
   review:string;
   reservation=new Reservation();
   isLoaded=false;
   error:boolean;
+  paymentOptions = ["Pay now with card", "Pay with cash at property"]
+  selectedPaymentOption: string;
+  owner: User;
+  currentProperty: Property;
+  cancellationDateLimit = new Date();
+  currentDate = new Date();
+  
   @ViewChild("payment") payment: PaymentComponent;
+  @ViewChild("confirmation") confirmation: PaymentComponent;
 
 
   ngOnInit(): void {
     this.api.getApartment(this.apartmentId).subscribe((data:Apartment) => {
       this.apartment=data;
-      this.isLoaded=true;
-      console.log(this.apartment);
+      this.api.getProperty(this.apartment.propertyId).subscribe((property: Property)=>{
+        this.currentProperty = property;
+        this.api.getUser(this.currentProperty.userId).subscribe((user: User)=>{
+          this.owner = user;
+          this.isLoaded=true;
+        });
+      });
     });
-    if(this.reservationHistory != null){
+    if(this.reservationHistory != null || this.futureReservation != null){
       this.api.getReservation(this.reservationId).subscribe((res:Reservation)=>{
         this.reservation=res;
+        this.cancellationDateLimit.setDate(new Date(formatDate(this.reservation.checkIn,'MM/dd/yyyy','en-US')).getDate() - 3);
+        console.log(this.cancellationDateLimit);
+        console.log(this.currentDate);
+        console.log(this.cancellationDateLimit.getTime() - this.currentDate.getTime());
      });
     }
 }
@@ -61,14 +81,10 @@ export class ReservationComponent implements OnInit {
       this.reservation =
         {price:this.apartment.pricePerNight*this.period,
           review:"",checkIn:this.dateRange0Formatted,checkOut:this.dateRange1Formatted,
-        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons}
+        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: true}
           console.log(this.reservation);
        this.payment.initialize();
       
-      // this.api.addReservation(this.reservation).subscribe();
-      // this.router.navigate(["user-profile", this.userId]).then(() => {
-      //   window.location.reload();
-      // });
     }
   }
   addReview(){
@@ -84,6 +100,43 @@ export class ReservationComponent implements OnInit {
           console.log('err', error);
         });
 
+  }
+
+  radioChange(event: any) {
+    this.selectedPaymentOption = event.target.value;
+  }
+
+  reserveApartment(){
+
+    if(JSON.parse(sessionStorage.getItem('isLoggedIn')) == false ||
+    JSON.parse(sessionStorage.getItem('isLoggedIn')) == null){
+      this.error=true;
+      setTimeout(() => {
+        this.error=false;
+    }, 2000);
+    }
+    else{
+      this.reservation =
+        {price:this.apartment.pricePerNight*this.period,
+          review:"",checkIn:this.dateRange0Formatted,checkOut:this.dateRange1Formatted,
+        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: false}
+          console.log(this.reservation);
+       this.payment.initialize();
+      
+    }
+    this.api.addReservation(this.reservation).subscribe();
+      this.router.navigate(["user-profile", this.userId]).then(() => {
+        window.location.reload();
+      });
+  }
+  cancelReservation(reservation: Reservation){
+
+    this.confirmation.initialize();
+    // this.api.deleteReservation(reservation).subscribe(()=>{
+    //   this.router.navigate(["user-profile", this.userId]).then(() => {
+    //     window.location.reload();
+    //   });
+    // });
   }
   
 }

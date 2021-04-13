@@ -9,7 +9,7 @@
         <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName }}
       </div>
       <button type="button" class="btn" (click)="logout()">
-        LOGOUT
+        <fa-icon [icon]="faSignOutAlt" ></fa-icon> LOGOUT
       </button>
     </div>
   </div>
@@ -18,11 +18,11 @@
       <ul class="nav navbar">
         <li class="nav-item"></li>
         <a class="nav-link" routerLink="/signUp">
-          <button type="button" class="btn">SIGN UP</button>
+          <button type="button" class="btn"><fa-icon [icon]="faUserPlus" ></fa-icon> SIGN UP</button>
         </a>
         <li class="nav-item">
           <a class="nav-link" routerLink="/login">
-            <button type="button" class="btn">LOGIN</button>
+            <button type="button" class="btn"><fa-icon [icon]="faSignInAlt" ></fa-icon> LOGIN</button>
           </a>
         </li>
         <!-- <li class="nav-item">

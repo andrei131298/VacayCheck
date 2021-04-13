@@ -14,13 +14,13 @@
 }
 .apartmentsContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 .view {
   margin-top: 20px;
   margin-left: 10px;
-  width: 96%;
+  width: 98%;
   display: flex;
   align-items: center;
   border-bottom: 6px solid rgb(75, 75, 75);
@@ -81,4 +81,57 @@
 #apName {
   font-size: 22px;
   font-weight: bold;
+}
+.editing {
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+}
+.propertyDetails {
+  display: flex;
+  flex-direction: row;
+}
+.propertyDescription {
+  background-color: rgb(230, 236, 240);
+  min-height: 200px;
+  max-height: 300px;
+  border-bottom: 5px solid rgb(87, 37, 37);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 25px;
+}
+.description {
+  width: 50%;
+}
+.detailsFlex {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+}
+#marker {
+  font-size: 20px;
+  color: red;
+}
+.form-container {
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+}
+#cancel {
+  color: red;
+  margin-left: 10px;
+}
+#cancelText {
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+  margin-bottom: 30px;
+  width: fit-content;
+}
+textarea {
+  resize: none;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 5px;
 }

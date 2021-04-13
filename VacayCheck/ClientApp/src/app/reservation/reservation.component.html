@@ -1,19 +1,31 @@
 <app-loader #loader *ngIf="isLoaded == false"></app-loader>
 <div *ngIf="isLoaded == true">
     <app-header></app-header>
-    <div *ngIf="reservationHistory == null" class="container">
+    <div *ngIf="reservationHistory == null && futureReservation == null" class="container">
         <div class="reservation">
             <h2 id="title">Reservation details</h2>
             <img id="apPhoto" src={{apartment.photos[0]}}>
             <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
-            <p>Check-in: {{dateRange0Formatted | date:'longDate'}}</p>
-            <p>Check-out: {{dateRange1Formatted | date:'longDate'}}</p>
-            <p>Number of persons: {{persons}}</p>
-            <p>Total Price: {{ apartment.pricePerNight*period}}</p>
-            <button class="btn btn-primary" (click)="goToPayment()">Go to payment</button>
+            <div class="reservationDetails">
+                <div class="leftHalf">
+                    <p>Check-in: {{dateRange0Formatted | date:'longDate'}}</p>
+                    <p>Check-out: {{dateRange1Formatted | date:'longDate'}}</p>
+                    <p>Number of persons: {{persons}}</p>
+                    <p>Total Price: {{ apartment.pricePerNight*period}}</p>
+                </div>
+                <div class="rightHalf">
+                    <p>Please select payment method: </p>
+                    <div *ngFor="let option of paymentOptions">
+                        <input type="radio" name="option" [value]="option" (change)="radioChange($event)"><i>{{option}}</i>
+                    </div>
+                    <button *ngIf="selectedPaymentOption == 'Pay now with card'" class="btn btn-primary" (click)="goToPayment()">Go to payment</button>
+                    <button *ngIf="selectedPaymentOption == 'Pay with cash at property'" class="btn btn-primary" (click)="reserveApartment()">Confirm and reserve</button>
+                </div>
+            </div>
             <p style="color: red; font-size: 24px;" *ngIf="error == true">You need to login</p>
         </div>
     </div>
+
     <div *ngIf="reservationHistory == true" class="container">
         <div class="reservation">
             <h2 id="title">Reservation details</h2>
@@ -34,5 +46,30 @@
             </div>        
         </div>
     </div>
+
+    <div *ngIf="futureReservation == true" class="container">
+        <div class="reservation">
+            <h2 id="title">Reservation details</h2>
+            <img id="apPhoto" src={{apartment.photos[0]}}>
+            <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
+            <div class="reservationDetails">
+                <div class="leftHalf">
+                    <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
+                    <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
+                    <p>Number of persons: {{reservation.numberOfPersons}}</p>
+                    <p>Total Price: {{ reservation.price}}</p>
+                </div>
+                <div class="rightHalf">
+                    <p class="font-weight-bold">Contact owner </p>
+                    <p>Phone number: {{owner.phoneNumber}}</p>
+                    <p>E-mail: {{owner.email}}</p>
+                </div>
+            </div>
+            <button *ngIf="cancellationDateLimit.getTime() > currentDate.getTime() " class="btn btn-primary" style="margin-top: 20px;" (click)="cancelReservation(reservation)">Cancel reservation</button>
+            <p *ngIf="cancellationDateLimit.getTime() <= currentDate.getTime() " style="color: red; margin-top: 20px;"> The deadline for free cancellation has passed</p>
+
+        </div>
+    </div>
 </div>
 <payment #payment [reservationToPay] = "reservation"></payment>
+<confirmation-modal #confirmation [reservationToCancel] = "reservation"></confirmation-modal>

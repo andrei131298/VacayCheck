@@ -152,11 +152,15 @@ export class UserProfileComponent implements OnInit {
   }
   toReviewPage(reservation:Reservation){
     this.router.navigate(["/reservation"],
-    {queryParams:{reservation:reservation.id,reservationHistory:true,apartmentId:reservation.apartmentId}});
+    {queryParams:{reservation:reservation.id, reservationHistory:true,apartmentId:reservation.apartmentId}});
   }
   toDetailsPage(reservation:Reservation){
     this.router.navigate(["/reservation"],
-    {queryParams:{reservation:reservation.id,reservationHistory:true,apartmentId:reservation.apartmentId,details:true}});
+    {queryParams:{reservation:reservation.id, reservationHistory:true,apartmentId:reservation.apartmentId,details:true}});
+  }
+  toReservationDetails(reservation:Reservation){
+    this.router.navigate(["/reservation"],
+    {queryParams:{reservation:reservation.id, futureReservation:true, propertyId: reservation.propertyId, apartmentId:reservation.apartmentId,details:true}});
   }
   goToProperty(property:Property){
     console.log(property);

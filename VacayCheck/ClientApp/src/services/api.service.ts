@@ -157,6 +157,12 @@ export class ApiService {
       });
     }
 
+    deleteReservation(reservation: Reservation){
+      return this.http.delete(this.baseUrl + "/Reservation/" + reservation.id, {
+        headers: this.header,
+      });
+    }
+
     editApartment(apartment: Apartment, apartmentId: string){
       return this.http.put(this.baseUrl + "/Apartment/" + apartmentId, apartment, {
         headers: this.header,
@@ -168,6 +174,13 @@ export class ApiService {
         headers: this.header,
       });
     }
+
+    editProperty(property: Property, propertyId: string){
+      return this.http.put(this.baseUrl + "/Property/" + propertyId, property, {
+        headers: this.header,
+      });
+    }
+
     editUser(user:User){
       return this.http.put(this.baseUrl + "/User/" + user.id, user, {
         headers: this.header,

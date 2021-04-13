@@ -17,6 +17,7 @@ namespace VacayCheck.DTOs
         public string propertyName { get; set; }
         public Guid propertyId { get; set; }
         public int numberOfPersons { get; set; }
+        public bool paidWithCard { get; set; }
 
 
 

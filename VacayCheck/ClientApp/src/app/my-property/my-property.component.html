@@ -15,25 +15,77 @@
           <div class="stele">
             <fa-icon *ngFor="let star of counter(property.numberOfStars)" id="stea" [icon]="faStar" ></fa-icon>
           </div>
-          <button *ngIf="property.userId == userId" class="btn btn-primary" (click)="goToAddApartment()">Add an apartment</button>
+        </div>
+        <div class="editing">
+          <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="showEditOption()"><fa-icon [icon]="faPen"></fa-icon> Edit Property</button>
+          <button *ngIf="property.userId == userId" class="btn btn-primary" (click)="goToAddApartment()"><fa-icon [icon]="faPlus"></fa-icon> Add an apartment</button>
+
         </div>
       </div>
-
-      <div class="apartmentsContainer mb-3 mr-3 p-0">
-        <div class="secondView" *ngFor="let apartment of apartments">
-          <img class="apPhoto" src="{{apartment.photos[0] }}" />
-          <div class="apDetail">
-                <p id="apName" (click)="openApartmentModal(apartment.id)">
-                  {{ apartment.apartmentName}}
-                </p>
-                <div class="persoane">
-                  Capacity:
-                  <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
-                </div>
-          </div>  
+      
+      <div class="propertyDetails">
+        <div class="description mb-3" *ngIf="edit == false">
+          <p class="text-center h2 mt-3 mb-3">Details</p>
+          <div class="detailsFlex">
+            <p class="h4 mt-2"><fa-icon id = "marker" [icon]="faMapMarkerAlt"></fa-icon> 
+            {{property.street}} {{property.streetNumber}}, {{property.cityName}}, </p>
+            <!-- <p class="h4 font-weight-bold">Description</p> -->
+            <div class="propertyDescription">
+                {{property.description}}
+            </div>
+          </div>
         </div>
+        <div class="description mb-3" *ngIf="edit == true">
+          <p class="text-center h2 mt-3 mb-3">Edit details</p>
+          <div class="detailsFlex">
+            <form class="form-container" [formGroup]="editPropertyForm">
+              <p id="cancelText" (click)="cancelForm()">Cancel<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
+
+
+                <label class="control-label mt-2">Property name</label>
+                <input type="text" id="firstName2" class="form-control" formControlName="propertyName"/>
+    
+                <label class="control-label mt-2">Type</label>
+                <input type="text" id="lastName" class="form-control" formControlName="type"/>
+    
+                
+                <label class="control-label mt-2">Description</label>
+                <textarea formControlName="description" rows="4" cols="53"></textarea>
+              
+                <label class="control-label mt-2">Country</label>
+                <input type="text" id="address" class="form-control" formControlName="country" autocomplete="off"/>
+
+                <label class="control-label mt-2">City</label>
+                <input type="text" id="address" class="form-control" formControlName="city" autocomplete="off"/>
+    
+                <label class="control-label mt-2">Street</label>
+                <input type="text" id="country" class="form-control" formControlName="street" autocomplete="off"/>
+                            
+                <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
+
+            </form>
+          </div>
+        </div>
+
+
+        <div class="apartmentsContainer mb-3 mr-3 p-0">
+          <p class="text-center h2 mt-3 mb-3">Apartments</p>
+          <div class="secondView" *ngFor="let apartment of apartments">
+            <img class="apPhoto" src="{{apartment.photos[0] }}" />
+            <div class="apDetail">
+                  <p id="apName" (click)="openApartmentModal(apartment.id)">
+                    {{ apartment.apartmentName}}
+                  </p>
+                  <div class="persoane">
+                    Capacity:
+                    <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
+                  </div>
+            </div>  
+          </div>
+        </div>
+
       </div>
   </div>
 </div>
 </div>
-<apartment-profile #apartmentModal></apartment-profile>
+<apartment-profile *ngIf="" #apartmentModal></apartment-profile>

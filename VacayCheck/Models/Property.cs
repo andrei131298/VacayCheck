@@ -13,6 +13,7 @@ namespace VacayCheck.Models
         public int numberOfStars { get; set; }
         public string street { get; set; }
         public int streetNumber { get; set; }
+        public string country { get; set; }
         public string photo { get; set; }
         public Guid cityId { get; set; }
 

@@ -119,7 +119,8 @@ namespace VacayCheck.Controllers
                 review = value.review,
                 userId = value.userId,
                 apartmentId = value.apartmentId,
-                numberOfPersons = value.numberOfPersons
+                numberOfPersons = value.numberOfPersons,
+                paidWithCard = value.paidWithCard
             };
             return IReservationRepository.Create(model);
         }
