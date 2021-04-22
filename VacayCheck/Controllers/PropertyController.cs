@@ -48,21 +48,14 @@ namespace VacayCheck.Controllers
                 description = Property.description,
                 numberOfStars = Property.numberOfStars,
                 street = Property.street,
-                streetNumber = Property.streetNumber,
                 country = Property.country,
+                cityName = Property.cityName,
                 userId = Property.userId,
-                photo = Property.photo
+                photo = Property.photo,
+                mapLatitude = Property.mapLatitude,
+                mapLongitude = Property.mapLongitude
             };
-            IEnumerable<City> Cities = ICityRepository.GetAll().Where(x => x.id == Property.cityId);
-            if (Cities != null)
-            {
-                List<string> CityNameList = new List<string>();
-                foreach (City City in Cities)
-                {
-                    CityNameList.Add(City.cityName);
-                }
-                MyProperties.cityName = CityNameList;
-            }
+            
             return MyProperties;
         }
         [HttpGet("GetPropertiesByUser/{userId}")]
@@ -76,16 +69,16 @@ namespace VacayCheck.Controllers
                 PropertyDTO propertyDTO = new PropertyDTO()
                 {
                     id = p.id,
-                    cityId = p.cityId,
+                    cityName = p.cityName,
                     name = p.name,
                     type = p.type,
                     description = p.description,
                     numberOfStars = p.numberOfStars,
                     street = p.street,
-                    streetNumber = p.streetNumber,
                     photo = p.photo,
                     userId = p.userId,
-
+                    mapLatitude = p.mapLatitude,
+                    mapLongitude = p.mapLongitude
                 };
                 PropertiesDTO.Add(propertyDTO);
             }
@@ -104,9 +97,8 @@ namespace VacayCheck.Controllers
                 description = value.description,
                 //numberOfStars = value.numberOfStars,
                 street = value.street,
-                streetNumber = value.streetNumber,
                 photo = value.photo,
-                cityId = value.cityId,
+                cityName = value.cityName,
                 userId = value.userId
             };
             IPropertyRepository.Create(model);
@@ -138,13 +130,21 @@ namespace VacayCheck.Controllers
             {
                 model.street = value.street;
             }
-            if (value.streetNumber != 0)
+            if (value.cityName != null)
             {
-                model.streetNumber = value.streetNumber;
+                model.cityName = value.cityName;
             }
             if (value.country != null)
             {
                 model.country = value.country;
+            }
+            if (value.mapLatitude != null)
+            {
+                model.mapLatitude = value.mapLatitude;
+            }
+            if (value.mapLongitude != null)
+            {
+                model.mapLongitude = value.mapLongitude;
             }
             if (value.photo != null)
             {

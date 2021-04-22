@@ -42,6 +42,11 @@
         </div>
         <div class="rightHalf">
             <div class="form-group">
+                <div class="mapContainer">
+                    <agm-map [zoom]="13" [latitude]="latitude" [longitude]="longitude">
+                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                    </agm-map>
+                </div>
                 <label for="description">Description: </label>
                 <br>
                 <textarea id="propertyDescription" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>

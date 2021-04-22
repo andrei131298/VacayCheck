@@ -34,6 +34,7 @@ import { ApartmentProfileComponent } from './apartment-profile/apartment-profile
 import { PaymentComponent } from './reservation/payment/payment.component';
 import { CreditCardDirective } from "./util/cardNumber.directive";
 import { ConfirmationModalComponent } from './reservation/confirmation-modal/confirmation-modal.component';
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   declarations: [
@@ -72,6 +73,9 @@ import { ConfirmationModalComponent } from './reservation/confirmation-modal/con
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     FontAwesomeModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCoBIRiecH77ZZoNFT529FW9Z6W0uHPIec'
+    }),
   ],
   exports: [],
   bootstrap: [AppComponent],

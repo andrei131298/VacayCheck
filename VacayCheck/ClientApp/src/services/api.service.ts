@@ -18,8 +18,18 @@ export class ApiService {
 
   header = new HttpHeaders({
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   });
   baseUrl = "https://localhost:44397/api";
+  countriesUrl = "https://restcountries.eu/rest/v2/all";
+
+  getCountries(){
+    return this.http.get(this.countriesUrl, {
+      headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
+    });
+  }
 
   getCity(id: string) {
     return this.http.get(this.baseUrl + "/City/" + id.toString(), {

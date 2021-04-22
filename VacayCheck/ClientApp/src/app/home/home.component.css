@@ -61,6 +61,7 @@ input {
 }
 #submit {
   background-color: rgb(23, 87, 143);
+  color: white;
 }
 
 .detail {

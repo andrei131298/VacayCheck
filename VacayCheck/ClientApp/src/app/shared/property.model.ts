@@ -12,6 +12,8 @@ export class Property {
   photo: string;
   cityId: string;
   userId: string;
+  mapLatitude: number;
+  mapLongitude: number;
   startingPrice?: number;
 
   constructor(input?: any) {

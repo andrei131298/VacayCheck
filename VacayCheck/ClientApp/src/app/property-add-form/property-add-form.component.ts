@@ -17,6 +17,8 @@ export class PropertyAddFormComponent implements OnInit {
   addPropertyForm: FormGroup;
   addPropertyForm2: FormGroup;
 
+  latitude = 44.439663;
+  longitude = 26.096306;
   mainPhoto:string;
   propertyTypes=["Vila","House","Hotel","Flat"];
   cities:City[]=[];

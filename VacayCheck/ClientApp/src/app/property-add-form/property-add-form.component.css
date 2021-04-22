@@ -40,8 +40,6 @@
 .formHalfs {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
 }
 .rightHalf {
   margin-top: 15px;
@@ -90,4 +88,14 @@ input[type="file"] {
 }
 .img-wrap:hover .delete {
   opacity: 1;
+}
+.mapContainer {
+  width: 90%;
+  border: 5px solid black;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+agm-map {
+  height: 200px;
 }

@@ -52,7 +52,8 @@
       </div>
       <div *ngIf="edit == true" class="rightHalf">
         <h3>Edit apartment details </h3>
-        <p id="cancelText" (click)="cancelForm()">Done editing<fa-icon [icon]="faCheck" id = "cancel" ></fa-icon></p>
+        <!-- <p id="cancelText" (click)="cancelForm()">Done editing<fa-icon [icon]="faCheck" id = "cancel" ></fa-icon></p> -->
+        <p id="cancelText" (click)="cancelForm()">Cancel<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
         <form class="form-container" [formGroup]="editApartmentForm">
           <div class="leftHalfForm">
             <label for="apartmentName" class="control-label required">Apartment Name</label>

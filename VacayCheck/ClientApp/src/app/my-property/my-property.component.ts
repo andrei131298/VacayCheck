@@ -7,6 +7,7 @@ import { LoaderComponent } from '../loader/loader.component';
 import { faUser,faBuilding, faStar, faPen, faPlus, faMapMarkerAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Country } from '../shared/country.model';
 
 @Component({
   selector: 'my-property',
@@ -20,11 +21,14 @@ export class MyPropertyComponent implements OnInit {
   constructor(private api: ApiService, private router: Router,private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
+  latitude = 44.439663;
+  longitude = 26.096306;
   editPropertyForm: FormGroup;
   propertyId:string;
   loggedIn = sessionStorage.getItem("isLoggedIn");
   properties:Property[]=[];
   apartments: Apartment[] = [];
+  allCountries: Country[] = [];
   property:Property;
   isLoaded = false;
   isFollow: boolean = false;
@@ -39,6 +43,8 @@ export class MyPropertyComponent implements OnInit {
   faPlus = faPlus;
   faTimes = faTimes;
   faMapMarkerAlt = faMapMarkerAlt;
+  propertyTypes=["Vila","House","Hotel","Flat"];
+
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
 
 
@@ -58,13 +64,16 @@ export class MyPropertyComponent implements OnInit {
         this.isLoaded = true;
       });
       this.editPropertyForm = this.fb.group({
-        propertyName: [this.property.name, Validators.required],
+        name: [this.property.name, Validators.required],
         type: [this.property.type, Validators.required],
         description: [this.property.description, Validators.required],
         country: [this.property.country, Validators.required],
-        city: [this.property.cityName, Validators.required],
+        cityName: [this.property.cityName, Validators.required],
         street: [this.property.street, Validators.required],
       });
+    });
+    this.api.getCountries().subscribe((countries: Country[])=>{
+      this.allCountries = countries;
     });
   }
 

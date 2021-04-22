@@ -101,12 +101,12 @@
   margin-bottom: 5px;
 }
 #cancel {
-  color: rgb(4, 180, 63);
+  color: rgb(180, 4, 4);
   margin-left: 10px;
 }
 #cancelText {
   font-size: 18px;
-  color: rgb(4, 180, 63);
+  color: rgb(180, 4, 4);
   cursor: pointer;
   margin-bottom: 30px;
   width: fit-content;

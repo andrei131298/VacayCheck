@@ -21,6 +21,11 @@
           <button *ngIf="property.userId == userId" class="btn btn-primary" (click)="goToAddApartment()"><fa-icon [icon]="faPlus"></fa-icon> Add an apartment</button>
 
         </div>
+        <div class="mapContainer">
+          <agm-map [zoom]="13" [latitude]="property.mapLatitude" [longitude]="property.mapLongitude">
+              <agm-marker [latitude]="property.mapLatitude" [longitude]="property.mapLongitude"></agm-marker>
+          </agm-map>
+        </div>
       </div>
       
       <div class="propertyDetails">
@@ -28,7 +33,7 @@
           <p class="text-center h2 mt-3 mb-3">Details</p>
           <div class="detailsFlex">
             <p class="h4 mt-2"><fa-icon id = "marker" [icon]="faMapMarkerAlt"></fa-icon> 
-            {{property.street}} {{property.streetNumber}}, {{property.cityName}}, </p>
+            {{property.street}}, {{property.cityName}}, {{property.country}}</p>
             <!-- <p class="h4 font-weight-bold">Description</p> -->
             <div class="propertyDescription">
                 {{property.description}}
@@ -43,20 +48,27 @@
 
 
                 <label class="control-label mt-2">Property name</label>
-                <input type="text" id="firstName2" class="form-control" formControlName="propertyName"/>
+                <input type="text" id="firstName2" class="form-control" formControlName="name"/>
     
                 <label class="control-label mt-2">Type</label>
-                <input type="text" id="lastName" class="form-control" formControlName="type"/>
+                <select class="form-control" formControlName="type">
+                  <option value="" disabled>Type</option>
+                  <option *ngFor="let type of propertyTypes" value="{{type}}">{{type}}</option>
+                </select>
     
                 
                 <label class="control-label mt-2">Description</label>
-                <textarea formControlName="description" rows="4" cols="53"></textarea>
+                <textarea class="form-control" formControlName="description" rows="5"></textarea>
               
+                
                 <label class="control-label mt-2">Country</label>
-                <input type="text" id="address" class="form-control" formControlName="country" autocomplete="off"/>
+                <select class="form-control" formControlName="country">
+                  <option value="" disabled>Country</option>
+                  <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
+                </select>
 
                 <label class="control-label mt-2">City</label>
-                <input type="text" id="address" class="form-control" formControlName="city" autocomplete="off"/>
+                <input type="text" id="address" class="form-control" formControlName="cityName" autocomplete="off"/>
     
                 <label class="control-label mt-2">Street</label>
                 <input type="text" id="country" class="form-control" formControlName="street" autocomplete="off"/>
@@ -88,4 +100,4 @@
   </div>
 </div>
 </div>
-<apartment-profile *ngIf="" #apartmentModal></apartment-profile>
+<apartment-profile #apartmentModal></apartment-profile>

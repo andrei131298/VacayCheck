@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VacayCheck.Contexts;
 
 namespace VacayCheck.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210421181607_addedCountryToProperty")]
+    partial class addedCountryToProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,8 +144,8 @@ namespace VacayCheck.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("cityName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("cityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("country")
                         .HasColumnType("nvarchar(max)");
@@ -163,6 +165,9 @@ namespace VacayCheck.Migrations
                     b.Property<string>("street")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("streetNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("type")
                         .HasColumnType("nvarchar(max)");
 
@@ -170,6 +175,8 @@ namespace VacayCheck.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
+
+                    b.HasIndex("cityId");
 
                     b.HasIndex("userId");
 
@@ -308,11 +315,19 @@ namespace VacayCheck.Migrations
 
             modelBuilder.Entity("VacayCheck.Models.Property", b =>
                 {
+                    b.HasOne("VacayCheck.Models.City", "city")
+                        .WithMany()
+                        .HasForeignKey("cityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("VacayCheck.Models.User", "user")
                         .WithMany("property")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("city");
 
                     b.Navigation("user");
                 });

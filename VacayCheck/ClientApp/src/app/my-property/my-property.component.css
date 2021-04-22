@@ -101,7 +101,7 @@
   margin-top: 25px;
 }
 .description {
-  width: 50%;
+  width: 45%;
 }
 .detailsFlex {
   display: flex;
@@ -114,17 +114,19 @@
   color: red;
 }
 .form-container {
-  width: 60%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
   margin: auto;
   margin-top: 20px;
 }
 #cancel {
-  color: red;
+  color: rgb(180, 4, 4);
   margin-left: 10px;
 }
 #cancelText {
   font-size: 18px;
-  color: red;
+  color: rgb(180, 4, 4);
   cursor: pointer;
   margin-bottom: 30px;
   width: fit-content;
@@ -134,4 +136,14 @@ textarea {
   overflow: hidden;
   border-radius: 5px;
   padding: 5px;
+}
+.mapContainer {
+  width: 25%;
+  position: absolute;
+  right: 100px;
+  border: 5px solid black;
+  border-radius: 5px;
+}
+agm-map {
+  height: 200px;
 }
