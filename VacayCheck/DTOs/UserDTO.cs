@@ -19,7 +19,7 @@ namespace VacayCheck.DTOs
         public string address { get; set; }
         public string phoneNumber { get; set; }
         public string country { get; set; }
-        public string city { get; set; }
+        public string cityName { get; set; }
 
     }
 }

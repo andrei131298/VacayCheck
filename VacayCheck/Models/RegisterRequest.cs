@@ -27,6 +27,6 @@ namespace VacayCheck.Models
         [Required]
         public string country { get; set; }
         [Required]
-        public Guid city { get; set; }
+        public string cityName { get; set; }
     }
 }

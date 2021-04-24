@@ -33,7 +33,7 @@
         <label class="features">E-mail: <span class="span"> {{activeUser.email}}</span></label> 
         <label class="features">Address: <span class="span"> {{activeUser.address}}</span></label>  
         <label class="features">Country: <span class="span"> {{activeUser.country}}</span></label>  
-        <label class="features">City: <span class="span"> {{activeUser.city}}</span>  </label> 
+        <label class="features">City: <span class="span"> {{activeUser.cityName}}</span>  </label> 
         <label class="features">Gender: <span class="span"> {{activeUser.sex}}</span>  </label> 
         <label class="features">Birth date: <span class="span"> {{activeUser.birthDate | date:'longDate'}}</span> </label>    
         <label class="features">Phone number: <span class="span"> {{activeUser.phoneNumber}}</span>  </label>   
@@ -63,7 +63,7 @@
           </div>
           <div class="rightHalfForm">
             <label for="city" class="control-label required">City</label>
-            <input type="text" id="city" class="form-control" formControlName="city" autocomplete="off"/>
+            <input type="text" id="city" class="form-control" formControlName="cityName" autocomplete="off"/>
 
             <label for="sex" class="control-label required">Gender</label>
             <br>

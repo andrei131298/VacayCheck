@@ -22,7 +22,7 @@
 
         </div>
         <div class="mapContainer">
-          <agm-map [zoom]="13" [latitude]="property.mapLatitude" [longitude]="property.mapLongitude">
+          <agm-map [zoom]="9" [latitude]="property.mapLatitude" [longitude]="property.mapLongitude">
               <agm-marker [latitude]="property.mapLatitude" [longitude]="property.mapLongitude"></agm-marker>
           </agm-map>
         </div>
@@ -93,6 +93,9 @@
                     <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
                   </div>
             </div>  
+          </div>
+          <div *ngIf="apartments.length == 0 ">
+            <p class="nullMessage">This property doesn't have any apartment</p>
           </div>
         </div>
 

@@ -11,14 +11,14 @@
             </div>
             <div class="form-group">
                 <label for="inputPhoneNr">Type:</label>
-                <select class="typeSelect" formControlName="type" formControlName="type">
+                <select class="typeSelect" formControlName="type">
                     <option value="" disabled selected>Type</option>
                     <option *ngFor="let type of propertyTypes" value="{{type}}">{{type}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="city">City:</label>
-                <input type="text" name="city" class="form-control" id="city" formControlName="city" [(ngModel)]="citySearchText"  autocomplete="off">
+                <input type="text" name="city" class="form-control" id="city" formControlName="cityName" [(ngModel)]="citySearchText"  autocomplete="off">
                 <div *ngIf="citySearchText.length > 0">
                     <div class="autocomplete" *ngFor="let city of cities| searchFilter: {cityName: citySearchText}">
                         <a (click)="setCity(city)">{{city.cityName}}</a>
@@ -31,20 +31,28 @@
                 </div>
             </div> -->
             <div class="form-group">
-                <label for="streetName">Street name:</label>
+                <label for="streetName">Address:</label>
                 <input type="text" name="streetName" class="form-control" formControlName="streetName" >
             </div>
             <div class="form-group">
-                <label for="inputPhoneNr">Street number:</label>
-                <input type="text" name="streetNumber" class="form-control" formControlName="streetNumber">
+                <label for="">Country:</label>
+                <select class="typeSelect" formControlName="country">
+                    <option value="" disabled selected>Country</option>
+                    <option *ngFor="let country of allCountries" value="{{country}}">{{country.name}}</option>
+                </select>
             </div>
-            
         </div>
         <div class="rightHalf">
             <div class="form-group">
                 <div class="mapContainer">
-                    <agm-map [zoom]="13" [latitude]="latitude" [longitude]="longitude">
-                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                    <agm-map [zoom]="8" [latitude]="latitude" [longitude]="longitude"  (mapReady)="mapReadyHandler($event)">
+                        <agm-marker
+                                [latitude]="markerLat"
+                                [longitude]="markerLng"
+                                [opacity]="markerAlpha"
+                                [markerDraggable]="true"
+                        >
+                        </agm-marker>
                     </agm-map>
                 </div>
                 <label for="description">Description: </label>

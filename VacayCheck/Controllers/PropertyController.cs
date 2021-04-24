@@ -99,7 +99,10 @@ namespace VacayCheck.Controllers
                 street = value.street,
                 photo = value.photo,
                 cityName = value.cityName,
-                userId = value.userId
+                userId = value.userId,
+                mapLatitude = value.mapLatitude,
+                mapLongitude = value.mapLongitude,
+                country = value.country
             };
             IPropertyRepository.Create(model);
             return model;

@@ -38,7 +38,7 @@ export class SignUpComponent implements OnInit {
       address: [null, Validators.required],
       phoneNumber: [null, Validators.required],
       country: [null, Validators.required],
-      city: [null, Validators.required]
+      cityName: [null, Validators.required]
 
     });
   }
@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
       setTimeout(() => {
         this.success = null;
       }, 3000);
-      console.log("addUserForm submitted");
+      console.log(this.addUserForm.value);
       this.api.addUser(this.addUserForm.value).subscribe();
       this.router.navigate(["/login"]);
     } else {

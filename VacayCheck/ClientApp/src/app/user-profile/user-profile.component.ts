@@ -101,7 +101,7 @@ export class UserProfileComponent implements OnInit {
         address: [this.activeUser.address, Validators.required],
         phoneNumber: [this.activeUser.phoneNumber, Validators.required],
         country: [this.activeUser.country, Validators.required],
-        city: [this.activeUser.city, Validators.required]
+        cityName: [this.activeUser.cityName, Validators.required]
   
       });
     });

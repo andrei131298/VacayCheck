@@ -10,7 +10,6 @@ export class Property {
   street: string;
   streetNumber: number;
   photo: string;
-  cityId: string;
   userId: string;
   mapLatitude: number;
   mapLongitude: number;

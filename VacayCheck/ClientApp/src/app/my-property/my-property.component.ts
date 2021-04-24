@@ -70,6 +70,8 @@ export class MyPropertyComponent implements OnInit {
         country: [this.property.country, Validators.required],
         cityName: [this.property.cityName, Validators.required],
         street: [this.property.street, Validators.required],
+        mapLongitude: [this.property.mapLongitude, Validators.required],
+        mapLatitude: [this.property.mapLatitude, Validators.required],
       });
     });
     this.api.getCountries().subscribe((countries: Country[])=>{

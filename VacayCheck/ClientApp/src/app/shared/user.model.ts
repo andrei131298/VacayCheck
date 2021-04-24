@@ -12,7 +12,7 @@ export class User {
   address: string;
   phoneNumber: string;
   country: string;
-  city: string;
+  cityName: string;
 
   constructor(input?: any) {
     Object.assign(this, input);

@@ -108,8 +108,8 @@
         <label for="sex" class="control-label required">Gender</label>
         <select formControlName="sex" class="form-control">
           <option value="" disabled selected>Gender</option>
-          <option value="man">Male</option>
-          <option value="woman">Female</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
         </select>
         <app-field-error-display
           [displayError]="isFieldValid('sex')"
@@ -180,11 +180,11 @@
           type="text"
           id="city"
           class="form-control"
-          formControlName="city"
+          formControlName="cityName"
           autocomplete="off"
         />
         <app-field-error-display
-          [displayError]="isFieldValid('city')"
+          [displayError]="isFieldValid('cityName')"
           errorMsg="Please inform your city"
         >
         </app-field-error-display>

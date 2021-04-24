@@ -6,6 +6,8 @@ import { City } from '../shared/city.model';
 import { Property } from '../shared/property.model';
 import { User } from '../shared/user.model';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { NgZone } from '@angular/core';
+import { Country } from '../shared/country.model';
 
 
 @Component({
@@ -30,17 +32,24 @@ export class PropertyAddFormComponent implements OnInit {
   userId:string;
   activeUser:User;
   faTimes = faTimes;
+  allCountries: Country[] = [];
+  markerLat: number;
+  markerLng: number;
+  markerAlpha = 1;
 
-  constructor(public fb: FormBuilder, private api: ApiService, private router: Router) { }
+  map: google.maps.Map<Element>;
+  mapClickListener: google.maps.MapsEventListener;
+
+  constructor(public fb: FormBuilder, private api: ApiService, private router: Router, private zone: NgZone) { }
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem("userId");
     this.addPropertyForm = this.fb.group({
       propertyName:[null, Validators.required],
       type: [null, Validators.required],
-      city: [null, Validators.required],
+      cityName: [null, Validators.required],
       streetName: [null, Validators.required],
-      streetNumber: [null, Validators.required],
+      country: [null, Validators.required],
       description: [null, Validators.required],
 
     });
@@ -55,10 +64,27 @@ export class PropertyAddFormComponent implements OnInit {
     this.api.getUser(this.userId).subscribe((activeUser: User) => {
       this.activeUser=activeUser;
     });
+    this.api.getCountries().subscribe((countries: Country[])=>{
+      this.allCountries = countries;
+    });
   }
 
-  deletePhoto(){
+addMarker(lat: number, lng: number) {
+  this.markerLat = lat;
+  this.markerLng = lng;
+}
 
+public mapReadyHandler(map: google.maps.Map): void {
+  this.map = map;
+  this.mapClickListener = this.map.addListener('click', (e: google.maps.MouseEvent) => {
+    this.zone.run(() => {
+
+        this.addMarker(e.latLng.lat(), e.latLng.lng());
+    });
+  });
+}
+
+  deletePhoto(){
     this.mainPhoto = null;   
     
   }
@@ -101,7 +127,7 @@ export class PropertyAddFormComponent implements OnInit {
     };
   }
   onSubmit() {
-    if (this.addPropertyForm.valid) {
+    if (this.addPropertyForm.valid && this.markerLat && this.markerLng) {
       this.success = true;
       setTimeout(() => {
         this.success = null;
@@ -112,10 +138,11 @@ export class PropertyAddFormComponent implements OnInit {
       this.newProperty.type=this.f.type.value;
       this.newProperty.description=this.f.description.value;
       this.newProperty.street=this.f.streetName.value;
-      this.newProperty.streetNumber=this.f.streetNumber.value;
       this.newProperty.photo=this.mainPhoto;
-      this.newProperty.cityId=this.cityId;
+      this.newProperty.cityName=this.f.cityName.value;
       this.newProperty.userId=this.userId;
+      this.newProperty.mapLatitude = this.markerLat;
+      this.newProperty.mapLongitude = this.markerLng;
       console.log(this.newProperty);
       
       this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{

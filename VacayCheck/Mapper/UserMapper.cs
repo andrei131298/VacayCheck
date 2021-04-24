@@ -29,6 +29,10 @@ namespace VacayCheck.Mapper
                 email = request.email,
                 password = request.password,
                 profilePhoto = defaultPhoto,
+                address = request.address,
+                cityName = request.cityName,
+                phoneNumber = request.phoneNumber,
+                country = request.country
             };
         }
     }

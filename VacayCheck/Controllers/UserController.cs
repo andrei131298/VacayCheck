@@ -75,9 +75,9 @@ namespace VacayCheck.Controllers
             {
                 model.address = value.address;
             }
-            if (value.city != null)
+            if (value.cityName != null)
             {
-                model.city = value.city;
+                model.cityName = value.cityName;
             }
             if (value.country != null)
             {
