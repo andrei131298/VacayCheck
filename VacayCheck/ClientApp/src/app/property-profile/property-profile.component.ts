@@ -7,8 +7,9 @@ import { Reservation } from '../shared/reservation.model';
 import { LoaderComponent } from '../loader/loader.component';
 import { Favourite } from '../shared/favourite.model';
 import { formatDate } from '@angular/common';
-import { faUser, faBuilding, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBuilding, faStar, faMapMarkerAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
+import { User } from '../shared/user.model';
 
 
 @Component({
@@ -38,9 +39,14 @@ export class PropertyProfileComponent implements OnInit {
   alreadyReserved:Reservation[]=[];
   error:boolean;
   activeFavourite:Favourite;
+  showInfo = false; 
+  showInfoForDisabled = false;
   faUser = faUser;
   faBuilding = faBuilding;
   faStar = faStar;
+  faMapMarkerAlt = faMapMarkerAlt; 
+  faInfoCircle = faInfoCircle;
+  currentUser: User;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
   constructor(private api: ApiService, private router: Router,private route: ActivatedRoute) {
@@ -66,10 +72,13 @@ export class PropertyProfileComponent implements OnInit {
       this.activeFavourite=fav;
     });
     this.api.getProperty(this.propertyId).subscribe((property:Property)=>{
-      this.property=property;
+      this.property = property;
       console.log(this.property)
     });
-    console.log(this.userId);
+    this.api.getUser(this.userId).subscribe((user: User)=>{
+      this.currentUser = user;
+      console.log(this.currentUser);
+    });
     
   }
   

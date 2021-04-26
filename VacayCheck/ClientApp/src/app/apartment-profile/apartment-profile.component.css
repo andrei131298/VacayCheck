@@ -24,8 +24,8 @@
 }
 .mainPhoto {
   object-fit: cover;
-  height: 250px;
-  width: 300px;
+  height: 350px;
+  width: 400px;
   margin-bottom: 20px;
 }
 .pozeApartament:hover {

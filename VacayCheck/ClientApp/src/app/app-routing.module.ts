@@ -14,6 +14,7 @@ import { ApartmentAddFormComponent } from "./apartment-add-form/apartment-add-fo
 import { MyPropertyComponent } from "./my-property/my-property.component";
 import { ApartmentProfileComponent } from "./apartment-profile/apartment-profile.component";
 import { PaymentComponent } from "./reservation/payment/payment.component";
+import { SelectApartmentComponent } from "./select-apartment/select-apartment.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: "owner-login", component:OwnerLoginComponent},
   { path: "property-add-form", component:PropertyAddFormComponent},
   { path: "apartment-add-form/:propertyId", component:ApartmentAddFormComponent},
-  { path: "my-property/:propertyId", component:MyPropertyComponent}
+  { path: "my-property/:propertyId", component:MyPropertyComponent},
+  { path: "select-apartment/:id", component: SelectApartmentComponent}
 ];
 
 @NgModule({

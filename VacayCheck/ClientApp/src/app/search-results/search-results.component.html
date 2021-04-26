@@ -6,9 +6,7 @@
   <p id="p3" *ngIf="period > 1 ">Your results for {{period}} days</p>
 </div>
 <div class="container">
-    <!-- <div *ngIf="activeProperties.length == 0">
-      <h1>There is no results to show</h1>
-    </div> -->
+    <p class="nullMessage" *ngIf="activeProperties.length == 0">There is no results to show</p>
     <div *ngFor="let property of activeProperties">
       <div class="view mb-3 mr-3 p-0">
         <img class="pozeCazari" src="{{ property.photo }}" />

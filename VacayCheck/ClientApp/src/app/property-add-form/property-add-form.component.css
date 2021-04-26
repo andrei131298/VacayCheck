@@ -61,6 +61,9 @@ input {
 input[type="file"] {
   display: none;
 }
+select { 
+  text-align-last:center; 
+}
 .custom-file-upload {
   border: 1px solid rgb(167, 167, 167);
   display: inline-block;

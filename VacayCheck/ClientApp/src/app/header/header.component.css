@@ -23,7 +23,7 @@ ul {
 }
 
 .btn:hover {
-  color: #ff7a59;
+  color: red;
   background: #fff;
 }
 .active-page {

@@ -15,13 +15,19 @@
           <div class="stele">
             <fa-icon *ngFor="let star of counter(property.numberOfStars)" id="stea" [icon]="faStar" ></fa-icon>
           </div>
-          <button *ngIf="loggedIn=='true' && property.userId != userId" class="btn" style="background-color: rgb(240, 226, 226);margin-top: 20px;" [ngClass]="{'followup' : activeFavourite!=null,
-                'unfollow' : activeFavourite == null }"
+          <button *ngIf="loggedIn=='true' && property.userId != userId" class="btn" style="background-color: rgb(240, 226, 226);margin-top: 20px;" 
+          [ngClass]="{'followup' : activeFavourite!=null, 'unfollow' : activeFavourite == null }"
                                 (click)="changeStyle();addToFavourites()">
                 {{activeFavourite!=null ? 'Remove from favourites' : (activeFavourite == null ? 'Add to favourites' : '')}}
             </button>
             <p style="color: red; font-size: 24px;" *ngIf="error == true">You need to login</p>
         </div>
+        <div class="mapContainer">
+          <agm-map [zoom]="9" [latitude]="property.mapLatitude" [longitude]="property.mapLongitude">
+              <agm-marker [latitude]="property.mapLatitude" [longitude]="property.mapLongitude"></agm-marker>
+          </agm-map>
+        </div>
+
         <!-- <div class="description">
           <p >
             Description: <br>{{property.description}}  
@@ -29,23 +35,52 @@
           
         </div> -->
       </div>
-      <div class="apartmentsContainer">
-        <div class="secondView" *ngFor="let apartment of apartments">
-          <img class="apPhoto" src="{{apartment.photos[0] }}" />
-          <div class="apDetail">
-                <p id="apName" (click)="openApartmentModal(apartment.id)">
-                  {{ apartment.apartmentName}}
-                </p>
-                <div class="persoane">
-                  Capacity:
-                  <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
-                </div>
-                <p *ngIf="property.userId != userId" id="totalPrice" >
-                  Total price: {{apartment.pricePerNight*period}}
-                </p>
-                <button *ngIf="property.userId != userId" type="button" class="btn btn-primary" (click)="check();set(apartment.id);">Reserve</button>
-          </div>  
+      <div class="propertyDetails">
+        <div class="description mb-3">
+          <p class="text-center h2 mt-3 mb-3">Details</p>
+          <div class="detailsFlex">
+            <p class="h4 mt-2"><fa-icon id = "marker" [icon]="faMapMarkerAlt"></fa-icon> 
+            {{property.street}}, {{property.cityName}}, {{property.country}}</p>
+            <!-- <p class="h4 font-weight-bold">Description</p> -->
+            <div class="propertyDescription">
+                {{property.description}}
+            </div>
+          </div>
         </div>
+        
+
+
+        <div class="apartmentsContainer mb-3 mr-3 p-0">
+          <p class="text-center h2 mt-3 mb-3">Apartments</p>
+          <div class="secondView" *ngFor="let apartment of apartments">
+            <img class="apPhoto" src="{{apartment.photos[0] }}" />
+            <div class="apDetail">
+              <p id="apName" (click)="openApartmentModal(apartment.id)">
+                {{ apartment.apartmentName}}
+              </p>
+              <div class="persoane">
+                Capacity:
+                <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
+              </div>
+              <p *ngIf="property.userId != userId" id="totalPrice" >
+                Total price: {{apartment.pricePerNight*period}}
+              </p>
+              <div class="optionsButtons">
+                <button *ngIf="property.userId != userId" type="button" class="btn" (click)="check();set(apartment.id);">Reserve</button>
+                <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" [routerLink]="['/select-apartment', apartment.id]">Vacay Request <fa-icon [icon]="faInfoCircle" 
+                  (mouseover)="showInfo = true" (mouseout)="showInfo = false"></fa-icon></button>
+                <button *ngIf="property.userId != userId && currentUser.isOwner == false" type="button" class="disabledButton btn ml-3">
+                  Vacay Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true" (mouseout)="showInfoForDisabled = false"></fa-icon></button>
+              </div>
+              <p class="information" *ngIf="showInfo == true">Vacay Request is a new feature through which you can request an exchange of accommodation</p>
+              <div class="infoForDisabled" *ngIf="showInfoForDisabled == true">You need to be an owner with at least 5 reservations on our website to be able to use this feature</div>
+            </div>  
+          </div>
+          <div *ngIf="apartments.length == 0 ">
+            <p class="nullMessage">This property doesn't have any apartment</p>
+          </div>
+        </div>
+
       </div>
   </div>
 </div>

@@ -127,6 +127,7 @@ public mapReadyHandler(map: google.maps.Map): void {
     };
   }
   onSubmit() {
+    console.log(this.f.country.value);
     if (this.addPropertyForm.valid && this.markerLat && this.markerLng) {
       this.success = true;
       setTimeout(() => {
@@ -143,10 +144,11 @@ public mapReadyHandler(map: google.maps.Map): void {
       this.newProperty.userId=this.userId;
       this.newProperty.mapLatitude = this.markerLat;
       this.newProperty.mapLongitude = this.markerLng;
+      this.newProperty.country = this.f.country.value;
       console.log(this.newProperty);
       
       this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{
-        if(this.activeUser.isOwner==false){
+        if(this.activeUser.isOwner == false){
           this.activeUser.isOwner = true;
           this.api.editUser(this.activeUser).subscribe();
         }
@@ -162,7 +164,6 @@ public mapReadyHandler(map: google.maps.Map): void {
   }
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
-      console.log(field);
       const control = formGroup.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
