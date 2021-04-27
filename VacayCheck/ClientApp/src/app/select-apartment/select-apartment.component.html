@@ -1,1 +1,40 @@
 <app-header></app-header>
+<div class= "pageFlex">
+    <div class="container">
+        <div class="reservation">
+            <h2 id="title">Requested apartment</h2>
+            <img id="apPhoto" src={{requestedApartment.photos[0]}}>
+            <p style="font-weight: bold; font-size: 26px;">{{requestedApartment.apartmentName}}</p>
+            <p style="font-weight: bold; font-size: 20px;"><fa-icon [icon]="faBuilding" ></fa-icon> {{propertyOfRequestedAp.name}}</p>
+            <div class="reservationDetails">
+                    <p>Check-in: {{dateRange0Formatted | date:'longDate'}}</p>
+                    <p>Check-out: {{dateRange1Formatted | date:'longDate'}}</p>
+                    <p>Number of persons: {{persons}}</p>
+                    <p>Total Price: {{ requestedApartment.pricePerNight*period}}</p>
+            </div>
+        </div>
+    </div>
+    <fa-icon id="exchange" [icon]="faExchangeAlt" ></fa-icon>
+    <div class="container">
+        <div class="reservation">
+            <h2 id="title">Select your apartment</h2>
+                <img *ngIf= "selectedApartmentId != null" id="apPhoto" src={{selectedApartment.photos[0]}}>
+                <label>Property:</label>
+                <select class="form-control" (change) = "selectApartment(value)" [(ngModel)] = "value">
+                    <option value="" disabled selected>Your property</option>
+                    <option *ngFor="let property of userProperties" value="{{property.id}}">{{property.name}}</option>
+                </select>
+                <br>
+                <label *ngIf= "value != null">Apartment:</label>
+                <select *ngIf= "value != null" class="form-control" (change) = "apartmentIsSelected(selectedApartmentId)" [(ngModel)] = "selectedApartmentId">
+                    <option value="" disabled selected>Your apartment</option>
+                    <option *ngFor="let apartment of selectedApartments" value="{{apartment.id}}">{{apartment.apartmentName}}</option>
+                </select>
+                <br>
+                <button *ngIf= "selectedApartmentId != null" class="btn" >Confirm request</button>
+                
+            <!-- <p style="font-weight: bold; font-size: 26px;">{{requestedApartment.apartmentName}}</p> -->
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+.pageFlex{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.container {
+    width: 40%;
+    margin-top: 40px;
+  }
+  .reservation {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    border-bottom: 12px solid black;
+    border-top: 12px solid black;
+    background-color: rgb(228, 222, 222);
+    padding-bottom: 50px;
+    font-size: 20px;
+  }
+  #title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-weight: bold;
+  }
+  .btn:hover {
+    color: #ff7a59;
+    background: #fff;
+  }
+  #apPhoto {
+    object-fit: cover;
+    height: 200px;
+    width: 250px;
+    margin-bottom: 20px;
+  }
+  .reservationDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+  #exchange{
+      font-size: 80px;
+      color: #ff7a59;
+  }
+  select{
+      width: 50%;
+  }
+  .apartmentSelect{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .btn {
+    background-color: rgb(20, 182, 20);
+    color: white;
+  }

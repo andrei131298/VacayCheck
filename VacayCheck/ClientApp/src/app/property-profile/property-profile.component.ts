@@ -133,4 +133,7 @@ export class PropertyProfileComponent implements OnInit {
     console.log(this.propertyId);
     this.router.navigate(["/apartment-add-form",this.propertyId]);
   }
+  goToSelectApartmentPage(apartment: Apartment){
+    this.router.navigate(["/select-apartment", apartment.id], {queryParams:{dateRange0:this.dateRange0Formatted, dateRange1:this.dateRange1Formatted, persons:this.persons, period:this.period}});
+  }
 }

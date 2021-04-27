@@ -67,7 +67,7 @@
               </p>
               <div class="optionsButtons">
                 <button *ngIf="property.userId != userId" type="button" class="btn" (click)="check();set(apartment.id);">Reserve</button>
-                <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" [routerLink]="['/select-apartment', apartment.id]">Vacay Request <fa-icon [icon]="faInfoCircle" 
+                <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" (click)="goToSelectApartmentPage(apartment)">Vacay Request <fa-icon [icon]="faInfoCircle" 
                   (mouseover)="showInfo = true" (mouseout)="showInfo = false"></fa-icon></button>
                 <button *ngIf="property.userId != userId && currentUser.isOwner == false" type="button" class="disabledButton btn ml-3">
                   Vacay Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true" (mouseout)="showInfoForDisabled = false"></fa-icon></button>
