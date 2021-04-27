@@ -17,6 +17,7 @@ namespace VacayCheck.Contexts
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<ExchangeRequest> ExchangeRequests { get; set; }
 
         public static bool isMigration = true;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

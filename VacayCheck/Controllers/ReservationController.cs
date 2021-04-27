@@ -156,7 +156,7 @@ namespace VacayCheck.Controllers
             }
             if (value.numberOfPersons != 0)
             {
-                model.apartmentId = value.apartmentId;
+                model.numberOfPersons = value.numberOfPersons;
             }
             return IReservationRepository.Update(model);
         }

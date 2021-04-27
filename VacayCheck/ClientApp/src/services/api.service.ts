@@ -9,6 +9,7 @@ import { User } from "../app/shared/user.model";
 import { Owner } from "../app/shared/owner.model";
 import { LoginRequest } from "../app/shared/loginRequest";
 import { Photo } from "src/app/shared/photo.model";
+import { ExchangeRequest } from "src/app/shared/exchangeRequest.model";
 
 @Injectable({
   providedIn: "root",
@@ -44,6 +45,18 @@ export class ApiService {
 }
   getFavouriteByUserAndProperty(userId: string,propertyId:string){
     return this.http.get(this.baseUrl + "/Favourite/user=" + userId + "/property="+ propertyId, {
+      headers: this.header,
+    });
+  }
+
+  getExchangeRequestByRequester(requesterId: string){
+    return this.http.get(this.baseUrl + "/ExchangeRequest/requester/" + requesterId, {
+      headers: this.header,
+    });
+  }
+
+  getExchangeRequestByResponder(responderId: string){
+    return this.http.get(this.baseUrl + "/ExchangeRequest/responder/" + responderId, {
       headers: this.header,
     });
   }
@@ -151,6 +164,12 @@ export class ApiService {
 
     addPhoto(photo: Photo){
       return this.http.post(this.baseUrl + "/Photo", photo, {
+        headers: this.header,
+      });
+    }
+
+    addExchangeRequest(req: ExchangeRequest){
+      return this.http.post(this.baseUrl + "/ExchangeRequest", req, {
         headers: this.header,
       });
     }

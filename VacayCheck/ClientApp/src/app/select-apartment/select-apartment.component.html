@@ -31,7 +31,7 @@
                     <option *ngFor="let apartment of selectedApartments" value="{{apartment.id}}">{{apartment.apartmentName}}</option>
                 </select>
                 <br>
-                <button *ngIf= "selectedApartmentId != null" class="btn" >Confirm request</button>
+                <button *ngIf= "selectedApartmentId != null" class="btn" (click)= "confirmRequest()">Confirm request</button>
                 
             <!-- <p style="font-weight: bold; font-size: 26px;">{{requestedApartment.apartmentName}}</p> -->
             

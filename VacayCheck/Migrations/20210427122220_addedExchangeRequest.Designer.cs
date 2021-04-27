@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VacayCheck.Contexts;
 
 namespace VacayCheck.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210427122220_addedExchangeRequest")]
+    partial class addedExchangeRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +72,9 @@ namespace VacayCheck.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("apartmentid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("checkIn")
                         .HasColumnType("datetime2");
 
@@ -88,13 +93,14 @@ namespace VacayCheck.Migrations
                     b.Property<Guid>("responderApartmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("responderId")
+                    b.Property<Guid?>("userid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("id");
+
+                    b.HasIndex("apartmentid");
+
+                    b.HasIndex("userid");
 
                     b.ToTable("ExchangeRequests");
                 });
@@ -315,6 +321,21 @@ namespace VacayCheck.Migrations
                         .IsRequired();
 
                     b.Navigation("property");
+                });
+
+            modelBuilder.Entity("VacayCheck.Models.ExchangeRequest", b =>
+                {
+                    b.HasOne("VacayCheck.Models.Apartment", "apartment")
+                        .WithMany()
+                        .HasForeignKey("apartmentid");
+
+                    b.HasOne("VacayCheck.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userid");
+
+                    b.Navigation("apartment");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("VacayCheck.Models.Favourite", b =>

@@ -18,6 +18,8 @@ using VacayCheck.Repositories.PropertyRepository;
 using VacayCheck.Repositories.ReservationRepository;
 using VacayCheck.Repositories.UserRepository;
 using VacayCheck.Repositories.PhotoRepository;
+using VacayCheck.Repositories.ExchangeRequestRepository;
+
 namespace VacayCheck
 {
     public class Startup
@@ -48,6 +50,7 @@ namespace VacayCheck
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPhotoRepository, PhotoRepository>();
+            services.AddTransient<IExchangeRequestRepository, ExchangeRequestRepository>();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>

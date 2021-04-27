@@ -9,6 +9,7 @@ import {  DatePipe,formatDate } from '@angular/common';
 import { Apartment } from '../shared/apartment.model';
 import { faPortrait, faPlusCircle, faPen, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ExchangeRequest } from '../shared/exchangeRequest.model';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class UserProfileComponent implements OnInit {
   currentReservations: Reservation[]=[];
   edit = false;
   success: boolean;
+  exchangesRequested: ExchangeRequest[]=[]
 
 
   ngOnInit(): void {
@@ -77,8 +79,13 @@ export class UserProfileComponent implements OnInit {
 
     this.api.getPropertiesByUser(this.userId).subscribe((myProperties: Property[])=>{
       this.userProperties = myProperties;
-      console.log(this.userProperties);
     });
+
+    this.api.getExchangeRequestByRequester(this.userId).subscribe((requests: ExchangeRequest[])=>{
+      this.exchangesRequested = requests;
+      console.log(this.exchangesRequested);
+    });
+
     setTimeout(() => {
       this.isLoaded=true;
       for(var reservation of this.userReservations){

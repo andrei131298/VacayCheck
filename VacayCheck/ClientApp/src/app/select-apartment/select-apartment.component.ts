@@ -5,6 +5,7 @@ import { Apartment } from '../shared/apartment.model';
 import { faExchangeAlt, faBuilding} from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '@angular/common';
 import { Property } from '../shared/property.model';
+import { ExchangeRequest } from '../shared/exchangeRequest.model';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class SelectApartmentComponent implements OnInit {
   value: string;
   selectedApartmentId: string;
   selectedApartment: Apartment;
+  newRequest = new ExchangeRequest();
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.apartmentId = params['id']);
@@ -53,6 +55,7 @@ export class SelectApartmentComponent implements OnInit {
     this.api.getApartmentsByPropertyId(valueId).subscribe((apartments: Apartment[])=>{
       this.selectedApartments = apartments;
       this.selectedApartment = this.selectedApartments[0];
+
     });
     console.log(valueId);
   }
@@ -62,6 +65,18 @@ export class SelectApartmentComponent implements OnInit {
       this.selectedApartment = apartment;
     });
     console.log(apartmentId);
+  }
+
+  confirmRequest(){
+    this.newRequest.requesterApartmentId = this.selectedApartment.id;
+    this.newRequest.responderApartmentId = this.apartmentId;
+    this.newRequest.numberOfPersons = this.persons;
+    this.newRequest.requesterId = this.userId;
+    this.newRequest.responderId = this.propertyOfRequestedAp.userId;
+    this.newRequest.checkIn = this.dateRange0Formatted;
+    this.newRequest.checkOut = this.dateRange1Formatted
+
+    this.api.addExchangeRequest(this.newRequest).subscribe();
   }
 
 }
