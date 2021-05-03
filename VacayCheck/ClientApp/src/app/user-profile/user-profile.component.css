@@ -179,3 +179,62 @@ hr {
 .form-control {
   margin-bottom: 10px;
 }
+.container {
+  width: 40%;
+  margin-top: 30px;
+}
+.reservation {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  border-bottom: 9px solid black;
+  border-top: 9px solid black;
+  background-color: rgb(228, 222, 222);
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+#title {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+.reservationDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.exchangePending{
+  font-size: 70px;
+  color: #ff7a59;
+}
+.exchangeDeclined{
+  font-size: 70px;
+  color: crimson;
+}
+.exchangeAccepted{
+  font-size: 70px;
+  color: rgb(20, 182, 20);
+}
+.pageFlex{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#status{
+  margin-bottom: 0;
+  font-size: 22px;
+}
+.exchangeSign{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#apartmentName{
+  font-weight: bold; 
+  font-size: 24px;
+  cursor: pointer;
+}
+#apartmentName:hover{
+  text-decoration: underline;
+}

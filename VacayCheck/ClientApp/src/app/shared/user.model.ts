@@ -13,6 +13,7 @@ export class User {
   phoneNumber: string;
   country: string;
   cityName: string;
+  prefferedCurrency: string;
 
   constructor(input?: any) {
     Object.assign(this, input);

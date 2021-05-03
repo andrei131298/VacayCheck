@@ -89,10 +89,6 @@ export class MyPropertyComponent implements OnInit {
     return new Array(i);
   }
 
-  toApartmentPage(apartment:Apartment){
-    this.router.navigate(["/apartment-profile", apartment.id]);
-  }
-
   goToAddApartment(){
     console.log(this.propertyId);
     this.router.navigate(["/apartment-add-form",this.propertyId]);

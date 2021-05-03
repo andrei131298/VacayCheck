@@ -1,216 +1,259 @@
 <app-loader #loader *ngIf="isLoaded == false"></app-loader>
+<apartment-profile #apartmentModal></apartment-profile>
+
 <div *ngIf="isLoaded == true">
-<app-header></app-header>
-<div class="profileHeader">
-  <p id="firstName"> {{activeUser.firstName}} {{activeUser.lastName}} </p>
-  <div class="options">
-    <div>
-      <ul class="nav">
-        <a *ngFor="let option of options; let i = index" class="link">
-          <p class="opt" (click)="changeOption(option);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{option}}</p>
-        </a>
-      </ul>
+  <app-header></app-header>
+  <div class="profileHeader">
+    <p id="firstName"> {{activeUser.firstName}} {{activeUser.lastName}} </p>
+    <div class="options">
+      <div>
+        <ul class="nav">
+          <a *ngFor="let option of options; let i = index" class="link">
+            <p class="opt" (click)="changeOption(option);setRow(i)" [ngClass]="{'highlight': selectedIndex === i}">{{option}}</p>
+          </a>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="selectedOption == 'Profile' ">
+    <div class="profileDetails">
+        <div class="profilePicture">
+          <img class="profilePhoto" src={{activeUser.profilePhoto}} />
+          <label class="custom-file-upload">
+            <input type="file" (change)="onSelectFile($event)"/>
+            <fa-icon [icon]="faPortrait" ></fa-icon> Change profile photo
+          </label>
+        </div>
+        <div *ngIf="edit == false" class="date">
+          <p class="hrHeader">Personal details <fa-icon [icon]="faPen" id ="edit" (click)="showEditOption()" ></fa-icon></p>
+          <hr>
+          
+          <label class="features">First name: <span class="span"> {{activeUser.firstName}}</span></label>
+          <label class="features">Last name: <span class="span"> {{activeUser.lastName}}</span> </label>  
+          <label class="features">E-mail: <span class="span"> {{activeUser.email}}</span></label> 
+          <label class="features">Address: <span class="span"> {{activeUser.address}}</span></label>  
+          <label class="features">Country: <span class="span"> {{activeUser.country}}</span></label>  
+          <label class="features">City: <span class="span"> {{activeUser.cityName}}</span>  </label> 
+          <label class="features">Gender: <span class="span"> {{activeUser.sex}}</span>  </label> 
+          <label class="features">Birth date: <span class="span"> {{activeUser.birthDate | date:'longDate'}}</span> </label>    
+          <label class="features">Phone number: <span class="span"> {{activeUser.phoneNumber}}</span>  </label>  
+          <!-- <label class="features">Currency: <span class="span"> {{activeUser.prefferedCurrency}}</span>  </label>  -->
+
+        </div>
+        <div *ngIf="edit == true" class="editData">
+          <h2>Edit personal details </h2>
+          <p id="cancelText" (click)="cancelForm()">Cancel<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
+          <form class="form-container" [formGroup]="editUserForm">
+            <div class="leftHalfForm">
+              <label for="firstName2" class="control-label required">First name</label>
+              <input type="text" id="firstName2" class="form-control" formControlName="firstName"/>
+
+              <label for="lastName" class="control-label required">Last name</label>
+              <input type="text" id="lastName" class="form-control" formControlName="lastName"/>
+
+              <label for="email" class="control-label required">E-mail</label>
+              <input type="text" id="email" class="form-control" formControlName="email" autocomplete="off" disabled />
+
+              <label for="address" class="control-label required">Address</label>
+              <input type="text" id="address" class="form-control" formControlName="address" autocomplete="off"/>
+
+              <label for="country" class="control-label required">Country</label>
+              <input type="text" id="country" class="form-control" formControlName="country" autocomplete="off"/>
+                          
+
+            </div>
+            <div class="rightHalfForm">
+              <label for="city" class="control-label required">City</label>
+              <input type="text" id="city" class="form-control" formControlName="cityName" autocomplete="off"/>
+
+              <label for="sex" class="control-label required">Gender</label>
+              <br>
+              <select formControlName="sex" class="form-control">
+                <option value="activeUser.sex" disabled selected>Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+
+              <label for="birthdate" class="control-label required">Birth date</label>
+              <input type="datetime" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" onKeyDown="return false" id="birthDate" class="form-control" formControlName="birthDate" autocomplete="off"/>
+
+              <label for="phoneNumber" class="control-label required">Phone number</label>
+              <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" autocomplete="off"/>
+
+              <!-- <label for="">Currency:</label>
+              <br> -->
+              <!-- <select class="form-control" formControlName="prefferedCurrency">
+                  <option value="" disabled selected>Currency</option>
+                  <option *ngFor="let currency of allCurrencies" value="{{currency}}">{{currency}}</option>
+              </select> -->
+
+              <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
+
+            </div>
+          </form>
+        </div>
     </div>
   </div>
 
-</div>
-
-<div *ngIf="selectedOption == 'Profile' ">
-  <div class="profileDetails">
-      <div class="profilePicture">
-        <img class="profilePhoto" src={{activeUser.profilePhoto}} />
-        <label class="custom-file-upload">
-          <input type="file" (change)="onSelectFile($event)"/>
-          <fa-icon [icon]="faPortrait" ></fa-icon> Change profile photo
-        </label>
-      </div>
-      <div *ngIf="edit == false" class="date">
-        <p class="hrHeader">Personal details <fa-icon [icon]="faPen" id ="edit" (click)="showEditOption()" ></fa-icon></p>
-        <hr>
-        
-        <label class="features">First name: <span class="span"> {{activeUser.firstName}}</span></label>
-        <label class="features">Last name: <span class="span"> {{activeUser.lastName}}</span> </label>  
-        <label class="features">E-mail: <span class="span"> {{activeUser.email}}</span></label> 
-        <label class="features">Address: <span class="span"> {{activeUser.address}}</span></label>  
-        <label class="features">Country: <span class="span"> {{activeUser.country}}</span></label>  
-        <label class="features">City: <span class="span"> {{activeUser.cityName}}</span>  </label> 
-        <label class="features">Gender: <span class="span"> {{activeUser.sex}}</span>  </label> 
-        <label class="features">Birth date: <span class="span"> {{activeUser.birthDate | date:'longDate'}}</span> </label>    
-        <label class="features">Phone number: <span class="span"> {{activeUser.phoneNumber}}</span>  </label>   
-
-      </div>
-      <div *ngIf="edit == true" class="editData">
-        <h2>Edit personal details </h2>
-        <p id="cancelText" (click)="cancelForm()">Cancel<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
-        <form class="form-container" [formGroup]="editUserForm">
-          <div class="leftHalfForm">
-            <label for="firstName2" class="control-label required">First name</label>
-            <input type="text" id="firstName2" class="form-control" formControlName="firstName"/>
-
-            <label for="lastName" class="control-label required">Last name</label>
-            <input type="text" id="lastName" class="form-control" formControlName="lastName"/>
-
-            <label for="email" class="control-label required">E-mail</label>
-            <input type="text" id="email" class="form-control" formControlName="email" autocomplete="off" disabled />
-
-            <label for="address" class="control-label required">Address</label>
-            <input type="text" id="address" class="form-control" formControlName="address" autocomplete="off"/>
-
-            <label for="country" class="control-label required">Country</label>
-            <input type="text" id="country" class="form-control" formControlName="country" autocomplete="off"/>
-                        
-
+  <div *ngIf="selectedOption == 'Saved properties'">
+    <div *ngFor="let favourite of savedProperties">
+      <div *ngIf="savedProperties.length>0">
+          <div class="secondView" >
+            <img class="apPhoto" src={{favourite.property.photo}} />
+            <div class="apDetail">
+                  <p id="apName" >
+                    {{favourite.propertyName}}
+                  </p>
+                  <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="deleteFavourite(favourite.propertyId)">Remove from favourites</button>
+            </div> 
           </div>
-          <div class="rightHalfForm">
-            <label for="city" class="control-label required">City</label>
-            <input type="text" id="city" class="form-control" formControlName="cityName" autocomplete="off"/>
+      </div>    
+    </div>
+    <div *ngIf="savedProperties.length == 0">
+      <p class="nullMessage">You don't have any saved properties</p>
+    </div>
+  </div>
 
-            <label for="sex" class="control-label required">Gender</label>
-            <br>
-            <select formControlName="sex" class="form-control">
-              <option value="activeUser.sex" disabled selected>Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
 
-            <label for="birthdate" class="control-label required">Birth date</label>
-            <input type="datetime" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" onKeyDown="return false" id="birthDate" class="form-control" formControlName="birthDate" autocomplete="off"/>
+    <div *ngIf="selectedOption == 'Future reservations'">
+      <div *ngFor="let futureReservation of futureReservations">
+        <div *ngIf="futureReservation.checkIn > currentDate && futureReservation.checkOut > currentDate ">
+          <div class="secondView" >
+            <img class="apPhoto" src={{futureReservation.apartment.photos[0]}} />
+            <div class="apDetail">
+                  <p id="apName" >
+                    {{ futureReservation.propertyName}} - {{ futureReservation.apartmentName}}
+                  </p>
+                  <p>
+                    {{futureReservation.checkIn | date:'longDate'}} - {{futureReservation.checkOut | date:'longDate'}}
+                  </p>
+                  <p id="totalPrice" >
+                    Price: {{ futureReservation.price}}
+                  </p>
+                  <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReservationDetails(futureReservation)">See details</button>
 
-            <label for="phoneNumber" class="control-label required">Phone number</label>
-            <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber" autocomplete="off"/>
-
-            <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
-
+            </div>  
           </div>
-        </form>
+        </div>
+      
       </div>
-  </div>
+
+      <div *ngIf="futureReservations.length == 0">
+        <p class="nullMessage">No future reservations</p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedOption == 'Reservations history'">
+      <div *ngFor="let reservationHistory of reservationsHistory">
+        <div *ngIf="reservationHistory.checkIn < currentDate && reservationHistory.checkOut < currentDate ">
+          <div class="secondView" >
+            <img class="apPhoto" src={{reservationHistory.apartment.photos[0]}} />
+            <div class="apDetail">
+                  <p id="apName" >
+                    {{ reservationHistory.propertyName}} - {{ reservationHistory.apartmentName}}
+                  </p>
+                  <p>
+                    {{reservationHistory.checkIn | date:'longDate'}} - {{reservationHistory.checkOut | date:'longDate'}}
+                  </p>
+                  <p id="totalPrice" >
+                    Price: {{ reservationHistory.price}}
+                  </p>
+                  <button *ngIf="reservationHistory.review == '' || reservationHistory.review == null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReviewPage(reservationHistory)">Add a review</button>
+                  <button *ngIf="reservationHistory.review != '' && reservationHistory.review != null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toDetailsPage(reservationHistory)">See details</button>
+            </div>  
+          </div>
+        </div>
+      
+      </div>
+
+      <div *ngIf="reservationsHistory.length == 0 ">
+        <p class="nullMessage">No reservations history</p>
+      </div>
+
+    </div>
+
+    <div *ngIf="selectedOption == 'Current reservations'">
+      <div *ngFor="let currentReservation of currentReservations">   
+        <div *ngIf="currentReservation.checkIn < currentDate && currentReservation.checkOut > currentDate ">
+          <div class="secondView" >
+            <img class="apPhoto" src={{currentReservation.apartment.photos[0]}} />
+            <div class="apDetail">
+                  <p id="apName" >
+                    {{ currentReservation.propertyName}} - {{ currentReservation.apartmentName}}
+                  </p>
+                  <p>
+                    {{currentReservation.checkIn | date:'longDate'}} - {{currentReservation.checkOut | date:'longDate'}}
+                  </p>
+                  <p id="totalPrice" >
+                    Price: {{ currentReservation.price}}
+                  </p>
+            </div>  
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="currentReservations.length == 0">
+        <p class="nullMessage">No current reservations</p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedOption == 'My properties'">
+      
+      <div *ngIf="activeUser.isOwner == true">
+        <p class="addProperty" routerLink="/property-add-form"><fa-icon [icon]="faPlusCircle" ></fa-icon> Add new property</p>
+        <div *ngFor="let prop of userProperties" class="secondView" >
+          <img class="apPhoto" src={{prop.photo}} />
+          <div class="apDetail">
+                <p id="propertyName" (click)="goToProperty(prop)">
+                  {{prop.name}}
+                </p>
+          </div>  
+        </div>
+      </div>
+      <div *ngIf="activeUser.isOwner == false">
+        <div class="register" >
+          <div>
+            Do you want to register your property?
+          </div>
+          <div class="start" routerLink="/property-add-form">
+            Let's start
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedOption == 'Vacay Requests'">
+
+        <div *ngFor="let request of exchangesRequested" class= "pageFlex">
+          <div class="container">
+            <div class="reservation">
+                <h2 id="title">Requested apartment</h2>
+                <!-- <img id="apPhoto" src={{requestedApartment.photos[0]}}> -->
+                <p id="apartmentName" (click)="openApartmentModal(request.responderApartmentId)">{{request.responderApartmentName}}</p>
+                <!-- <p style="font-weight: bold; font-size: 20px;"><fa-icon [icon]="faBuilding" ></fa-icon> {{propertyOfRequestedAp.name}}</p> -->
+                <div class="reservationDetails">
+                        <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
+                        <p>Number of persons: {{request.numberOfPersons}}</p>
+                  </div>
+            </div>
+          </div>
+          <div class="exchangeSign">
+            <p id="status">{{request.status}}</p>
+            <fa-icon [ngClass]="{'exchangePending' : request.status=='Pending', 'exchangeDeclined' : request.status=='Declined', 'exchangeAccepted' : request.status=='Accepted' }"
+            [icon]="faExchangeAlt" ></fa-icon>
+          </div>
+          <div class="container">
+            <div class="reservation">
+                <h2 id="title">Offered apartment</h2>
+                <!-- <img id="apPhoto" src={{requestedApartment.photos[0]}}> -->
+                <p id="apartmentName" (click)="openApartmentModal(request.requesterApartmentId)">{{request.requesterApartmentName}}</p>
+                <!-- <p style="font-weight: bold; font-size: 20px;"><fa-icon [icon]="faBuilding" ></fa-icon> {{propertyOfRequestedAp.name}}</p> -->
+                
+            </div>
+          </div>
+        </div>
+    </div>
 </div>
-
-<div *ngIf="selectedOption == 'Saved properties'">
-  <div *ngFor="let favourite of savedProperties">
-    <div *ngIf="savedProperties.length>0">
-        <div class="secondView" >
-          <img class="apPhoto" src={{favourite.property.photo}} />
-          <div class="apDetail">
-                <p id="apName" >
-                  {{favourite.propertyName}}
-                </p>
-                <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="deleteFavourite(favourite.propertyId)">Remove from favourites</button>
-          </div> 
-        </div>
-    </div>    
-  </div>
-  <div *ngIf="savedProperties.length == 0">
-    <p class="nullMessage">You don't have any saved properties</p>
-  </div>
-</div>
-
-
-  <div *ngIf="selectedOption == 'Future reservations'">
-    <div *ngFor="let futureReservation of futureReservations">
-      <div *ngIf="futureReservation.checkIn > currentDate && futureReservation.checkOut > currentDate ">
-        <div class="secondView" >
-          <img class="apPhoto" src={{futureReservation.apartment.photos[0]}} />
-          <div class="apDetail">
-                <p id="apName" >
-                  {{ futureReservation.propertyName}} - {{ futureReservation.apartmentName}}
-                </p>
-                <p>
-                  {{futureReservation.checkIn | date:'longDate'}} - {{futureReservation.checkOut | date:'longDate'}}
-                </p>
-                <p id="totalPrice" >
-                  Price: {{ futureReservation.price}}
-                </p>
-                <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReservationDetails(futureReservation)">See details</button>
-
-          </div>  
-        </div>
-      </div>
-    
-    </div>
-
-    <div *ngIf="futureReservations.length == 0">
-      <p class="nullMessage">No future reservations</p>
-    </div>
-  </div>
-
-  <div *ngIf="selectedOption == 'Reservations history'">
-    <div *ngFor="let reservationHistory of reservationsHistory">
-      <div *ngIf="reservationHistory.checkIn < currentDate && reservationHistory.checkOut < currentDate ">
-        <div class="secondView" >
-          <img class="apPhoto" src={{reservationHistory.apartment.photos[0]}} />
-          <div class="apDetail">
-                <p id="apName" >
-                  {{ reservationHistory.propertyName}} - {{ reservationHistory.apartmentName}}
-                </p>
-                <p>
-                  {{reservationHistory.checkIn | date:'longDate'}} - {{reservationHistory.checkOut | date:'longDate'}}
-                </p>
-                <p id="totalPrice" >
-                  Price: {{ reservationHistory.price}}
-                </p>
-                <button *ngIf="reservationHistory.review == '' || reservationHistory.review == null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReviewPage(reservationHistory)">Add a review</button>
-                <button *ngIf="reservationHistory.review != '' && reservationHistory.review != null" type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toDetailsPage(reservationHistory)">See details</button>
-          </div>  
-        </div>
-      </div>
-    
-    </div>
-
-    <div *ngIf="reservationsHistory.length == 0 ">
-      <p class="nullMessage">No reservations history</p>
-    </div>
-
-  </div>
-
-  <div *ngIf="selectedOption == 'Current reservations'">
-    <div *ngFor="let currentReservation of currentReservations">   
-      <div *ngIf="currentReservation.checkIn < currentDate && currentReservation.checkOut > currentDate ">
-        <div class="secondView" >
-          <img class="apPhoto" src={{currentReservation.apartment.photos[0]}} />
-          <div class="apDetail">
-                <p id="apName" >
-                  {{ currentReservation.propertyName}} - {{ currentReservation.apartmentName}}
-                </p>
-                <p>
-                  {{currentReservation.checkIn | date:'longDate'}} - {{currentReservation.checkOut | date:'longDate'}}
-                </p>
-                <p id="totalPrice" >
-                  Price: {{ currentReservation.price}}
-                </p>
-          </div>  
-        </div>
-      </div>
-
-    </div>
-
-    <div *ngIf="currentReservations.length == 0">
-      <p class="nullMessage">No current reservations</p>
-    </div>
-  </div>
-
-  <div *ngIf="selectedOption == 'My properties'">
-     
-    <div *ngIf="activeUser.isOwner == true">
-      <p class="addProperty" routerLink="/property-add-form"><fa-icon [icon]="faPlusCircle" ></fa-icon> Add new property</p>
-      <div *ngFor="let prop of userProperties" class="secondView" >
-        <img class="apPhoto" src={{prop.photo}} />
-        <div class="apDetail">
-              <p id="propertyName" (click)="goToProperty(prop)">
-                {{prop.name}}
-              </p>
-        </div>  
-      </div>
-    </div>
-    <div *ngIf="activeUser.isOwner == false">
-      <div class="register" >
-        <div>
-          Do you want to register your property?
-        </div>
-        <div class="start" routerLink="/property-add-form">
-          Let's start
-        </div>
-      </div>
-    </div>
-  </div>

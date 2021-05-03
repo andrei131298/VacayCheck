@@ -87,7 +87,18 @@ namespace VacayCheck.Controllers
             {
                 model.phoneNumber = value.phoneNumber;
             }
-            model.isOwner = value.isOwner;
+            if (value.prefferedCurrency != null)
+            {
+                model.prefferedCurrency = value.prefferedCurrency;
+            }
+            if (value.isOwner == true)
+            {
+                model.isOwner = true;
+            }
+            if (value.isOwner == false)
+            {
+                model.isOwner = false;
+            }
             return IUserRepository.Update(model);
         }
         [HttpPost("register")]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ApiService } from 'src/services/api.service';
 import { Apartment } from '../shared/apartment.model';
 import { faExchangeAlt, faBuilding} from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,7 @@ import { ExchangeRequest } from '../shared/exchangeRequest.model';
 })
 export class SelectApartmentComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private api: ApiService) { }
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   apartmentId: string;
   requestedApartment: Apartment;
@@ -77,6 +77,8 @@ export class SelectApartmentComponent implements OnInit {
     this.newRequest.checkOut = this.dateRange1Formatted
 
     this.api.addExchangeRequest(this.newRequest).subscribe();
+
+    this.router.navigate(["user-profile", this.userId]);
   }
 
 }

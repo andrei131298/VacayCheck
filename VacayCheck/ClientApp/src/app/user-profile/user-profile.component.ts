@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Favourite } from '../shared/favourite.model';
@@ -7,9 +7,10 @@ import { Reservation } from '../shared/reservation.model';
 import { User } from '../shared/user.model';
 import {  DatePipe,formatDate } from '@angular/common';
 import { Apartment } from '../shared/apartment.model';
-import { faPortrait, faPlusCircle, faPen, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faPortrait, faPlusCircle, faPen, faTimes, faExchangeAlt} from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExchangeRequest } from '../shared/exchangeRequest.model';
+import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class UserProfileComponent implements OnInit {
   userId:string;
   activeUser:User;
   isLoaded=false;
-  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties'];
+  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties', 'Vacay Requests'];
+  allCurrencies = ['AED', 'ARS', 'AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'JPY', 'KRW', 'MAD', 'MXN', 'MYR', 'NOK', 'NZD', 'PEN', 'PHP', 'PLN', 'RON', 'RUB', 'SAR', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'UAH', 'USD', 'UYU', 'VND', 'ZAR']
   selectedOption='Profile';
   savedProperties:Favourite[]=[];
   userReservations:Reservation[]=[];
@@ -38,12 +40,17 @@ export class UserProfileComponent implements OnInit {
   faPlusCircle = faPlusCircle;
   faPen = faPen;
   faTimes = faTimes;
+  faExchangeAlt = faExchangeAlt;
   futureReservations: Reservation[]=[];
   reservationsHistory: Reservation[]=[];
   currentReservations: Reservation[]=[];
   edit = false;
   success: boolean;
-  exchangesRequested: ExchangeRequest[]=[]
+  exchangesRequested: ExchangeRequest[]=[];
+  modalOpened = false;
+
+  @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
+
 
 
   ngOnInit(): void {
@@ -84,6 +91,14 @@ export class UserProfileComponent implements OnInit {
     this.api.getExchangeRequestByRequester(this.userId).subscribe((requests: ExchangeRequest[])=>{
       this.exchangesRequested = requests;
       console.log(this.exchangesRequested);
+      this.exchangesRequested.forEach((request: ExchangeRequest)=>{
+        this.api.getApartment(request.requesterApartmentId).subscribe((apartment: Apartment)=>{
+          request.requesterApartmentName = apartment.apartmentName;
+        });
+        this.api.getApartment(request.responderApartmentId).subscribe((ap: Apartment)=>{
+          request.responderApartmentName = ap.apartmentName;
+        });
+      });
     });
 
     setTimeout(() => {
@@ -109,6 +124,7 @@ export class UserProfileComponent implements OnInit {
         phoneNumber: [this.activeUser.phoneNumber, Validators.required],
         country: [this.activeUser.country, Validators.required],
         cityName: [this.activeUser.cityName, Validators.required]
+        // prefferedCurrency: [this.activeUser.prefferedCurrency, Validators.required]
   
       });
     });
@@ -125,6 +141,7 @@ export class UserProfileComponent implements OnInit {
         this.success = null;
       }, 3000);
       this.api.updateUserDetails(this.editUserForm.value, this.activeUser.id).subscribe(()=>{
+        console.log(this.editUserForm.value);
         this.getCurrentUser()
       });
 
@@ -142,6 +159,11 @@ export class UserProfileComponent implements OnInit {
   }
   cancelForm(){
     this.edit = false
+  }
+  openApartmentModal(id: string){
+    console.log(this.apartmentModal);
+    this.modalOpened = true;
+    this.apartmentModal.initialize(id);
   }
   deleteFavourite(propertyId:string){
     console.log(propertyId);

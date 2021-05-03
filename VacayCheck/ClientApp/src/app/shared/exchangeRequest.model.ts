@@ -7,6 +7,9 @@ export class ExchangeRequest {
   checkIn: Date;
   checkOut: Date;
   numberOfPersons:number;
+  status: string;
+  requesterApartmentName?: string;
+  responderApartmentName?: string;
 
 
   constructor(input?: any) {
