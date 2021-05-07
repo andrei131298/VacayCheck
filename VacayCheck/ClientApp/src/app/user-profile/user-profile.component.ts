@@ -29,13 +29,18 @@ export class UserProfileComponent implements OnInit {
   isLoaded=false;
   options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties', 'Vacay Requests'];
   allCurrencies = ['AED', 'ARS', 'AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'JPY', 'KRW', 'MAD', 'MXN', 'MYR', 'NOK', 'NZD', 'PEN', 'PHP', 'PLN', 'RON', 'RUB', 'SAR', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'UAH', 'USD', 'UYU', 'VND', 'ZAR']
+  requestsOptions = ["Your requests", "Requests on your properties"]
   selectedOption='Profile';
+  selectedRequest = "Your requests"
+  statuses = ['All statuses','Pending', 'Accepted', 'Declined']
+  selectedStatus = 'All statuses'
   savedProperties:Favourite[]=[];
   userReservations:Reservation[]=[];
   currentDate= new Date();
   userProperties:Property[]=[];
   selectedPhoto: string;
-  selectedIndex: number;
+  selectedIndex = 0;
+  selectedRequestIndex = 0;
   faPortrait = faPortrait;
   faPlusCircle = faPlusCircle;
   faPen = faPen;
@@ -47,6 +52,7 @@ export class UserProfileComponent implements OnInit {
   edit = false;
   success: boolean;
   exchangesRequested: ExchangeRequest[]=[];
+  exchangesToRespond: ExchangeRequest[]=[];
   modalOpened = false;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
@@ -101,6 +107,8 @@ export class UserProfileComponent implements OnInit {
       });
     });
 
+    this.getExchangeRequestsByResponder();
+
     setTimeout(() => {
       this.isLoaded=true;
       for(var reservation of this.userReservations){
@@ -134,6 +142,21 @@ export class UserProfileComponent implements OnInit {
     return this.editUserForm.controls;
   }
 
+  getExchangeRequestsByResponder(){
+    this.api.getExchangeRequestByResponder(this.userId).subscribe((requests: ExchangeRequest[])=>{
+      this.exchangesToRespond = requests;
+      console.log(this.exchangesToRespond);
+      this.exchangesToRespond.forEach((request: ExchangeRequest)=>{
+        this.api.getApartment(request.requesterApartmentId).subscribe((apartment: Apartment)=>{
+          request.requesterApartmentName = apartment.apartmentName;
+        });
+        this.api.getApartment(request.responderApartmentId).subscribe((ap: Apartment)=>{
+          request.responderApartmentName = ap.apartmentName;
+        });
+      });
+    });
+  }
+
   saveChanges(){
     if (this.editUserForm.valid) {
       this.success = true;
@@ -155,7 +178,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   changeOption(option){
-    this.selectedOption=option;
+    this.selectedOption = option;
+  }
+  changeRequestOption(requestOption){
+    this.selectedRequest = requestOption;
+  }
+  selectStatus(value: string){
+    this.selectedStatus = value;
+    console.log(this.selectedStatus);
   }
   cancelForm(){
     this.edit = false
@@ -200,6 +230,22 @@ export class UserProfileComponent implements OnInit {
     this.selectedIndex = _index;
   }
 
+  public setRequestRow(_index: number) {
+    this.selectedRequestIndex = _index;
+  }
+
+  acceptRequest(request: ExchangeRequest){
+    request.status = "Accepted";
+    this.api.updateExchangeRequest(request).subscribe(()=>{
+      this.getExchangeRequestsByResponder();
+    });
+  }
+  declineRequest(request: ExchangeRequest){
+    request.status = "Declined";
+    this.api.updateExchangeRequest(request).subscribe(()=>{
+      this.getExchangeRequestsByResponder();
+    });
+  }
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
         var filesAmount = event.target.files.length;

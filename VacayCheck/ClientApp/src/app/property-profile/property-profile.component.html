@@ -52,7 +52,7 @@
 
         <div class="apartmentsContainer mb-3 mr-3 p-0">
           <p class="text-center h2 mt-3 mb-3">Apartments</p>
-          <div class="secondView" *ngFor="let apartment of apartments">
+          <div class="secondView" *ngFor="let apartment of apartments; let i = index">
             <img class="apPhoto" src="{{apartment.photos[0] }}" />
             <div class="apDetail">
               <p id="apName" (click)="openApartmentModal(apartment.id)">
@@ -63,17 +63,17 @@
                 <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
               </div>
               <p *ngIf="property.userId != userId" id="totalPrice" >
-                Total price: {{apartment.pricePerNight*period}}
+                Total price: {{apartment.pricePerNight*period}}$
               </p>
               <div class="optionsButtons">
                 <button *ngIf="property.userId != userId" type="button" class="btn" (click)="check();set(apartment.id);">Reserve</button>
                 <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" (click)="goToSelectApartmentPage(apartment)">Vacay Request <fa-icon [icon]="faInfoCircle" 
-                  (mouseover)="showInfo = true" (mouseout)="showInfo = false"></fa-icon></button>
+                  (mouseover)="showInfo = true; hoveredApartmentIndex = i" (mouseout)="showInfo = false; hoveredApartmentIndex = null"></fa-icon></button>
                 <button *ngIf="property.userId != userId && currentUser.isOwner == false" type="button" class="disabledButton btn ml-3">
-                  Vacay Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true" (mouseout)="showInfoForDisabled = false"></fa-icon></button>
+                  Vacay Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true; hoveredApartmentIndex = i" (mouseout)="showInfoForDisabled = false; hoveredApartmentIndex = null"></fa-icon></button>
               </div>
-              <p class="information" *ngIf="showInfo == true">Vacay Request is a new feature through which you can request an exchange of accommodation</p>
-              <div class="infoForDisabled" *ngIf="showInfoForDisabled == true">You need to be an owner with at least 5 reservations on our website to be able to use this feature</div>
+              <p class="infoForDisabled" *ngIf="showInfo == true && hoveredApartmentIndex == i">Vacay Request is a new feature through which you can request an exchange of accommodation</p>
+              <div class="infoForDisabled" *ngIf="showInfoForDisabled == true && hoveredApartmentIndex == i">You need to be an owner with at least 5 reservations on our website to be able to use this feature</div>
             </div>  
           </div>
           <div *ngIf="apartments.length == 0 ">

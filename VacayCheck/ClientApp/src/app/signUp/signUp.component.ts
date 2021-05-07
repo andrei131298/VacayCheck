@@ -9,6 +9,7 @@ import {
   FormControl,
 } from "@angular/forms";
 import { ApiService } from "../../services/api.service";
+import { Country } from "../shared/country.model";
 
 @Component({
   selector: "sign-up",
@@ -20,6 +21,7 @@ export class SignUpComponent implements OnInit {
   addUserForm: FormGroup;
   success: boolean;
   birthDate: string;
+  allCountries: Country[] = [];
 
   constructor(
     public fb: FormBuilder,
@@ -40,6 +42,10 @@ export class SignUpComponent implements OnInit {
       country: [null, Validators.required],
       cityName: [null, Validators.required]
 
+    });
+
+    this.api.getCountries().subscribe((countries: Country[])=>{
+      this.allCountries = countries;
     });
   }
 

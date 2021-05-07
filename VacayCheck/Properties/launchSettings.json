@@ -2,8 +2,12 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/VacayCheck",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:50004",
+      "applicationUrl": "http://localhost:5000",
       "sslPort": 44397
     }
   },

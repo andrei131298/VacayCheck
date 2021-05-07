@@ -157,14 +157,11 @@
 
     <div class="form-group">
       <div class="col-sm-12">
-        <label for="country" class="control-label required">Country</label>
-        <input
-          type="text"
-          id="country"
-          class="form-control"
-          formControlName="country"
-          autocomplete="off"
-        />
+        <label class="control-label mt-2">Country</label>
+                <select class="form-control" formControlName="country">
+                  <option value="" disabled>Country</option>
+                  <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
+                </select>
         <app-field-error-display
           [displayError]="isFieldValid('country')"
           errorMsg="Please inform your country"

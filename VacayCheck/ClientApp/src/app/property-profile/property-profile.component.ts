@@ -47,6 +47,7 @@ export class PropertyProfileComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt; 
   faInfoCircle = faInfoCircle;
   currentUser: User;
+  hoveredApartmentIndex: number;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
   constructor(private api: ApiService, private router: Router,private route: ActivatedRoute) {

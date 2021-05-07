@@ -227,31 +227,82 @@
 
     <div *ngIf="selectedOption == 'Vacay Requests'">
 
-        <div *ngFor="let request of exchangesRequested" class= "pageFlex">
-          <div class="container">
-            <div class="reservation">
-                <h2 id="title">Requested apartment</h2>
-                <!-- <img id="apPhoto" src={{requestedApartment.photos[0]}}> -->
-                <p id="apartmentName" (click)="openApartmentModal(request.responderApartmentId)">{{request.responderApartmentName}}</p>
-                <!-- <p style="font-weight: bold; font-size: 20px;"><fa-icon [icon]="faBuilding" ></fa-icon> {{propertyOfRequestedAp.name}}</p> -->
-                <div class="reservationDetails">
-                        <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
-                        <p>Number of persons: {{request.numberOfPersons}}</p>
-                  </div>
+        <div class="header">
+          <div class="options">
+              <ul class="nav">
+                <a *ngFor="let requestOption of requestsOptions; let i = index" class="link">
+                  <p class="opt" style="color: white;" (click)="changeRequestOption(requestOption);setRequestRow(i)" [ngClass]="{'highlight2': selectedRequestIndex === i}">{{requestOption}}</p>
+                </a>
+              </ul>
+          </div>
+        </div>
+
+        <div *ngIf="selectedRequest == 'Your requests' ">
+          <select class="form-control" style="width: 10%; margin: auto; margin-top: 20px;" (change) = "selectStatus(selectedStatus)" [(ngModel)]="selectedStatus">
+            <option value="" disabled selected>Status</option>
+            <option *ngFor = "let status of statuses" value="{{status}}">{{status}}</option>
+          </select>
+          <div *ngFor = "let request of exchangesRequested">
+            <div *ngIf = "request.status == selectedStatus || selectedStatus == 'All statuses' " class= "pageFlex">
+              <div class="container">
+                <div class="reservation">
+                    <h2 id="title">Requested apartment</h2>
+                    <p id="apartmentName" (click)="openApartmentModal(request.responderApartmentId)">{{request.responderApartmentName}}</p>
+                    <div class="reservationDetails">
+                            <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
+                            <p>Number of persons: {{request.numberOfPersons}}</p>
+                      </div>
+                </div>
+              </div>
+              <div class="exchangeSign">
+                <p id="status">{{request.status}}</p>
+                <fa-icon [ngClass]="{'exchangePending' : request.status=='Pending', 'exchangeDeclined' : request.status=='Declined', 'exchangeAccepted' : request.status=='Accepted' }"
+                [icon]="faExchangeAlt" ></fa-icon>
+              </div>
+              <div class="container">
+                <div class="reservation">
+                    <h2 id="title">Offered apartment</h2>
+                    <p id="apartmentName" (click)="openApartmentModal(request.requesterApartmentId)">{{request.requesterApartmentName}}</p>
+                    
+                </div>
+              </div>
             </div>
           </div>
-          <div class="exchangeSign">
-            <p id="status">{{request.status}}</p>
-            <fa-icon [ngClass]="{'exchangePending' : request.status=='Pending', 'exchangeDeclined' : request.status=='Declined', 'exchangeAccepted' : request.status=='Accepted' }"
-            [icon]="faExchangeAlt" ></fa-icon>
-          </div>
-          <div class="container">
-            <div class="reservation">
-                <h2 id="title">Offered apartment</h2>
-                <!-- <img id="apPhoto" src={{requestedApartment.photos[0]}}> -->
-                <p id="apartmentName" (click)="openApartmentModal(request.requesterApartmentId)">{{request.requesterApartmentName}}</p>
-                <!-- <p style="font-weight: bold; font-size: 20px;"><fa-icon [icon]="faBuilding" ></fa-icon> {{propertyOfRequestedAp.name}}</p> -->
-                
+        </div>
+
+        <div *ngIf="selectedRequest == 'Requests on your properties' ">
+          <select class="form-control" style="width: 10%; margin: auto; margin-top: 20px;" (change) = "selectStatus(selectedStatus)" [(ngModel)]="selectedStatus">
+            <option value="" disabled selected>Status</option>
+            <option *ngFor = "let status of statuses" value="{{status}}">{{status}}</option>
+          </select>
+          <div *ngFor = "let request of exchangesToRespond">
+            <div *ngIf = "request.status == selectedStatus || selectedStatus == 'All statuses' " class= "pageFlex">
+              <div class="container">
+                <div class="reservation">
+                    <h2 id="title">Requested apartment</h2>
+                    <p id="apartmentName" (click)="openApartmentModal(request.responderApartmentId)">{{request.responderApartmentName}}</p>
+                    <div class="reservationDetails">
+                            <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
+                            <p>Number of persons: {{request.numberOfPersons}}</p>
+                      </div>
+                </div>
+              </div>
+              <div class="exchangeSign">
+                <p id="status">{{request.status}}</p>
+                <fa-icon [ngClass]="{'exchangePending' : request.status=='Pending', 'exchangeDeclined' : request.status=='Declined', 'exchangeAccepted' : request.status=='Accepted' }"
+                [icon]="faExchangeAlt" ></fa-icon>
+                <button *ngIf="request.status == 'Pending' " type="button" style="background-color: rgb(4, 180, 63); color: white;" 
+                  class="btn" (click) = "acceptRequest(request)">Accept</button>
+                <button *ngIf="request.status == 'Pending' " type="button" style="margin-top: 10px; background-color: crimson; color: white;"
+                  class="btn" (click) = "declineRequest(request)">Decline</button>
+              </div>
+              <div class="container">
+                <div class="reservation">
+                    <h2 id="title">Offered apartment</h2>
+                    <p id="apartmentName" (click)="openApartmentModal(request.requesterApartmentId)">{{request.requesterApartmentName}}</p>
+                    
+                </div>
+              </div>
             </div>
           </div>
         </div>

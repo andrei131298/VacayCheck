@@ -220,4 +220,9 @@ export class ApiService {
         headers: this.header,
       });
     }
+    updateExchangeRequest(exchangeRequest: ExchangeRequest){
+      return this.http.put(this.baseUrl + "/ExchangeRequest/", exchangeRequest, {
+        headers: this.header,
+      });
+    }
 }
