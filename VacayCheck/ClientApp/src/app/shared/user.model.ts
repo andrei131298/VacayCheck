@@ -13,8 +13,7 @@ export class User {
   phoneNumber: string;
   country: string;
   cityName: string;
-  prefferedCurrency: string;
-
+  isMailVerificated: boolean;
   constructor(input?: any) {
     Object.assign(this, input);
   }

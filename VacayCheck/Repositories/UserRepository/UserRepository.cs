@@ -11,6 +11,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace VacayCheck.Repositories.UserRepository
 {
@@ -52,9 +55,39 @@ namespace VacayCheck.Repositories.UserRepository
         public User Register(RegisterRequest request)
         {
             var entity = request.ToUserExtension();
-            var result = _context.Add<User>(entity);
-            _context.SaveChanges();
-            return result.Entity;
+            var userAlreadyExists = _context.Users.Any(x => x.email == request.email);
+            if (userAlreadyExists)
+            {
+                return null;
+            }
+            else
+            {
+                var result = _context.Add<User>(entity);
+                _context.SaveChanges();
+                
+                MailMessage mailMessage = new MailMessage("andtei131298@gmail.com", request.email);
+                // Specify the email body
+                mailMessage.Body = "Verification link: https://localhost:44397/email-verification/" + result.Entity.id;
+                // Specify the email Subject
+                mailMessage.Subject = "TravelCheck e-mail verification";
+
+                // Specify the SMTP server name and post number
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                // Specify your gmail address and password
+                smtpClient.UseDefaultCredentials = false;
+
+                smtpClient.Credentials = new System.Net.NetworkCredential()
+                {
+                    UserName = "andtei131298@gmail.com",
+                    Password = "tenismen"
+                };
+                // Gmail works on SSL, so set this property to true
+                smtpClient.EnableSsl = true;
+                // Finall send the email message using Send() method
+                smtpClient.Send(mailMessage);
+
+                return result.Entity;
+            }
 
         }
         public User GetByUserAndPassword(string email, string password)
@@ -91,7 +124,8 @@ namespace VacayCheck.Repositories.UserRepository
             {
                 id = user.id,
                 email = user.email,
-                token = token
+                token = token,
+                isMailVerificated = user.isMailVerificated
             };
         }
     }

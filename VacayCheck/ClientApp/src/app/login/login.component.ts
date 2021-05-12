@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
   success: boolean;
   users: User[] = [];
   triedWithoutLogin = JSON.parse(sessionStorage.getItem('triedWithoutLogin'));
+  mailNotVerificated: string;
 
   ngOnInit() {
-    console.log(this.triedWithoutLogin)
     this.loginForm = this.fb.group({
       email: [null, Validators.required],
       password: [null, Validators.required],
@@ -69,30 +69,39 @@ export class LoginComponent implements OnInit {
               this.success = null;
             }, 3000);
           }
-          console.log(this.requestResponse.token)
+          console.log(this.requestResponse)
       }, error => {
           console.log(error);
       },
 
       () => {
 
-          this.success = true;
-          setTimeout(() => {
-            this.success = null;
-          }, 3000);
-          sessionStorage.setItem("isLoggedIn", "true");
-          sessionStorage.setItem("userId", this.requestResponse.id);
-          this.api.getUser(this.requestResponse.id).subscribe((user: User) => {
-            sessionStorage.setItem('firstName',user.firstName);
-          });
-          if(this.triedWithoutLogin == true){
-            sessionStorage.setItem("token", this.requestResponse.token);
-            this.router.navigate(["/reservation"]);
+          if(this.requestResponse.isMailVerificated != false){
+
+            this.success = true;
+            setTimeout(() => {
+              this.success = null;
+            }, 3000);
+            sessionStorage.setItem("isLoggedIn", "true");
+            sessionStorage.setItem("userId", this.requestResponse.id);
+            this.api.getUser(this.requestResponse.id).subscribe((user: User) => {
+              sessionStorage.setItem('firstName',user.firstName);
+            });
+            if(this.triedWithoutLogin == true){
+              sessionStorage.setItem("token", this.requestResponse.token);
+              this.router.navigate(["/reservation"]);
+            }
+            else{
+              sessionStorage.setItem("token", this.requestResponse.token);
+              setTimeout(() => {
+                this.router.navigate(["/home"]);
+              }, 3000);
+            }
           }
           else{
-            sessionStorage.setItem("token", this.requestResponse.token);
+            this.mailNotVerificated = "Verificate your mail"
             setTimeout(() => {
-              this.router.navigate(["/home"]);
+              this.mailNotVerificated = null
             }, 3000);
           }
         }

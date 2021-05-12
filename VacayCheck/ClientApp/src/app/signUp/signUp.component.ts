@@ -67,13 +67,18 @@ export class SignUpComponent implements OnInit {
   }
   onSubmit() {
     if (this.addUserForm.valid) {
-      this.success = true;
-      setTimeout(() => {
-        this.success = null;
-      }, 3000);
       console.log(this.addUserForm.value);
-      this.api.addUser(this.addUserForm.value).subscribe();
-      this.router.navigate(["/login"]);
+      this.api.addUser(this.addUserForm.value).subscribe((response)=>{
+        if(response){
+          this.router.navigate(["/email-sent"]);
+        }
+        else{
+          this.success = false;
+          setTimeout(() => {
+            this.success = null;
+          }, 3000);
+        }
+      });
     } else {
       this.success = false;
       setTimeout(() => {

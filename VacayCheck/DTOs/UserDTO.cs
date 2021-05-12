@@ -20,7 +20,7 @@ namespace VacayCheck.DTOs
         public string phoneNumber { get; set; }
         public string country { get; set; }
         public string cityName { get; set; }
-        public string prefferedCurrency { get; set; }
+        public bool isMailVerificated { get; set; }
 
     }
 }

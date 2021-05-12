@@ -87,9 +87,9 @@ namespace VacayCheck.Controllers
             {
                 model.phoneNumber = value.phoneNumber;
             }
-            if (value.prefferedCurrency != null)
+            if (value.isMailVerificated == true)
             {
-                model.prefferedCurrency = value.prefferedCurrency;
+                model.isMailVerificated = value.isMailVerificated;
             }
             if (value.isOwner == true)
             {

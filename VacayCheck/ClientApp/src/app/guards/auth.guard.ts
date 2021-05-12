@@ -4,18 +4,24 @@ import {
   Router,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
+  ActivatedRoute,
+  Params,
 } from "@angular/router";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
+  userId = sessionStorage.getItem('userId');
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    let url: string = state.url;
-    return this.verifyLogin(url);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+    if(this.userId != route.params.id){
+      this.router.navigate(["/user-profile", this.userId]);
+      return false;
+    }
+    else{
+      return true;
+    }
   }
   
   verifyLogin(url): boolean {

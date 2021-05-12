@@ -36,6 +36,8 @@ import { CreditCardDirective } from "./util/cardNumber.directive";
 import { ConfirmationModalComponent } from './reservation/confirmation-modal/confirmation-modal.component';
 import { AgmCoreModule } from "@agm/core";
 import { SelectApartmentComponent } from './select-apartment/select-apartment.component';
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { EmailSentComponent } from './email-sent/email-sent.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { SelectApartmentComponent } from './select-apartment/select-apartment.co
     PaymentComponent,
     CreditCardDirective,
     ConfirmationModalComponent,
-    SelectApartmentComponent
+    SelectApartmentComponent,
+    EmailVerificationComponent,
+    EmailSentComponent
   ],
   imports: [
     CommonModule,

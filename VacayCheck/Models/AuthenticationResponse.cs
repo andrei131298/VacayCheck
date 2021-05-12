@@ -11,5 +11,6 @@ namespace VacayCheck.Models
 
         public string token { get; set; }
         public string email { get; set; }
+        public bool isMailVerificated { get; set; }
     }
 }

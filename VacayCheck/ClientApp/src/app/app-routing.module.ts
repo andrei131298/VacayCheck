@@ -15,21 +15,25 @@ import { MyPropertyComponent } from "./my-property/my-property.component";
 import { ApartmentProfileComponent } from "./apartment-profile/apartment-profile.component";
 import { PaymentComponent } from "./reservation/payment/payment.component";
 import { SelectApartmentComponent } from "./select-apartment/select-apartment.component";
+import { EmailVerificationComponent } from "./email-verification/email-verification.component";
+import { EmailSentComponent } from "./email-sent/email-sent.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "signUp", component: SignUpComponent },
   { path: "search-results", component: SearchResult },
   { path: "login", component: LoginComponent },
-  { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "home", component: HomeComponent },
   { path: "property-profile", component: PropertyProfileComponent },
   { path: 'reservation', component: ReservationComponent },
-  { path: "user-profile/:id", component: UserProfileComponent },
+  { path: "user-profile/:id", component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: "owner-login", component:OwnerLoginComponent},
   { path: "property-add-form", component:PropertyAddFormComponent},
   { path: "apartment-add-form/:propertyId", component:ApartmentAddFormComponent},
   { path: "my-property/:propertyId", component:MyPropertyComponent},
-  { path: "select-apartment/:id", component: SelectApartmentComponent}
+  { path: "select-apartment/:id", component: SelectApartmentComponent},
+  { path: "email-verification/:id", component:EmailVerificationComponent},
+  { path: "email-sent", component: EmailSentComponent}
 ];
 
 @NgModule({

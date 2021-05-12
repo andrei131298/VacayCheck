@@ -197,10 +197,11 @@
         <button class="btn btn-dark" (click)="reset()">Reset</button>
         
   </form>
-  <p *ngIf="success" style="color: green; font-size: 22px">
-    {{ selectedOption.toUpperCase() }} added successfully
+  
+  <p class="text-center mt-2" *ngIf="success" style="color: green; font-size: 22px">
+    User added successfully
   </p>
-  <p *ngIf="success === false" style="color: red; font-size: 22px">
-    Something went wrong
+  <p class="text-center mt-2" *ngIf="success == false" style="color: red; font-size: 22px">
+    Error on sign up
   </p>
 </div>
