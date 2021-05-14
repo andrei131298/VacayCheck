@@ -46,7 +46,7 @@
 </form>
     <div *ngIf="searchText.length > 0" class="row">
       <ng-container
-        *ngFor="let property of properties | searchFilter: {name: searchText};let ind = index">
+        *ngFor="let property of properties | searchFilter: {cityName: searchText};let ind = index">
         <div class="view col mb-2 mr-2 hoverable">
           <img
             class="pozeCazari"

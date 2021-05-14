@@ -19,6 +19,7 @@ export class HomeComponent {
   minDate=new Date();
   dateRange0Formatted:string;
   dateRange1Formatted:string;
+  propertyId: string;
 
 
   @ViewChild("detailModal") detailModal: DetailModalComponent;
@@ -26,13 +27,16 @@ export class HomeComponent {
 
   ngOnInit() {
     this.api.getProperties().subscribe((properties: Property[]) => {
-      this.properties=properties
+      this.properties=properties;
+      console.log(this.properties);
     });
     this.maxDate.setFullYear(this.maxDate.getFullYear()+1);
     
   }
   showDM(id: string): void {
-    this.detailModal.initialize(id);
+    this.propertyId = id;
+    console.log(this.propertyId)
+    this.detailModal.initialize(this.propertyId);
   }
 
   onSubmit() {

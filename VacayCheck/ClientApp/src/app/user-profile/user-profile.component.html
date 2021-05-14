@@ -248,6 +248,8 @@
                             'completed': propertiesReservation.status == 'Completed' }">
                             {{propertiesReservation.status}}
                           </p>
+                          <button type="button" style="margin-top: 10px;" class="btn btn-primary" (click)="toOwnerReservationDetails(propertiesReservation)">See details</button>
+
                     </div>  
                   </div>
                 </div>
@@ -267,7 +269,8 @@
                           <p class="completed">
                             {{propertiesReservation.status}}
                           </p>
-                        
+                          <button type="button" style="margin-top: 10px;" class="btn btn-primary" (click)="toOwnerReservationDetails(propertiesReservation)">See details</button>
+
                     </div>  
                   </div>
                 </div>
@@ -287,6 +290,8 @@
                           <p class="upcoming">
                             {{propertiesReservation.status}}
                           </p>
+                          <button type="button" style="margin-top: 10px;" class="btn btn-primary" (click)="toOwnerReservationDetails(propertiesReservation)">See details</button>
+
                     </div>  
                   </div>
                 </div>
@@ -306,6 +311,8 @@
                           <p class="current">
                             {{propertiesReservation.status}}
                           </p>
+                          <button type="button" style="margin-top: 10px;" class="btn btn-primary" (click)="toOwnerReservationDetails(propertiesReservation)">See details</button>
+
                     </div>  
                   </div>
                 </div>
@@ -378,7 +385,7 @@
             <div *ngIf = "request.status == selectedStatus || selectedStatus == 'All statuses' " class= "pageFlex">
               <div class="container">
                 <div class="reservation">
-                    <h2 id="title">Requested apartment</h2>
+                    <h2 id="title">Your apartment</h2>
                     <p id="apartmentName" (click)="openApartmentModal(request.responderApartmentId)">{{request.responderApartmentName}}</p>
                     <div class="reservationDetails">
                             <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
@@ -391,7 +398,7 @@
                 <fa-icon [ngClass]="{'exchangePending' : request.status=='Pending', 'exchangeDeclined' : request.status=='Declined', 'exchangeAccepted' : request.status=='Accepted' }"
                 [icon]="faExchangeAlt" ></fa-icon>
                 <button *ngIf="request.status == 'Pending' " type="button" style="background-color: rgb(4, 180, 63); color: white;" 
-                  class="btn" (click) = "acceptRequest(request)">Accept</button>
+                  class="btn" (click) = "openCalendar()">Check availability</button>
                 <button *ngIf="request.status == 'Pending' " type="button" style="margin-top: 10px; background-color: crimson; color: white;"
                   class="btn" (click) = "declineRequest(request)">Decline</button>
               </div>
@@ -399,6 +406,23 @@
                 <div class="reservation">
                     <h2 id="title">Offered apartment</h2>
                     <p id="apartmentName" (click)="openApartmentModal(request.requesterApartmentId)">{{request.requesterApartmentName}}</p>
+                    <!-- <div class="reservationDetails">
+                      <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
+                      <p>Number of persons: {{request.numberOfPersons}}</p>
+                    </div> -->
+                    <div class="inputs">
+                      <input *ngIf = "calendarIsShown == true" id="checkin" type="datetime" bsDaterangepicker class="form-control" placeholder="Check-in  -  Check-out" [bsConfig]="{ rangeInputFormat: 'DD-MM-YYYY' }"
+                        autocomplete="off" [(ngModel)]="bsRangeValue" (ngModelChange)="checkAvailibility(request.requesterApartmentId, request.checkIn, request.checkOut)" [minDate]="minDate" [maxDate]="maxDate" [ngModelOptions]="{ standalone: true }" onKeyDown="return false"/>
+                      <input *ngIf = "calendarIsShown == true" id="numberOfPersons" class="form-control" style="margin-left: 5px;" type="number" min="1" max="10"
+                        (change)="checkAvailibility(request.requesterApartmentId, request.checkIn, request.checkOut)" onKeyDown="return false" placeholder="Number of persons" [(ngModel)]="nrOfPersons" />
+                    </div>
+                    <p *ngIf = "availabilityMessage" id = "availabilityMessage" [ngClass]="{'available' : availabilityMessage == 'Available', 'overlayed' : availabilityMessage == 'Overlayed', 
+                      'notAvailable' : availabilityMessage == 'Not available'}">{{availabilityMessage}}</p>
+                    <div class="buttons">
+                      <button *ngIf = "bsRangeValue && availabilityMessage == 'Available'" type="button" class="btn" style="margin-right: 10px; background-color: rgb(4, 180, 63); color: white;"
+                        (click) = "confirmExchange(request)">Confirm</button>
+                      <button *ngIf="bsRangeValue" type="button" style="background-color: crimson; color: white;" class="btn" (click) = "cancelCheck()">Cancel</button>
+                    </div>
                     
                 </div>
               </div>

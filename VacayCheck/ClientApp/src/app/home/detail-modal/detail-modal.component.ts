@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { Property } from "../../shared/property.model";
 import { City } from "../../shared/city.model";
@@ -11,6 +11,8 @@ import { ApiService } from "../../../services/api.service";
 })
 export class DetailModalComponent implements OnInit {
   @ViewChild("detailModal") modal: ModalDirective;
+  // @Input() propertyId:string;
+
   property = new Property();
 
   constructor(private api: ApiService) {}

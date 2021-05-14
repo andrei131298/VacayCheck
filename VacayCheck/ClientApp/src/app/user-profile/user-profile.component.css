@@ -259,3 +259,41 @@ hr {
 .completed{
   color: rgb(20, 182, 20);
 }
+#checkin {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  /* width: 30%; */
+  text-align: center;
+}
+#numberOfPersons{
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  /* width: 20%; */
+  text-align: center;
+}
+.notAvailable{
+  color: crimson;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+.overlayed{
+  color: crimson;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+.available{
+  color: rgb(20, 182, 20);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+}
+.inputs{
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+}

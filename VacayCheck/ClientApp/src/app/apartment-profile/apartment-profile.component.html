@@ -37,20 +37,21 @@
         </div>
         <div class="reviews">
           <p><fa-icon [icon]="faComment"></fa-icon> Reviews:</p>
-          <div *ngFor="let reservation of apartmentsReservations | slice:0:showNumber" class="review">
-            <p><fa-icon [icon]="faUser"></fa-icon> {{reservation.userFirstName}} - {{reservation.checkIn | date:'longDate'}} </p>
-            <p><fa-icon [icon]="faGlobe"></fa-icon> {{reservation.rating}} Travel points  
-              <fa-icon *ngIf="reservation.rating >=1 && reservation.rating < 4" class="frown" [icon]="faFrown"></fa-icon>
-              <fa-icon *ngIf="reservation.rating >= 4 && reservation.rating < 8" class="meh" [icon]="faMeh"></fa-icon>
-              <fa-icon *ngIf="reservation.rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
-            </p>  
-            <p>{{reservation.review}}</p>
-              
+          <div *ngFor="let reservation of apartmentsReservations | slice:0:showNumber">
+            <div *ngIf = "reservation.review != '' && reservation.review != null" class="review">
+              <p><fa-icon [icon]="faUser"></fa-icon> {{reservation.userFirstName}} - {{reservation.checkIn | date:'longDate'}} </p>
+              <p><fa-icon [icon]="faGlobe"></fa-icon> {{reservation.rating}} Travel points  
+                <fa-icon *ngIf="reservation.rating >=1 && reservation.rating < 4" class="frown" [icon]="faFrown"></fa-icon>
+                <fa-icon *ngIf="reservation.rating >= 4 && reservation.rating < 8" class="meh" [icon]="faMeh"></fa-icon>
+                <fa-icon *ngIf="reservation.rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
+              </p>  
+              <p>{{reservation.review}}</p>
+            </div>
           </div>
 
           <p id="seeComments" *ngIf="apartmentsReservations.length > 3 && show == false" (click)="show = true; showNumber = apartmentsReservations.length">See more comments</p>
           <p id="seeComments" *ngIf="show == true" (click)="show = false; showNumber = 3">See less comments</p>
-          <div *ngIf="apartmentsReservations.length == 0">
+          <div *ngIf="apartmentsReservations.length == 0 || apartmentHasReviews == false">
             This apartment doesn't have reviews yet
           </div>  
         </div>

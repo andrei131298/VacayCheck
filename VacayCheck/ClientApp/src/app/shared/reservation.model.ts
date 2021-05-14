@@ -9,13 +9,14 @@ export class Reservation {
   userId: string;
   apartmentId: string;
   numberOfPersons:number;
-  paidWithCard: boolean;
+  paidWithCard?: boolean;
   rating: number;
   propertyId?:string;
   apartmentName?: string;
   propertyName?:string;
   apartment?:Apartment;
   userFirstName?: string;
+  status?:string;
 
   constructor(input?: any) {
     Object.assign(this, input);

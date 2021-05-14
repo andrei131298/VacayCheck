@@ -2,8 +2,8 @@
   background-color: white;
   border: 3px solid black;
   border-radius: 10px;
-  width: 70%;
-  height: 70%;
+  width: 60%;
+  height: 60%;
   margin: auto;
 }
 
@@ -17,12 +17,12 @@
 .details {
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
+  align-items: center;
 }
 .propertyMainPhoto {
   object-fit: cover;
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
   border: 4px solid black;
   border-radius: 10px;
 }

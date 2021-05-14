@@ -46,6 +46,7 @@ namespace VacayCheck.Controllers
             {
                 PropertyDetailsDTO MyProperty = new PropertyDetailsDTO()
                 {
+                    id = p.id,
                     name = p.name,
                     type = p.type,
                     description = p.description,

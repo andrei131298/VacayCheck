@@ -21,6 +21,9 @@ export class ApiService {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   });
+  header2 = new HttpHeaders({
+    "Content-Type": "text",
+  });
   baseUrl = "https://localhost:44397/api";
   countriesUrl = "https://restcountries.eu/rest/v2/all";
 
@@ -70,9 +73,10 @@ export class ApiService {
       headers: this.header,
     });
   }
-  getOwner(id: string) {
-    return this.http.get(this.baseUrl + "/Owner/" + id.toString(), {
-      headers: this.header,
+  
+  checkApartmentAvailability(apartmentId, requesterCheckin, requesterCheckout, responderCheckin, responderCheckout, persons){
+    return this.http.get(this.baseUrl + "/Apartment/" + apartmentId + "/" + requesterCheckin + "/" + requesterCheckout + "/" + responderCheckin + "/" + responderCheckout + "/" + persons, {
+      headers: {"Content-Type": "text/plain"},
     });
   }
   getUser(id: string) {
@@ -221,7 +225,7 @@ export class ApiService {
       });
     }
     updateExchangeRequest(exchangeRequest: ExchangeRequest){
-      return this.http.put(this.baseUrl + "/ExchangeRequest/", exchangeRequest, {
+      return this.http.put(this.baseUrl + "/ExchangeRequest/"+ exchangeRequest.id, exchangeRequest, {
         headers: this.header,
       });
     }

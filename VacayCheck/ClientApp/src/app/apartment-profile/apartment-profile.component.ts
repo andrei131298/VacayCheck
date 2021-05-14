@@ -18,9 +18,9 @@ import { Photo } from '../shared/photo.model';
 export class ApartmentProfileComponent implements OnInit {
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ModalDirective;
   apartmentId: string;
-  activeApartment: Apartment;
-  activeProperty: Property;
-  mainPhoto: Photo;
+  activeApartment = new Apartment();
+  activeProperty = new Property();
+  mainPhoto = new Photo();
   selectedIndex = 0;
   faUser = faUser;
   faComment = faComment;
@@ -41,6 +41,7 @@ export class ApartmentProfileComponent implements OnInit {
   newPhoto = new Photo();
   newPath: string;
   userId = sessionStorage.getItem('userId');
+  apartmentHasReviews = false;
 
 
 
@@ -80,6 +81,9 @@ export class ApartmentProfileComponent implements OnInit {
         this.apartmentsReservations.forEach((reservation:Reservation) =>{
           this.api.getUser(reservation.userId).subscribe((user: User)=>{
             reservation.userFirstName = user.firstName;
+            if(reservation.review != ""){
+              this.apartmentHasReviews = true;
+            }
           });
         });
       });

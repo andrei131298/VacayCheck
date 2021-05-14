@@ -11,6 +11,8 @@ namespace VacayCheck.Repositories.ApartmentRepository
         List<Apartment> GetAll();
         Apartment Get(Guid id);
         IEnumerable<Apartment> GetApartmentsByPropertyId(Guid propertyId);
+        string CheckApartmentAvailibility(Guid apartmentId, DateTime requesterCheckin, DateTime requesterCheckout, 
+            DateTime responderCheckin, DateTime responderCheckout, int persons);
         Apartment Create(Apartment Apartment);
         Apartment Update(Apartment Apartment);
         Apartment Delete(Apartment Apartment);

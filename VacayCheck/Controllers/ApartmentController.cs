@@ -65,6 +65,15 @@ namespace VacayCheck.Controllers
             return MyApartment;
         }
 
+        [HttpGet("{apartmentId}/{requesterCheckin}/{requesterCheckout}/{responderCheckin}/{responderCheckout}/{persons}")]
+        
+        public IActionResult GetApartmentAvailability(Guid apartmentId, DateTime requesterCheckin, DateTime requesterCheckout,
+            DateTime responderCheckin, DateTime responderCheckout, int persons)
+        {
+            return Ok(IApartmentRepository.CheckApartmentAvailibility(apartmentId, requesterCheckin, requesterCheckout,
+                responderCheckin, responderCheckout, persons));
+        }
+
         [HttpGet("propertyId/{propertyId}")]
         public List<ApartmentDTO> GetApartmentsByPropertyId(Guid propertyId)
         {

@@ -35,6 +35,7 @@ export class ReservationComponent implements OnInit {
   reservationHistory = JSON.parse(this.route.snapshot.queryParamMap.get('reservationHistory'));
   futureReservation = JSON.parse(this.route.snapshot.queryParamMap.get('futureReservation'));
   details = JSON.parse(this.route.snapshot.queryParamMap.get('details'));
+  ownerReservation = JSON.parse(this.route.snapshot.queryParamMap.get('owner'));
   review:string;
   reservation=new Reservation();
   isLoaded=false;
@@ -42,6 +43,7 @@ export class ReservationComponent implements OnInit {
   paymentOptions = ["Pay now with card", "Pay with cash at property"]
   selectedPaymentOption: string;
   owner: User;
+  guest: User;
   currentProperty: Property;
   cancellationDateLimit = new Date();
   currentDate = new Date();
@@ -65,15 +67,18 @@ export class ReservationComponent implements OnInit {
         });
       });
     });
-    if(this.reservationHistory != null || this.futureReservation != null){
+    if(this.reservationHistory != null || this.futureReservation != null || this.ownerReservation != null){
       this.api.getReservation(this.reservationId).subscribe((res:Reservation)=>{
         this.reservation=res;
+        console.log(this.reservation);
         this.cancellationDateLimit.setDate(new Date(formatDate(this.reservation.checkIn,'MM/dd/yyyy','en-US')).getDate() - 3);
-        console.log(this.cancellationDateLimit);
-        console.log(this.currentDate);
-        console.log(this.cancellationDateLimit.getTime() - this.currentDate.getTime());
+        this.api.getUser(this.reservation.userId).subscribe((user: User)=>{
+          this.guest = user;
+        });
      });
+     
     }
+
 }
   goToPayment(){
     if(JSON.parse(sessionStorage.getItem('isLoggedIn')) == false ||

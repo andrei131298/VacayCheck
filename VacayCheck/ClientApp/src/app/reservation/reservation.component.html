@@ -1,7 +1,7 @@
 <app-loader #loader *ngIf="isLoaded == false"></app-loader>
 <div *ngIf="isLoaded == true">
     <app-header></app-header>
-    <div *ngIf="reservationHistory == null && futureReservation == null" class="container">
+    <div *ngIf="reservationHistory == null && futureReservation == null && ownerReservation == null" class="container">
         <div class="reservation">
             <h2 id="title">Reservation details</h2>
             <img id="apPhoto" src={{apartment.photos[0]}}>
@@ -72,12 +72,36 @@
                 </div>
                 <div class="rightHalf">
                     <p class="font-weight-bold">Contact owner </p>
+                    <p>{{owner.firstName}} {{owner.lastName}}</p>
                     <p>Phone number: {{owner.phoneNumber}}</p>
                     <p>E-mail: {{owner.email}}</p>
                 </div>
             </div>
             <button *ngIf="cancellationDateLimit.getTime() > currentDate.getTime() " class="btn btn-primary" style="margin-top: 20px;" (click)="cancelReservation(reservation)">Cancel reservation</button>
             <p *ngIf="cancellationDateLimit.getTime() <= currentDate.getTime() " style="color: red; margin-top: 20px;"> The deadline for free cancellation has passed</p>
+
+        </div>
+    </div>
+
+    <div *ngIf="ownerReservation == true" class="container">
+        <div class="reservation">
+            <h2 id="title">Reservation details</h2>
+            <img id="apPhoto" src={{apartment.photos[0]}}>
+            <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
+            <div class="reservationDetails">
+                <div class="leftHalf">
+                    <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
+                    <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
+                    <p>Number of persons: {{reservation.numberOfPersons}}</p>
+                    <p>Total Price: {{ reservation.price}}$</p>
+                </div>
+                <div class="rightHalf">
+                    <p class="font-weight-bold">Contact guest </p>
+                    <p>{{guest.firstName}} {{guest.lastName}}</p>
+                    <p>Phone number: {{guest.phoneNumber}}</p>
+                    <p>E-mail: {{guest.email}}</p>
+                </div>
+            </div>
 
         </div>
     </div>

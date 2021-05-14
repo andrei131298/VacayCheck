@@ -11,6 +11,7 @@ import { faPortrait, faPlusCircle, faPen, faTimes, faExchangeAlt} from '@fortawe
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExchangeRequest } from '../shared/exchangeRequest.model';
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -62,16 +63,30 @@ export class UserProfileComponent implements OnInit {
   success: boolean;
   exchangesRequested: ExchangeRequest[]=[];
   exchangesToRespond: ExchangeRequest[]=[];
-  modalOpened = false;
-
+  calendarIsShown = false;
+  bsRangeValue: Date;
+  maxDate=new Date();
+  minDate=new Date();
+  dateRange0Formatted:string;
+  dateRange1Formatted:string;
+  availabilityMessage: string;
+  requesterReservation = new Reservation();
+  responderReservation = new Reservation();
+  nrOfPersons: number;
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
 
 
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.userId = params['id']);
-    
-    this.getCurrentUser()
+    this.maxDate.setFullYear(this.maxDate.getFullYear()+1);
+
+    this.refreshPage();
+
+  }
+
+  refreshPage(){
+    this.getCurrentUser();
 
     this.api.getFavouritesByUser(this.userId).subscribe((data: Favourite[]) => {
       this.savedProperties=data;
@@ -83,9 +98,13 @@ export class UserProfileComponent implements OnInit {
     });
     this.api.getReservationsByUser(this.userId).subscribe((reservations: Reservation[]) => {
       this.userReservations=reservations;
+      this.futureReservations = [];
+      this.reservationsHistory = [];
+      this.currentReservations = [];
       this.userReservations.forEach(reservation =>{
         this.api.getApartment(reservation.apartmentId).subscribe((apartment:Apartment)=>{
           reservation.apartment = apartment;
+        
           if(new Date(reservation.checkIn) > this.currentDate && new Date(reservation.checkOut) > this.currentDate ){
             this.futureReservations.push(reservation)
           }
@@ -148,18 +167,23 @@ export class UserProfileComponent implements OnInit {
       this.activeUser.userPropertiesReservations.forEach(reservation =>{
         this.api.getApartment(reservation.apartmentId).subscribe((apartment:Apartment)=>{
           reservation.apartment = apartment;
+          this.futurePropertyReservations = [];
+          this.propertyReservationsHistory = [];
+          this.currentPropertyReservations = [];
           this.api.getProperty(apartment.propertyId).subscribe((property: Property)=>{
             reservation.propertyName = property.name;
+            
             if(new Date(reservation.checkIn) > this.currentDate && new Date(reservation.checkOut) > this.currentDate ){
-              reservation.status = "Upcoming"
+              reservation.status = "Upcoming";
               this.futurePropertyReservations.push(reservation)
+              console.log(this.futurePropertyReservations);
             }
             if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) < this.currentDate){
-              reservation.status = "Completed"
+              reservation.status = "Completed";
               this.propertyReservationsHistory.push(reservation)
             }
             if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) > this.currentDate){
-              reservation.status = "Current"
+              reservation.status = "Current";
               this.currentPropertyReservations.push(reservation)
             }
           });
@@ -228,8 +252,6 @@ export class UserProfileComponent implements OnInit {
     this.edit = false
   }
   openApartmentModal(id: string){
-    console.log(this.apartmentModal);
-    this.modalOpened = true;
     this.apartmentModal.initialize(id);
   }
   deleteFavourite(propertyId:string){
@@ -258,6 +280,10 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(["/reservation"],
     {queryParams:{reservation:reservation.id, futureReservation:true, propertyId: reservation.propertyId, apartmentId:reservation.apartmentId,details:true}});
   }
+  toOwnerReservationDetails(reservation:Reservation){
+    this.router.navigate(["/reservation"],
+    {queryParams:{reservation:reservation.id, propertyId: reservation.propertyId, apartmentId:reservation.apartmentId, owner:true}});
+  }
   goToProperty(property:Property){
     console.log(property);
     this.router.navigate(["my-property", property.id]);
@@ -273,8 +299,51 @@ export class UserProfileComponent implements OnInit {
   public setPropertiesRow(_index: number) {
     this.selectedPropertiesIndex = _index;
   }
+  checkAvailibility(apartmentId, requesterCheckin, requesterCheckout){
+    if(this.nrOfPersons >=1 && this.bsRangeValue){
+      this.dateRange0Formatted = formatDate(this.bsRangeValue[0],'MM-dd-yyyy','en-US');
+      this.dateRange1Formatted = formatDate(this.bsRangeValue[1],'MM-dd-yyyy','en-US');
+      if(this.bsRangeValue[1].valueOf() != this.bsRangeValue[0].valueOf())
+      {
+        this.api.checkApartmentAvailability(apartmentId, requesterCheckin, requesterCheckout, this.dateRange0Formatted, this.dateRange1Formatted, this.nrOfPersons).subscribe((message: string)=>{
+          this.availabilityMessage = message;
+        },
+        (error: HttpErrorResponse) => {
+          this.availabilityMessage = error.error.text;
+        });
+      }
+    }
+    
+  }
+  cancelCheck(){
+    this.availabilityMessage = null;
+    this.calendarIsShown = false;
+    this.bsRangeValue = null;
+  }
+  openCalendar(){
+    this.calendarIsShown = true;
+  }
+  confirmExchange(request: ExchangeRequest){
+    this.acceptRequest(request);
+    this.requesterReservation =
+        {price:0,review:"",checkIn: request.checkIn, checkOut:request.checkOut,
+        userId:request.responderId, apartmentId: request.requesterApartmentId, numberOfPersons: request.numberOfPersons, rating: 0}
+    this.responderReservation =
+        {price:0,review:"",checkIn: new Date(this.dateRange0Formatted), checkOut: new Date(this.dateRange1Formatted),
+        userId:request.requesterId, apartmentId: request.responderApartmentId, numberOfPersons: this.nrOfPersons, rating: 0}
+    this.api.addReservation(this.requesterReservation).subscribe(()=>{
+      this.api.addReservation(this.responderReservation).subscribe(()=>{
+        this.refreshPage();
+        this.cancelCheck();
+      });
+    });
+    console.log(this.requesterReservation);
+    console.log(this.responderReservation);
+
+  }
   acceptRequest(request: ExchangeRequest){
     request.status = "Accepted";
+    console.log(request);
     this.api.updateExchangeRequest(request).subscribe(()=>{
       this.getExchangeRequestsByResponder();
     });

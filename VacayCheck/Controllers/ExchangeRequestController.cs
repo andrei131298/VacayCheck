@@ -138,6 +138,10 @@ namespace VacayCheck.Controllers
             {
                 model.numberOfPersons = value.numberOfPersons;
             }
+            if (value.status != null)
+            {
+                model.status = value.status;
+            }
             return IExchangeRequestRepository.Update(model);
         }
 

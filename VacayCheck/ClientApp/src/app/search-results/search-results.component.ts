@@ -23,6 +23,7 @@ export class SearchResult implements OnInit {
   
   properties:Property[]=[];
   apartments: Apartment[] = [];
+  allApartments: Apartment[] = [];
   period: number;
   searchText=this.route.snapshot.queryParamMap.get('searchText');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
@@ -58,18 +59,29 @@ export class SearchResult implements OnInit {
 
     this.api.getApartments().subscribe((apartments: Apartment[]) => {
       this.apartments=apartments;
+      this.allApartments = apartments
+      console.log(apartments);
       this.api.getAlreadyReservedByDates(this.dateRange0Formatted,this.dateRange1Formatted).subscribe((reserved:Reservation[])=>{
-        this.alreadyReserved=reserved;
-        for(let res of this.alreadyReserved){
-            this.apartments.forEach((apartment, index) => {
-            if(apartment.id === res.apartmentId || apartment.maxPersons<this.persons) this.apartments.splice(index,1);
-          });
-        }
+        this.alreadyReserved = reserved;
+        console.log(this.alreadyReserved);
+        // this.apartments.forEach((ap, index)=>{
+        //   if(ap.maxPersons < this.persons){
+        //     this.apartments.splice(index,1);
+        //   }
+        // })
+        // for(let res of this.alreadyReserved){
+        //   this.apartments.forEach((apartment, index) => {
+        //     if(apartment.id == res.apartmentId) {
+        //       this.apartments.splice(index,1);
+        //     }
+        //   });
+        // }
+
         console.log(this.apartments);
-        this.apartments.forEach((apartment) =>{
+        this.allApartments.forEach((apartment) =>{
           this.api.getProperty(apartment.propertyId).subscribe((property:Property)=>{
             if (this.activeProperties.find((prop) => prop.name === property.name) === undefined) {
-              if (property.name.toLowerCase().includes(this.searchText.toLowerCase())) {
+              if (property.cityName.toLowerCase().includes(this.searchText.toLowerCase())) {
                 property.id = apartment.propertyId;
                 this.activeProperties.push(property);
               }
