@@ -38,7 +38,12 @@
         <div class="reviews">
           <p><fa-icon [icon]="faComment"></fa-icon> Reviews:</p>
           <div *ngFor="let reservation of apartmentsReservations | slice:0:showNumber" class="review">
-            <p><fa-icon [icon]="faUser"></fa-icon> {{reservation.userFirstName}} - {{reservation.checkIn | date:'longDate'}}</p>  
+            <p><fa-icon [icon]="faUser"></fa-icon> {{reservation.userFirstName}} - {{reservation.checkIn | date:'longDate'}} </p>
+            <p><fa-icon [icon]="faGlobe"></fa-icon> {{reservation.rating}} Travel points  
+              <fa-icon *ngIf="reservation.rating >=1 && reservation.rating < 4" class="frown" [icon]="faFrown"></fa-icon>
+              <fa-icon *ngIf="reservation.rating >= 4 && reservation.rating < 8" class="meh" [icon]="faMeh"></fa-icon>
+              <fa-icon *ngIf="reservation.rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
+            </p>  
             <p>{{reservation.review}}</p>
               
           </div>

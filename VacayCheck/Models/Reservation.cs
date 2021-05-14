@@ -15,6 +15,7 @@ namespace VacayCheck.Models
         public Guid apartmentId { get; set; }
         public int numberOfPersons { get; set; }
         public bool paidWithCard { get; set; }
+        public int rating { get; set; }
         public virtual Apartment apartment { get; set; }//many to one
         public virtual User user { get; set; }
     }

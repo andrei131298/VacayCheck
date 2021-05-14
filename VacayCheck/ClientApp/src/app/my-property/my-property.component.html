@@ -18,8 +18,7 @@
         </div>
         <div class="editing">
           <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="showEditOption()"><fa-icon [icon]="faPen"></fa-icon> Edit Property</button>
-          <button *ngIf="property.userId == userId" class="btn btn-primary" (click)="goToAddApartment()"><fa-icon [icon]="faPlus"></fa-icon> Add an apartment</button>
-
+          <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="goToAddApartment()"><fa-icon [icon]="faPlus"></fa-icon> Add an apartment</button>
         </div>
         <div class="mapContainer">
           <agm-map [zoom]="9" [latitude]="property.mapLatitude" [longitude]="property.mapLongitude">

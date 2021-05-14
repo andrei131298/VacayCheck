@@ -1,3 +1,5 @@
+import { Reservation } from "./reservation.model";
+
 export class User {
   id: string;
   firstName: string;
@@ -14,6 +16,7 @@ export class User {
   country: string;
   cityName: string;
   isMailVerificated: boolean;
+  userPropertiesReservations?: Array<Reservation>;
   constructor(input?: any) {
     Object.assign(this, input);
   }

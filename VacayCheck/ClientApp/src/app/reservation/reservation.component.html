@@ -11,7 +11,7 @@
                     <p>Check-in: {{dateRange0Formatted | date:'longDate'}}</p>
                     <p>Check-out: {{dateRange1Formatted | date:'longDate'}}</p>
                     <p>Number of persons: {{persons}}</p>
-                    <p>Total Price: {{ apartment.pricePerNight*period}}</p>
+                    <p>Total Price: {{ apartment.pricePerNight*period}}$</p>
                 </div>
                 <div class="rightHalf">
                     <p>Please select payment method: </p>
@@ -34,13 +34,24 @@
             <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
             <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
             <p>Number of persons: {{reservation.numberOfPersons}}</p>
-            <p>Total Price: {{ reservation.price}}</p>
+            <p>Total Price: {{ reservation.price}}$</p>
             <div *ngIf="details == null && (reservation.review == null || reservation.review == '') " class="review">
+                <div style="font-weight: bold; font-size: 26px; margin-top: 20px;">Add Rating </div>
+                <input class="slider" id="myRange" #ranger type="range" min="1" max="10" [(NgModel)] = "rating" (input)="setRam(ranger.value)" value="0">
+                <fa-icon *ngIf="rating >=1 && rating < 4" class="frown" [icon]="faFrown"></fa-icon>
+                <fa-icon *ngIf="rating >= 4 && rating < 8" class="meh" [icon]="faMeh"></fa-icon>
+                <fa-icon *ngIf="rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
+                <p style="font-weight: bold; font-size: 22px; margin-top: 10px;">{{rating}} Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
                 <div style="font-weight: bold; font-size: 26px; margin-top: 30px;">Add Review </div>
                 <textarea style="margin-top: 30px;" rows="4" cols="50" placeholder="How it was your vacation here?" [(ngModel)]="review"></textarea>
                 <button class="btn btn-primary" (click)="addReview()">Add review</button>
             </div> 
             <div *ngIf="details == true" class="review">
+                <div style="font-weight: bold; font-size: 26px; margin-top: 20px;">Rating</div>
+                <fa-icon *ngIf="reservation.rating >=1 && reservation.rating < 4" class="frown" [icon]="faFrown"></fa-icon>
+                <fa-icon *ngIf="reservation.rating >= 4 && reservation.rating < 8" class="meh" [icon]="faMeh"></fa-icon>
+                <fa-icon *ngIf="reservation.rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
+                <p style="font-weight: bold; font-size: 22px; margin-top: 10px;">{{reservation.rating}} Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
                 <div style="font-weight: bold; font-size: 26px; margin-top: 30px;">Review</div>
                 <textarea readonly style="margin-top: 30px;" rows="4" cols="50">{{reservation.review}}</textarea>
             </div>        
@@ -57,7 +68,7 @@
                     <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
                     <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
                     <p>Number of persons: {{reservation.numberOfPersons}}</p>
-                    <p>Total Price: {{ reservation.price}}</p>
+                    <p>Total Price: {{ reservation.price}}$</p>
                 </div>
                 <div class="rightHalf">
                     <p class="font-weight-bold">Contact owner </p>

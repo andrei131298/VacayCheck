@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using VacayCheck.DTOs;
 using VacayCheck.Models;
 using VacayCheck.Repositories.UserRepository;
+using VacayCheck.Repositories.ApartmentRepository;
+using VacayCheck.Repositories.PropertyRepository;
+using VacayCheck.Repositories.ReservationRepository;
 
 
 namespace VacayCheck.Controllers
@@ -15,11 +18,19 @@ namespace VacayCheck.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        public UserController(IUserRepository repository)
+        public UserController(IUserRepository repository, IApartmentRepository apRepository, IPropertyRepository propRepository,
+            IReservationRepository resRepository)
         {
             IUserRepository = repository;
+            IApartmentRepository = apRepository;
+            IPropertyRepository = propRepository;
+            IReservationRepository = resRepository;
         }
         public IUserRepository IUserRepository { get; set; }
+        public IPropertyRepository IPropertyRepository { get; set; }
+        public IApartmentRepository IApartmentRepository { get; set; }
+        public IReservationRepository IReservationRepository { get; set; }
+
         // GET: api/User
         [HttpGet]
         public ActionResult<IEnumerable<User>> Get()
@@ -29,9 +40,42 @@ namespace VacayCheck.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(Guid id)
+        public ActionResult<UserDTO> Get(Guid id)
         {
-            return IUserRepository.Get(id);
+            User user = IUserRepository.Get(id);
+            UserDTO userDTO = new UserDTO()
+            {
+                id = user.id,
+                firstName = user.firstName,
+                lastName = user.lastName,
+                sex = user.sex,
+                birthDate = user.birthDate,
+                bankAccount = user.bankAccount,
+                email = user.email,
+                password = user.password,
+                isOwner = user.isOwner,
+                profilePhoto = user.profilePhoto,
+                address = user.address,
+                phoneNumber = user.phoneNumber,
+                country = user.country,
+                cityName = user.cityName,
+                isMailVerificated = user.isMailVerificated
+
+            };
+            List<Reservation> allReservations = new List<Reservation>();
+            IEnumerable<Property> myProperties = IPropertyRepository.GetPropertiesByUser(userDTO.id);
+            foreach(Property p in myProperties)
+            {
+                IEnumerable<Apartment> myapartments = IApartmentRepository.GetApartmentsByPropertyId(p.id);
+                foreach(Apartment ap in myapartments)
+                {
+                    IEnumerable<Reservation> myReservations = IReservationRepository.GetReservationsByApartment(ap.id);
+                    allReservations.AddRange(myReservations.ToList());
+
+                }
+            }
+            userDTO.userPropertiesReservations = allReservations;
+            return userDTO;
         }
 
         // PUT: api/User/5

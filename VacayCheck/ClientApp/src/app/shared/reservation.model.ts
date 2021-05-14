@@ -10,6 +10,7 @@ export class Reservation {
   apartmentId: string;
   numberOfPersons:number;
   paidWithCard: boolean;
+  rating: number;
   propertyId?:string;
   apartmentName?: string;
   propertyName?:string;

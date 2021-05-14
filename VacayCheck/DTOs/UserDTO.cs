@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VacayCheck.Models;
 
 namespace VacayCheck.DTOs
 {
-    public class UserDTO
+    public class UserDTO: BaseEntity
     {
         public string firstName { get; set; }
         public string lastName { get; set; }
@@ -21,6 +22,7 @@ namespace VacayCheck.DTOs
         public string country { get; set; }
         public string cityName { get; set; }
         public bool isMailVerificated { get; set; }
+        public List<Reservation> userPropertiesReservations { get; set; }
 
     }
 }

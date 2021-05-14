@@ -14,6 +14,7 @@ export class Property {
   mapLatitude: number;
   mapLongitude: number;
   startingPrice?: number;
+  averageRating?: number;
 
   constructor(input?: any) {
     Object.assign(this, input);

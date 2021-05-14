@@ -27,13 +27,17 @@ export class UserProfileComponent implements OnInit {
   userId:string;
   activeUser:User;
   isLoaded=false;
-  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties', 'Vacay Requests'];
+  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties', 'Travel Requests'];
   allCurrencies = ['AED', 'ARS', 'AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'JPY', 'KRW', 'MAD', 'MXN', 'MYR', 'NOK', 'NZD', 'PEN', 'PHP', 'PLN', 'RON', 'RUB', 'SAR', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'UAH', 'USD', 'UYU', 'VND', 'ZAR']
-  requestsOptions = ["Your requests", "Requests on your properties"]
+  requestsOptions = ["Your requests", "Requests on your properties"];
   selectedOption='Profile';
-  selectedRequest = "Your requests"
-  statuses = ['All statuses','Pending', 'Accepted', 'Declined']
-  selectedStatus = 'All statuses'
+  selectedRequest = "Your requests";
+  statuses = ['All statuses','Pending', 'Accepted', 'Declined'];
+  selectedStatus = 'All statuses';
+  reservationsStatuses = ['All reservations', 'Completed', 'Upcoming', 'Current']
+  selectedReservationsStatus = "All reservations"
+  propertiesOptions = ["Properties list", "Reservations"];
+  selectedPropertyOption = 'Properties list'
   savedProperties:Favourite[]=[];
   userReservations:Reservation[]=[];
   currentDate= new Date();
@@ -41,6 +45,7 @@ export class UserProfileComponent implements OnInit {
   selectedPhoto: string;
   selectedIndex = 0;
   selectedRequestIndex = 0;
+  selectedPropertiesIndex = 0;
   faPortrait = faPortrait;
   faPlusCircle = faPlusCircle;
   faPen = faPen;
@@ -49,6 +54,10 @@ export class UserProfileComponent implements OnInit {
   futureReservations: Reservation[]=[];
   reservationsHistory: Reservation[]=[];
   currentReservations: Reservation[]=[];
+  futurePropertyReservations: Reservation[]=[];
+  propertyReservationsHistory: Reservation[]=[];
+  currentPropertyReservations: Reservation[]=[];
+  allReservedApartments: Apartment[]=[];
   edit = false;
   success: boolean;
   exchangesRequested: ExchangeRequest[]=[];
@@ -120,7 +129,8 @@ export class UserProfileComponent implements OnInit {
 
   getCurrentUser(){
     this.api.getUser(this.userId).subscribe((activeUser: User) => {
-      this.activeUser=activeUser;
+      this.activeUser = activeUser;
+      
       console.log(this.activeUser);
       this.editUserForm = this.fb.group({
         firstName: [this.activeUser.firstName, Validators.required],
@@ -132,8 +142,29 @@ export class UserProfileComponent implements OnInit {
         phoneNumber: [this.activeUser.phoneNumber, Validators.required],
         country: [this.activeUser.country, Validators.required],
         cityName: [this.activeUser.cityName, Validators.required]
-        // prefferedCurrency: [this.activeUser.prefferedCurrency, Validators.required]
   
+      });
+
+      this.activeUser.userPropertiesReservations.forEach(reservation =>{
+        this.api.getApartment(reservation.apartmentId).subscribe((apartment:Apartment)=>{
+          reservation.apartment = apartment;
+          this.api.getProperty(apartment.propertyId).subscribe((property: Property)=>{
+            reservation.propertyName = property.name;
+            if(new Date(reservation.checkIn) > this.currentDate && new Date(reservation.checkOut) > this.currentDate ){
+              reservation.status = "Upcoming"
+              this.futurePropertyReservations.push(reservation)
+            }
+            if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) < this.currentDate){
+              reservation.status = "Completed"
+              this.propertyReservationsHistory.push(reservation)
+            }
+            if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) > this.currentDate){
+              reservation.status = "Current"
+              this.currentPropertyReservations.push(reservation)
+            }
+          });
+        
+        });
       });
     });
   }
@@ -183,9 +214,15 @@ export class UserProfileComponent implements OnInit {
   changeRequestOption(requestOption){
     this.selectedRequest = requestOption;
   }
+  changePropertiesOption(propertiesOption){
+    this.selectedPropertyOption = propertiesOption;
+  }
   selectStatus(value: string){
     this.selectedStatus = value;
     console.log(this.selectedStatus);
+  }
+  selectReservationStatus(value: string){
+    this.selectedReservationsStatus = value;
   }
   cancelForm(){
     this.edit = false
@@ -233,7 +270,9 @@ export class UserProfileComponent implements OnInit {
   public setRequestRow(_index: number) {
     this.selectedRequestIndex = _index;
   }
-
+  public setPropertiesRow(_index: number) {
+    this.selectedPropertiesIndex = _index;
+  }
   acceptRequest(request: ExchangeRequest){
     request.status = "Accepted";
     this.api.updateExchangeRequest(request).subscribe(()=>{

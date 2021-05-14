@@ -7,6 +7,8 @@ import { Reservation } from '../shared/reservation.model';
 import { PaymentComponent } from "./payment/payment.component";
 import { User } from "../shared/user.model";
 import { Property } from "../shared/property.model";
+import { faGlobe, faFrown, faMeh, faSmile } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: "reservation",
@@ -43,7 +45,11 @@ export class ReservationComponent implements OnInit {
   currentProperty: Property;
   cancellationDateLimit = new Date();
   currentDate = new Date();
-  
+  rating = 0;
+  faGlobe = faGlobe;
+  faFrown = faFrown;
+  faMeh = faMeh;
+  faSmile = faSmile;
   @ViewChild("payment") payment: PaymentComponent;
   @ViewChild("confirmation") confirmation: PaymentComponent;
 
@@ -81,25 +87,32 @@ export class ReservationComponent implements OnInit {
       this.reservation =
         {price:this.apartment.pricePerNight*this.period,
           review:"",checkIn:this.dateRange0Formatted,checkOut:this.dateRange1Formatted,
-        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: true}
+        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: true, rating: this.rating}
           console.log(this.reservation);
        this.payment.initialize();
       
     }
   }
+  setRam(value){
+    this.rating = value;
+    console.log(this.rating);
+  }
   addReview(){
-    const editedReservation = new Reservation(this.reservation);
-    editedReservation.review = this.review;
+    if((this.review != null && this.review != "") && this.rating != 0){
+      const editedReservation = new Reservation(this.reservation);
+      editedReservation.review = this.review;
+      editedReservation.rating = this.rating;
 
-    this.api.editReservation(editedReservation)
-      .subscribe(() => {
-        console.log(editedReservation);
-        this.router.navigate(["user-profile", this.userId]);
-      },
-        (error: Error) => {
-          console.log('err', error);
-        });
+      this.api.editReservation(editedReservation)
+        .subscribe(() => {
+          console.log(editedReservation);
+          this.router.navigate(["user-profile", this.userId]);
+        },
+          (error: Error) => {
+            console.log('err', error);
+          });
 
+      }
   }
 
   radioChange(event: any) {
@@ -119,7 +132,7 @@ export class ReservationComponent implements OnInit {
       this.reservation =
         {price:this.apartment.pricePerNight*this.period,
           review:"",checkIn:this.dateRange0Formatted,checkOut:this.dateRange1Formatted,
-        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: false}
+        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: false, rating: 0}
           console.log(this.reservation);
        this.payment.initialize();
       

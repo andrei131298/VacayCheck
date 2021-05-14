@@ -7,7 +7,7 @@ import { Reservation } from '../shared/reservation.model';
 import { LoaderComponent } from '../loader/loader.component';
 import { Favourite } from '../shared/favourite.model';
 import { formatDate } from '@angular/common';
-import { faUser, faBuilding, faStar, faMapMarkerAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBuilding, faStar, faMapMarkerAlt, faInfoCircle, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 import { User } from '../shared/user.model';
 
@@ -46,7 +46,8 @@ export class PropertyProfileComponent implements OnInit {
   faStar = faStar;
   faMapMarkerAlt = faMapMarkerAlt; 
   faInfoCircle = faInfoCircle;
-  currentUser: User;
+  faGlobe = faGlobe;
+  currentUser = new User();
   hoveredApartmentIndex: number;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;

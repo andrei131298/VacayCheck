@@ -60,7 +60,9 @@ namespace VacayCheck.Controllers
                     review = r.review,
                     userId = r.userId,
                     apartmentId = r.apartmentId,
-                    numberOfPersons = r.numberOfPersons
+                    numberOfPersons = r.numberOfPersons,
+                    paidWithCard = r.paidWithCard,
+                    rating = r.rating
 
                 };
                 ReservationsDTO.Add(reservationDTO);
@@ -93,11 +95,14 @@ namespace VacayCheck.Controllers
                     review = r.review,
                     userId = r.userId,
                     apartmentId = r.apartmentId,
-                    numberOfPersons = r.numberOfPersons
+                    numberOfPersons = r.numberOfPersons,
+                    paidWithCard = r.paidWithCard,
+                    rating = r.rating
 
                 };
                 ReservationsDTO.Add(reservationDTO);
             }
+
             return ReservationsDTO;
         }
 
@@ -157,6 +162,10 @@ namespace VacayCheck.Controllers
             if (value.numberOfPersons != 0)
             {
                 model.numberOfPersons = value.numberOfPersons;
+            }
+            if (value.rating != null)
+            {
+                model.rating = value.rating;
             }
             return IReservationRepository.Update(model);
         }

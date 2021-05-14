@@ -10,7 +10,8 @@ using VacayCheck.Repositories.PropertyRepository;
 using VacayCheck.Repositories.CityRepository;
 using VacayCheck.Repositories.OwnerRepository;
 using VacayCheck.Repositories.UserRepository;
-
+using VacayCheck.Repositories.ApartmentRepository;
+using VacayCheck.Repositories.ReservationRepository;
 
 namespace VacayCheck.Controllers
 {
@@ -20,20 +21,65 @@ namespace VacayCheck.Controllers
     {
         public IPropertyRepository IPropertyRepository { get; set; }
         public ICityRepository ICityRepository { get; set; }
-        public IOwnerRepository IOwnerRepository { get; set; }
         public IUserRepository IUserRepository { get; set; }
-        public PropertyController(IPropertyRepository propertyrepository, ICityRepository cityrepository, IUserRepository userrepository)
+        public IApartmentRepository IApartmentRepository { get; set; }
+        public IReservationRepository IReservationRepository { get; set; }
+
+        public PropertyController(IPropertyRepository propertyrepository, ICityRepository cityrepository, IUserRepository userrepository, 
+            IApartmentRepository apartmentrepository, IReservationRepository reservationrepository)
         {
             IPropertyRepository = propertyrepository;
             ICityRepository = cityrepository;
             IUserRepository = userrepository;
+            IApartmentRepository = apartmentrepository;
+            IReservationRepository = reservationrepository;
 
         }
         // GET: api/Property
         [HttpGet]
-        public ActionResult<IEnumerable<Property>> Get()
+        public List<PropertyDetailsDTO> Get()
         {
-            return IPropertyRepository.GetAll();
+
+            List<Property> AllProperties = IPropertyRepository.GetAll();
+            List<PropertyDetailsDTO> PropertiesDTO = new List<PropertyDetailsDTO>();
+            foreach (Property p in AllProperties)
+            {
+                PropertyDetailsDTO MyProperty = new PropertyDetailsDTO()
+                {
+                    name = p.name,
+                    type = p.type,
+                    description = p.description,
+                    numberOfStars = p.numberOfStars,
+                    street = p.street,
+                    country = p.country,
+                    cityName = p.cityName,
+                    userId = p.userId,
+                    photo = p.photo,
+                    mapLatitude = p.mapLatitude,
+                    mapLongitude = p.mapLongitude
+                };
+                PropertiesDTO.Add(MyProperty);
+                int numberOfReservations = 0;
+                int allRatings = 0;
+
+                IEnumerable<Apartment> apartments = IApartmentRepository.GetAll().Where(x => x.propertyId == p.id);
+                foreach (Apartment ap in apartments)
+                {
+                    IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
+                    foreach (Reservation res in reservations)
+                    {
+                        allRatings += res.rating;
+                        numberOfReservations++;
+                    }
+                }
+                if(numberOfReservations != 0)
+                {
+                    MyProperty.averageRating = allRatings / numberOfReservations;
+
+                }
+            }
+
+            return PropertiesDTO;
         }
 
         // GET: api/Property/5
@@ -41,8 +87,9 @@ namespace VacayCheck.Controllers
         public PropertyDetailsDTO Get(Guid id)
         {
             Property Property = IPropertyRepository.Get(id);
-            PropertyDetailsDTO MyProperties = new PropertyDetailsDTO()
+            PropertyDetailsDTO MyProperty = new PropertyDetailsDTO()
             {
+                id = Property.id,
                 name = Property.name,
                 type = Property.type,
                 description = Property.description,
@@ -55,8 +102,26 @@ namespace VacayCheck.Controllers
                 mapLatitude = Property.mapLatitude,
                 mapLongitude = Property.mapLongitude
             };
-            
-            return MyProperties;
+
+            int numberOfReservations = 0;
+            int allRatings = 0;
+
+            IEnumerable<Apartment> apartments = IApartmentRepository.GetAll().Where(x => x.propertyId == MyProperty.id);
+            foreach (Apartment ap in apartments)
+            {
+                IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
+                foreach (Reservation res in reservations)
+                {
+                    allRatings += res.rating;
+                    numberOfReservations++;
+                }
+            }
+            if (numberOfReservations != 0)
+            {
+                MyProperty.averageRating = allRatings / numberOfReservations;
+
+            }
+            return MyProperty;
         }
         [HttpGet("GetPropertiesByUser/{userId}")]
         public IEnumerable<PropertyDTO> GetPropertiesByUser(Guid userId)

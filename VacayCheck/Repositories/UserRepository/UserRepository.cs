@@ -65,7 +65,9 @@ namespace VacayCheck.Repositories.UserRepository
                 var result = _context.Add<User>(entity);
                 _context.SaveChanges();
                 
-                MailMessage mailMessage = new MailMessage("andtei131298@gmail.com", request.email);
+                MailMessage mailMessage = new MailMessage("travelcheckmail@gmail.com", request.email);
+                mailMessage.From = new MailAddress("travelcheckmail@gmail.com", "Travel Check");
+
                 // Specify the email body
                 mailMessage.Body = "Verification link: https://localhost:44397/email-verification/" + result.Entity.id;
                 // Specify the email Subject
@@ -78,8 +80,8 @@ namespace VacayCheck.Repositories.UserRepository
 
                 smtpClient.Credentials = new System.Net.NetworkCredential()
                 {
-                    UserName = "andtei131298@gmail.com",
-                    Password = "tenismen"
+                    UserName = "travelcheckmail@gmail.com",
+                    Password = "tenismen13"
                 };
                 // Gmail works on SSL, so set this property to true
                 smtpClient.EnableSsl = true;

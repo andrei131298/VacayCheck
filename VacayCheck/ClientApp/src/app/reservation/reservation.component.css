@@ -56,3 +56,50 @@
   border-radius: 10px;
   padding: 10px;
 }
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.8;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin-top: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+
+
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: rgb(23, 87, 143);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.frown{
+  font-size: 40px;
+  margin-top: 10px;
+  color: crimson;
+}
+.meh{
+  font-size: 40px;
+  margin-top: 10px;
+  color: rgb(223, 139, 14);
+}
+.smile{
+  font-size: 40px;
+  margin-top: 10px;
+  color: rgb(20, 182, 20);
+}

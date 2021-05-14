@@ -15,11 +15,11 @@
             <fa-icon *ngIf="property.userId == userId" [icon]="faBuilding" id="faBuilding"></fa-icon>{{ property.name.toString() }}
           </p>
           <p id="p2">
-            {{ property.cityName }}
+            <fa-icon id = "marker" [icon]="faMapMarkerAlt"></fa-icon> {{ property.cityName }}
           </p>
-          <div class="stele">
-            <fa-icon *ngFor="let star of counter(property.numberOfStars)" id="stea" [icon]="faStar" ></fa-icon>
-          </div>
+          <p *ngIf = "property.averageRating != 0" style="font-weight: bold; font-size: 22px; margin-top: 10px;">{{property.averageRating}} average Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
+          <p *ngIf = "(property.averageRating == 0 || property.averageRating == null) && property.userId != userId" style="font-weight: bold; font-size: 22px; margin-top: 10px;color: rgb(40, 150, 40);">Become the first guest</p>
+
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { Apartment } from '../shared/apartment.model';
 import { Property } from '../shared/property.model';
 import { LoaderComponent } from '../loader/loader.component';
-import { faUser,faBuilding, faStar, faPen, faPlus, faMapMarkerAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUser,faBuilding, faStar, faPen, faPlus, faMapMarkerAlt, faTimes, faList } from '@fortawesome/free-solid-svg-icons';
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country } from '../shared/country.model';
@@ -43,6 +43,7 @@ export class MyPropertyComponent implements OnInit {
   faPlus = faPlus;
   faTimes = faTimes;
   faMapMarkerAlt = faMapMarkerAlt;
+  faList = faList;
   propertyTypes=["Vila","House","Hotel","Flat"];
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;

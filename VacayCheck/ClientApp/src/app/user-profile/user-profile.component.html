@@ -203,15 +203,114 @@
     <div *ngIf="selectedOption == 'My properties'">
       
       <div *ngIf="activeUser.isOwner == true">
-        <p class="addProperty" routerLink="/property-add-form"><fa-icon [icon]="faPlusCircle" ></fa-icon> Add new property</p>
-        <div *ngFor="let prop of userProperties" class="secondView" >
-          <img class="apPhoto" src={{prop.photo}} />
-          <div class="apDetail">
-                <p id="propertyName" (click)="goToProperty(prop)">
-                  {{prop.name}}
-                </p>
-          </div>  
-        </div>
+
+          <div class="header">
+            <div class="options">
+                <ul class="nav">
+                  <a *ngFor="let propertyOption of propertiesOptions; let i = index" class="link">
+                    <p class="opt" style="color: white;" (click)="changePropertiesOption(propertyOption);setPropertiesRow(i)" [ngClass]="{'highlight2': selectedPropertiesIndex === i}">{{propertyOption}}</p>
+                  </a>
+                </ul>
+            </div>
+          </div>
+
+          <div *ngIf="selectedPropertyOption == 'Properties list' ">
+            <p class="addProperty" routerLink="/property-add-form"><fa-icon [icon]="faPlusCircle" ></fa-icon> Add new property</p>
+            <div *ngFor="let prop of userProperties" class="secondView" >
+              <img class="apPhoto" src={{prop.photo}} />
+              <div class="apDetail">
+                    <p id="propertyName" (click)="goToProperty(prop)">
+                      {{prop.name}}
+                    </p>
+              </div>  
+            </div>
+          </div>
+        
+
+          <div *ngIf="selectedPropertyOption == 'Reservations' ">
+            <select class="form-control" style="width: 10%; margin: auto; margin-top: 20px;" (change) = "selectReservationStatus(selectedReservationsStatus)" [(ngModel)]="selectedReservationsStatus">
+              <option value="" disabled selected>Status</option>
+              <option *ngFor = "let reservationStatus of reservationsStatuses" value="{{reservationStatus}}">{{reservationStatus}}</option>
+            </select>
+
+              <div *ngIf = "selectedReservationsStatus == 'All reservations'">
+                <div *ngFor="let propertiesReservation of activeUser.userPropertiesReservations">
+                  <div class="secondView" >
+                    <img class="apPhoto" src={{propertiesReservation.apartment.photos[0]}} />
+                    <div class="apDetail">
+                          <p id="apName" >
+                            {{ propertiesReservation.propertyName}} - {{ propertiesReservation.apartment.apartmentName}}
+                          </p>
+                          <p>
+                            {{propertiesReservation.checkIn | date:'longDate'}} - {{propertiesReservation.checkOut | date:'longDate'}}
+                          </p>
+                          <p [ngClass]="{'upcoming' : propertiesReservation.status == 'Upcoming', 'current' : propertiesReservation.status == 'Current', 
+                            'completed': propertiesReservation.status == 'Completed' }">
+                            {{propertiesReservation.status}}
+                          </p>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf = "selectedReservationsStatus == 'Completed'">
+                <div *ngFor="let propertiesReservation of propertyReservationsHistory">
+                  <div class="secondView" >
+                    <img class="apPhoto" src={{propertiesReservation.apartment.photos[0]}} />
+                    <div class="apDetail">
+                          <p id="apName" >
+                            {{ propertiesReservation.propertyName}} - {{ propertiesReservation.apartment.apartmentName}}
+                          </p>
+                          <p>
+                            {{propertiesReservation.checkIn | date:'longDate'}} - {{propertiesReservation.checkOut | date:'longDate'}}
+                          </p>
+                          <p class="completed">
+                            {{propertiesReservation.status}}
+                          </p>
+                        
+                    </div>  
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf = "selectedReservationsStatus == 'Upcoming'">
+                <div *ngFor="let propertiesReservation of futurePropertyReservations">
+                  <div class="secondView" >
+                    <img class="apPhoto" src={{propertiesReservation.apartment.photos[0]}} />
+                    <div class="apDetail">
+                          <p id="apName" >
+                            {{ propertiesReservation.propertyName}} - {{ propertiesReservation.apartment.apartmentName}}
+                          </p>
+                          <p>
+                            {{propertiesReservation.checkIn | date:'longDate'}} - {{propertiesReservation.checkOut | date:'longDate'}}
+                          </p>
+                          <p class="upcoming">
+                            {{propertiesReservation.status}}
+                          </p>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf = "selectedReservationsStatus == 'Current'">
+                <div *ngFor="let propertiesReservation of currentPropertyReservations">
+                  <div class="secondView" >
+                    <img class="apPhoto" src={{propertiesReservation.apartment.photos[0]}} />
+                    <div class="apDetail">
+                          <p id="apName" >
+                            {{ propertiesReservation.propertyName}} - {{ propertiesReservation.apartment.apartmentName}}
+                          </p>
+                          <p>
+                            {{propertiesReservation.checkIn | date:'longDate'}} - {{propertiesReservation.checkOut | date:'longDate'}}
+                          </p>
+                          <p class="current">
+                            {{propertiesReservation.status}}
+                          </p>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+          </div>
       </div>
       <div *ngIf="activeUser.isOwner == false">
         <div class="register" >
@@ -225,7 +324,7 @@
       </div>
     </div>
 
-    <div *ngIf="selectedOption == 'Vacay Requests'">
+    <div *ngIf="selectedOption == 'Travel Requests'">
 
         <div class="header">
           <div class="options">

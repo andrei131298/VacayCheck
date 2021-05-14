@@ -145,3 +145,12 @@ input[type="file"] {
 .img-wrap:hover .delete {
   opacity: 1;
 }
+.frown{
+  color: crimson;
+}
+.meh{
+  color: rgb(223, 139, 14);
+}
+.smile{
+  color: rgb(20, 182, 20);
+}

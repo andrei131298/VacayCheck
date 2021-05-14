@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.firstName = sessionStorage.getItem("firstName");
     this.userId = sessionStorage.getItem("userId");
+    console.log(this.userId)
   }
   openProfile(){
     this.router.navigate(["user-profile", this.userId]);

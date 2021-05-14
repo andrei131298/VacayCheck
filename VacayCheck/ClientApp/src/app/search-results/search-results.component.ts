@@ -6,7 +6,7 @@ import { Apartment } from '../shared/apartment.model';
 import { Reservation } from '../shared/reservation.model';
 import { LoaderComponent } from '../loader/loader.component';
 import {  formatDate } from '@angular/common';
-import { faStar, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faBuilding, faGlobe, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -35,6 +35,8 @@ export class SearchResult implements OnInit {
   activeProperties:Property[]=[];
   faStar = faStar;
   faBuilding = faBuilding;
+  faGlobe = faGlobe;
+  faMapMarkerAlt = faMapMarkerAlt;
   userId = sessionStorage.getItem('userId');
 
 
@@ -51,6 +53,7 @@ export class SearchResult implements OnInit {
     this.period = Math.floor((Date.UTC(this.dateRange1.getFullYear(), this.dateRange1.getMonth(), this.dateRange1.getDate()) - Date.UTC(this.dateRange0.getFullYear(), this.dateRange0.getMonth(), this.dateRange0.getDate()) ) /(1000 * 60 * 60 * 24));
     this.api.getProperties().subscribe((properties: Property[]) => {
       this.properties=properties
+      console.log(properties);
     });
 
     this.api.getApartments().subscribe((apartments: Apartment[]) => {

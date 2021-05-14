@@ -12,9 +12,8 @@
           <p id="p2">
             {{ property.cityName }}
           </p>
-          <div class="stele">
-            <fa-icon *ngFor="let star of counter(property.numberOfStars)" id="stea" [icon]="faStar" ></fa-icon>
-          </div>
+          <p *ngIf = "property.averageRating != 0" style="font-weight: bold; font-size: 22px; margin-top: 10px;">
+            {{property.averageRating}} average Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
           <button *ngIf="loggedIn=='true' && property.userId != userId" class="btn" style="background-color: rgb(240, 226, 226);margin-top: 20px;" 
           [ngClass]="{'followup' : activeFavourite!=null, 'unfollow' : activeFavourite == null }"
                                 (click)="changeStyle();addToFavourites()">
@@ -67,12 +66,12 @@
               </p>
               <div class="optionsButtons">
                 <button *ngIf="property.userId != userId" type="button" class="btn" (click)="check();set(apartment.id);">Reserve</button>
-                <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" (click)="goToSelectApartmentPage(apartment)">Vacay Request <fa-icon [icon]="faInfoCircle" 
+                <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" (click)="goToSelectApartmentPage(apartment)">Travel Request <fa-icon [icon]="faInfoCircle" 
                   (mouseover)="showInfo = true; hoveredApartmentIndex = i" (mouseout)="showInfo = false; hoveredApartmentIndex = null"></fa-icon></button>
                 <button *ngIf="property.userId != userId && currentUser.isOwner == false" type="button" class="disabledButton btn ml-3">
-                  Vacay Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true; hoveredApartmentIndex = i" (mouseout)="showInfoForDisabled = false; hoveredApartmentIndex = null"></fa-icon></button>
+                  Travel Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true; hoveredApartmentIndex = i" (mouseout)="showInfoForDisabled = false; hoveredApartmentIndex = null"></fa-icon></button>
               </div>
-              <p class="infoForDisabled" *ngIf="showInfo == true && hoveredApartmentIndex == i">Vacay Request is a new feature through which you can request an exchange of accommodation</p>
+              <p class="infoForDisabled" *ngIf="showInfo == true && hoveredApartmentIndex == i">Travel Request is a new feature through which you can request an exchange of accommodation</p>
               <div class="infoForDisabled" *ngIf="showInfoForDisabled == true && hoveredApartmentIndex == i">You need to be an owner with at least 5 reservations on our website to be able to use this feature</div>
             </div>  
           </div>
