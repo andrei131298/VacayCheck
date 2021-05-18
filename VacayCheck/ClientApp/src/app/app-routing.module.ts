@@ -17,6 +17,7 @@ import { PaymentComponent } from "./reservation/payment/payment.component";
 import { SelectApartmentComponent } from "./select-apartment/select-apartment.component";
 import { EmailVerificationComponent } from "./email-verification/email-verification.component";
 import { EmailSentComponent } from "./email-sent/email-sent.component";
+import { PasswordResetComponent } from "./password-reset/password-reset.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
   { path: "my-property/:propertyId", component:MyPropertyComponent},
   { path: "select-apartment/:id", component: SelectApartmentComponent},
   { path: "email-verification/:id", component:EmailVerificationComponent},
-  { path: "email-sent", component: EmailSentComponent}
+  { path: "email-sent", component: EmailSentComponent},
+  { path: "password-reset/:id", component: PasswordResetComponent}
 ];
 
 @NgModule({

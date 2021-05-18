@@ -8,7 +8,18 @@ h1 {
   max-width: 30%;
   text-align: center;
   margin: auto;
-  padding-bottom: 3rem;
+  padding-bottom: 1rem;
+  background-color: black;
+  border-radius: 10px;
+  border-bottom: 12px solid rgb(23, 87, 143);
+  border-top: 12px solid rgb(23, 87, 143);
+}
+.password-container{
+  max-width: 30%;
+  text-align: center;
+  margin: auto;
+  padding-bottom: 1rem;
+  padding-top: 2rem;
   background-color: black;
   border-radius: 10px;
   border-bottom: 12px solid rgb(23, 87, 143);
@@ -28,4 +39,17 @@ button {
 form {
   padding: 3rem;
   padding-bottom: 0;
+}
+#forgotPassword{
+  color: aliceblue;
+  cursor: pointer;
+}
+#forgotPassword:hover{
+  text-decoration: underline;
+}
+#successMessage{
+  margin-top: 40px;
+  font-size: 24px;
+  color: rgb(20, 182, 20);
+  text-align: center;
 }

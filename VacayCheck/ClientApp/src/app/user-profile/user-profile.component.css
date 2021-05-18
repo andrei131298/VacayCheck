@@ -176,6 +176,8 @@ hr {
 }
 .leftHalfForm {
   margin-right: 70px;
+  width: 40%;
+  max-width: 40%;
 }
 #cancel {
   color: red;

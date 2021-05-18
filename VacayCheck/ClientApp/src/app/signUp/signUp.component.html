@@ -2,201 +2,200 @@
 <h1>Sign up</h1>
 <div class="container">
   <form class="form-container" [formGroup]="addUserForm">
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="firstName" class="control-label required">First name</label>
-        <input
-          type="text"
-          id="firstName"
-          class="form-control"
-          formControlName="firstName"
-          autocomplete="off"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('firstName')"
-          errorMsg="Please inform your first name"
-        >
-        </app-field-error-display>
+    <div class="form-flex">
+      <div class="leftHalf">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="firstName" class="control-label required">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              formControlName="firstName"
+              autocomplete="off"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('firstName')"
+              errorMsg="Please inform your first name"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="lastName" class="control-label required">Last name</label>
+            <input
+              type="text"
+              id="lastName"
+              class="form-control"
+              formControlName="lastName"
+              autocomplete="off"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('lastName')"
+              errorMsg="Please inform your last name"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="email" class="control-label required">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+              autocomplete="off"
+              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('email')"
+              errorMsg="Please inform your email"
+            >
+            </app-field-error-display>
+            <!-- <div *ngIf="addUserForm.controls['email'].errors?.pattern">
+              Email not valid.
+            </div> -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="password" class="control-label required">Password</label>
+            <label id="smaller">(must contain at least 8 characters and at least one number)</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              formControlName="password"
+              autocomplete="off"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('password')"
+              errorMsg="Please complete a password"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="birthDate" class="control-label required">Birth Date</label>
+            <input
+              id="birthdate"
+              class="form-control"
+              type="datetime"
+              bsDatepicker
+              autocomplete="off"
+              [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+              formControlName="birthDate"
+              autocomplete="off"
+              onKeyDown="return false"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('birthDate')"
+              errorMsg="Please inform your birth date"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+      </div>  
+
+      <div class="rightHalf">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="sex" class="control-label required">Gender</label>
+            <select formControlName="sex" class="form-control">
+              <option value="" disabled selected>Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <app-field-error-display
+              [displayError]="isFieldValid('sex')"
+              errorMsg="Please inform your sex"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="address" class="control-label required">Address</label>
+            <input
+              type="text"
+              id="address"
+              class="form-control"
+              formControlName="address"
+              autocomplete="off"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('address')"
+              errorMsg="Please inform your address"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="phoneNumber" class="control-label required">Phone number</label>
+            <input
+              type="text"
+              id="phoneNumber"
+              class="form-control"
+              formControlName="phoneNumber"
+              autocomplete="off"
+            />
+            <app-field-error-display
+              [displayError]="isFieldValid('phoneNumber')"
+              errorMsg="Please inform your phone number"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label class="control-label mt-2">Country</label>
+                    <select class="form-control" formControlName="country" [(ngModel)] = "selectedCountry" (ngModelChange)= "onSelectCountry(selectedCountry)">
+                      <option value="" disabled>Country</option>
+                      <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
+                    </select>
+            <app-field-error-display
+              [displayError]="isFieldValid('country')"
+              errorMsg="Please inform your country"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label class="control-label mt-2">City</label>
+                    <select class="form-control" formControlName="cityName" [(ngModel)] = "selectedCity">
+                      <option value="" disabled selected></option>
+                      <option *ngFor="let city of allSearchedCities" [ngValue]="city.city">{{city.city}}</option>
+                    </select>
+            <app-field-error-display
+              [displayError]="isFieldValid('cityName')"
+              errorMsg="Please inform your city"
+            >
+            </app-field-error-display>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <div class="col-sm-12">
-        <label for="lastName" class="control-label required">Last name</label>
-        <input
-          type="text"
-          id="lastName"
-          class="form-control"
-          formControlName="lastName"
-          autocomplete="off"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('lastName')"
-          errorMsg="Please inform your last name"
-        >
-        </app-field-error-display>
-      </div>
+      <button class="btn btn-dark" (click)="onSubmit()">Submit</button>
     </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="email" class="control-label required">Email</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          formControlName="email"
-          autocomplete="off"
-          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('email')"
-          errorMsg="Please inform your email"
-        >
-        </app-field-error-display>
-        <!-- <div *ngIf="addUserForm.controls['email'].errors?.pattern">
-          Email not valid.
-        </div> -->
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="password" class="control-label required"
-          >Password (must contain at least 8 characters and at least one
-          number)</label
-        >
-        <input
-          type="password"
-          id="password"
-          class="form-control"
-          formControlName="password"
-          autocomplete="off"
-          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('password')"
-          errorMsg="Please complete a password"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="birthDate" class="control-label required">Birth Date</label>
-        <input
-          id="birthdate"
-          type="datetime"
-          bsDatepicker
-          autocomplete="off"
-          [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
-          formControlName="birthDate"
-          autocomplete="off"
-          onKeyDown="return false"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('birthDate')"
-          errorMsg="Please inform your birth date"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="sex" class="control-label required">Gender</label>
-        <select formControlName="sex" class="form-control">
-          <option value="" disabled selected>Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <app-field-error-display
-          [displayError]="isFieldValid('sex')"
-          errorMsg="Please inform your sex"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="address" class="control-label required">Address</label>
-        <input
-          type="text"
-          id="address"
-          class="form-control"
-          formControlName="address"
-          autocomplete="off"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('address')"
-          errorMsg="Please inform your address"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="phoneNumber" class="control-label required">Phone number</label>
-        <input
-          type="text"
-          id="phoneNumber"
-          class="form-control"
-          formControlName="phoneNumber"
-          autocomplete="off"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('phoneNumber')"
-          errorMsg="Please inform your phone number"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label class="control-label mt-2">Country</label>
-                <select class="form-control" formControlName="country">
-                  <option value="" disabled>Country</option>
-                  <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
-                </select>
-        <app-field-error-display
-          [displayError]="isFieldValid('country')"
-          errorMsg="Please inform your country"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-12">
-        <label for="city" class="control-label required">City</label>
-        <input
-          type="text"
-          id="city"
-          class="form-control"
-          formControlName="cityName"
-          autocomplete="off"
-        />
-        <app-field-error-display
-          [displayError]="isFieldValid('cityName')"
-          errorMsg="Please inform your city"
-        >
-        </app-field-error-display>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="">
-        <button class="btn btn-dark" (click)="onSubmit()">Submit</button>
-      </div>
-    </div>
-
-        <button class="btn btn-dark" (click)="reset()">Reset</button>
-        
   </form>
+
+  
   
   <p class="text-center mt-2" *ngIf="success" style="color: green; font-size: 22px">
     User added successfully

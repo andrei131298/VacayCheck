@@ -10,6 +10,7 @@ import {
 } from "@angular/forms";
 import { ApiService } from "../../services/api.service";
 import { Country } from "../shared/country.model";
+import { CityRequest } from "../shared/cityRequest.model";
 
 @Component({
   selector: "sign-up",
@@ -22,6 +23,9 @@ export class SignUpComponent implements OnInit {
   success: boolean;
   birthDate: string;
   allCountries: Country[] = [];
+  allSearchedCities;
+  selectedCountry: string;
+  selectedCity: string;
 
   constructor(
     public fb: FormBuilder,
@@ -47,6 +51,24 @@ export class SignUpComponent implements OnInit {
     this.api.getCountries().subscribe((countries: Country[])=>{
       this.allCountries = countries;
     });
+
+    this.selectedCity = ""
+  }
+
+  onSelectCountry(countryName){
+    console.log(countryName);
+    this.selectedCountry = countryName;
+    this.api.getCityByCountryName(this.selectedCountry).subscribe((cities: CityRequest)=>{
+      if(cities == null){
+        this.allSearchedCities = []
+        console.log("golit")
+      }
+      else{
+        this.allSearchedCities = cities.data;
+
+      }
+
+    }); 
   }
 
   get f() {
@@ -98,7 +120,5 @@ export class SignUpComponent implements OnInit {
       }
     });
   }
-  reset() {
-    this.addUserForm.reset();
-  }
+ 
 }

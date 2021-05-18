@@ -2,12 +2,18 @@
   <a routerLink="/" class="navbar-brand">
     <h2 class="logo" ><fa-icon [icon] = "faGlobeEurope"> </fa-icon>Travel Check</h2>
   </a>
-
+  
   <div *ngIf="loggedIn == 'true'">
     <div class="container">
-      <div class="firstName" (click)="openProfile()">
+      <button type="button" class="btn" routerLink="">
+        <fa-icon [icon]="faHome" ></fa-icon> HOME
+      </button>
+      <!-- <div class="firstName" (click)="openProfile()">
         <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName }}
-      </div>
+      </div> -->
+      <button type="button" class="firstName btn" (click)="openProfile()">
+        <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName }}
+      </button>
       <button type="button" class="btn" (click)="logout()">
         <fa-icon [icon]="faSignOutAlt" ></fa-icon> LOGOUT
       </button>
@@ -16,7 +22,9 @@
   <div *ngIf="loggedIn == 'false' || loggedIn==null">
     <div>
       <ul class="nav navbar">
-        <li class="nav-item"></li>
+        <button type="button" class="btn" routerLink="">
+          <fa-icon [icon]="faHome" ></fa-icon> HOME
+        </button>
         <a class="nav-link" routerLink="/signUp">
           <button type="button" class="btn"><fa-icon [icon]="faUserPlus" ></fa-icon> SIGN UP</button>
         </a>

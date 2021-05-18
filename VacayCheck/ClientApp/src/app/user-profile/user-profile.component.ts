@@ -12,6 +12,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ExchangeRequest } from '../shared/exchangeRequest.model';
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CityRequest } from '../shared/cityRequest.model';
+import { Country } from '../shared/country.model';
 
 
 @Component({
@@ -73,6 +75,12 @@ export class UserProfileComponent implements OnInit {
   requesterReservation = new Reservation();
   responderReservation = new Reservation();
   nrOfPersons: number;
+  selectedCountry: string;
+  allSearchedCities;
+  allCountries: Country[] = [];
+  selectedCity: string;
+
+
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
 
 
@@ -82,7 +90,9 @@ export class UserProfileComponent implements OnInit {
     this.maxDate.setFullYear(this.maxDate.getFullYear()+1);
 
     this.refreshPage();
-
+    this.api.getCountries().subscribe((countries: Country[])=>{
+      this.allCountries = countries;
+    });
   }
 
   refreshPage(){
@@ -164,6 +174,8 @@ export class UserProfileComponent implements OnInit {
   
       });
 
+      this.selectedCountry = this.activeUser.country;
+      this.selectedCity = this.activeUser.cityName;
       this.activeUser.userPropertiesReservations.forEach(reservation =>{
         this.api.getApartment(reservation.apartmentId).subscribe((apartment:Apartment)=>{
           reservation.apartment = apartment;
@@ -196,6 +208,7 @@ export class UserProfileComponent implements OnInit {
   get f() {
     return this.editUserForm.controls;
   }
+  
 
   getExchangeRequestsByResponder(){
     this.api.getExchangeRequestByResponder(this.userId).subscribe((requests: ExchangeRequest[])=>{
@@ -212,9 +225,20 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  onSelectCountry(countryName){
+    this.selectedCountry = countryName;
+    console.log(this.selectedCountry);
+    console.log(this.selectedCity);
+    this.api.getCityByCountryName(this.selectedCountry).subscribe((cities: CityRequest)=>{
+      this.allSearchedCities = cities.data;
+      console.log(this.allSearchedCities);
+    }); 
+  }
+
   saveChanges(){
     if (this.editUserForm.valid) {
       this.success = true;
+      console.log(this.editUserForm);
       setTimeout(() => {
         this.success = null;
       }, 3000);
@@ -249,7 +273,9 @@ export class UserProfileComponent implements OnInit {
     this.selectedReservationsStatus = value;
   }
   cancelForm(){
-    this.edit = false
+    this.edit = false;
+    this.selectedCity = this.activeUser.cityName;
+    this.selectedCountry = this.activeUser.country;
   }
   openApartmentModal(id: string){
     this.apartmentModal.initialize(id);

@@ -10,6 +10,7 @@ import { Owner } from "../app/shared/owner.model";
 import { LoginRequest } from "../app/shared/loginRequest";
 import { Photo } from "src/app/shared/photo.model";
 import { ExchangeRequest } from "src/app/shared/exchangeRequest.model";
+import { CityRequest } from "src/app/shared/cityRequest.model";
 
 @Injectable({
   providedIn: "root",
@@ -26,12 +27,23 @@ export class ApiService {
   });
   baseUrl = "https://localhost:44397/api";
   countriesUrl = "https://restcountries.eu/rest/v2/all";
+  citiesUrl = "https://countriesnow.space/api/v0.1/countries/population/cities/filter"
 
   getCountries(){
     return this.http.get(this.countriesUrl, {
       headers : {
         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
     },
+    });
+  }
+
+  getCityByCountryName(countryName: string){
+    return this.http.post(this.citiesUrl, {
+      "order": "asc",
+      "orderBy": "name",
+      "country": countryName
+    },{
+      headers : this.header,
     });
   }
 
@@ -46,6 +58,11 @@ export class ApiService {
         headers: this.header, observe: 'response',
     });
 }
+  getForgotPasswordResponse(email: string){
+    return this.http.get(this.baseUrl + "/User/forgotPassword/" + email, {
+      headers: this.header,
+  });
+  }
   getFavouriteByUserAndProperty(userId: string,propertyId:string){
     return this.http.get(this.baseUrl + "/Favourite/user=" + userId + "/property="+ propertyId, {
       headers: this.header,

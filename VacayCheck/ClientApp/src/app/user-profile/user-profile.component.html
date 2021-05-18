@@ -59,14 +59,25 @@
               <label for="address" class="control-label required">Address</label>
               <input type="text" id="address" class="form-control" formControlName="address" autocomplete="off"/>
 
-              <label for="country" class="control-label required">Country</label>
-              <input type="text" id="country" class="form-control" formControlName="country" autocomplete="off"/>
+              <!-- <label for="country" class="control-label required">Country</label>
+              <input type="text" id="country" class="form-control" formControlName="country" autocomplete="off"/> -->
                           
-
+              <label class="control-label mt-2">Country</label>
+                          <select class="form-control" formControlName="country" [(ngModel)] = "selectedCountry" (ngModelChange)= "onSelectCountry(selectedCountry)">
+                            <option value="activeUser.country" disabled>Country</option>
+                            <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
+                          </select>
             </div>
             <div class="rightHalfForm">
-              <label for="city" class="control-label required">City</label>
-              <input type="text" id="city" class="form-control" formControlName="cityName" autocomplete="off"/>
+              <!-- <label for="city" class="control-label required">City</label>
+              <input type="text" id="city" class="form-control" formControlName="cityName" autocomplete="off"/> -->
+
+              <label class="control-label mt-2">City</label>
+                          <select class="form-control" formControlName="cityName" [(ngModel)] = "selectedCity">
+                            <option disabled>City</option>
+                            <option *ngFor="let city of allSearchedCities" [ngValue]="city.city">{{city.city}}</option>
+                          </select>
+                
 
               <label for="sex" class="control-label required">Gender</label>
               <br>

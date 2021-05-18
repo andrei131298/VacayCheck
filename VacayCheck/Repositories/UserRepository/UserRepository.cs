@@ -92,6 +92,35 @@ namespace VacayCheck.Repositories.UserRepository
             }
 
         }
+        public bool forgotPassword(string email)
+        {
+
+            var userExists = _context.Users.Any(x => x.email == email);
+
+            if (userExists)
+            {
+                var foundUser = _context.Users.SingleOrDefault(x => x.email == email);
+
+                MailMessage mailMessage = new MailMessage("travelcheckmail@gmail.com", email);
+                mailMessage.From = new MailAddress("travelcheckmail@gmail.com", "Travel Check");
+                mailMessage.Body = "Password reset link: https://localhost:44397/password-reset/" + foundUser.id;
+                mailMessage.Subject = "TravelCheck e-mail verification";
+
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.UseDefaultCredentials = false;
+
+                smtpClient.Credentials = new System.Net.NetworkCredential()
+                {
+                    UserName = "travelcheckmail@gmail.com",
+                    Password = "tenismen13"
+                };
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mailMessage);
+            }
+            
+
+            return userExists;
+        }
         public User GetByUserAndPassword(string email, string password)
         {
             return _context.Users.Where(x => x.email == email && x.password == password).FirstOrDefault();

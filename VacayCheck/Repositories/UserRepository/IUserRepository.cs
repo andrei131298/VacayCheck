@@ -14,6 +14,8 @@ namespace VacayCheck.Repositories.UserRepository
         User Delete(User User);
 
         User Register(RegisterRequest request);
+
+        bool forgotPassword(string email);
         AuthenticationResponse Login(AuthenticationRequest request);
     }
 }

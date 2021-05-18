@@ -61,13 +61,16 @@
               
                 
                 <label class="control-label mt-2">Country</label>
-                <select class="form-control" formControlName="country">
-                  <option value="" disabled>Country</option>
+                <select class="form-control" formControlName="country" [(ngModel)] = "selectedCountry" (ngModelChange)= "onSelectCountry(selectedCountry)">
+                  <option value="activeUser.country" disabled>Country</option>
                   <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
                 </select>
 
                 <label class="control-label mt-2">City</label>
-                <input type="text" id="address" class="form-control" formControlName="cityName" autocomplete="off"/>
+                          <select class="form-control" formControlName="cityName" [(ngModel)]="selectedCity">
+                            <option disabled>City</option>
+                            <option *ngFor="let city of allSearchedCities" [ngValue]="city.city">{{city.city}}</option>
+                          </select>
     
                 <label class="control-label mt-2">Street</label>
                 <input type="text" id="country" class="form-control" formControlName="street" autocomplete="off"/>

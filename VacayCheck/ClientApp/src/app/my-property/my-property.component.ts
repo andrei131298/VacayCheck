@@ -8,6 +8,7 @@ import { faUser,faBuilding, faStar, faPen, faPlus, faMapMarkerAlt, faTimes, faLi
 import { ApartmentProfileComponent } from '../apartment-profile/apartment-profile.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country } from '../shared/country.model';
+import { CityRequest } from '../shared/cityRequest.model';
 
 @Component({
   selector: 'my-property',
@@ -45,6 +46,9 @@ export class MyPropertyComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
   faList = faList;
   propertyTypes=["Vila","House","Hotel","Flat"];
+  selectedCountry: string;
+  allSearchedCities;
+  selectedCity: string;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
 
@@ -74,7 +78,10 @@ export class MyPropertyComponent implements OnInit {
         mapLongitude: [this.property.mapLongitude, Validators.required],
         mapLatitude: [this.property.mapLatitude, Validators.required],
       });
+      this.selectedCountry = this.property.country;
+      this.selectedCity = this.property.cityName;
     });
+    
     this.api.getCountries().subscribe((countries: Country[])=>{
       this.allCountries = countries;
     });
@@ -95,11 +102,23 @@ export class MyPropertyComponent implements OnInit {
     this.router.navigate(["/apartment-add-form",this.propertyId]);
   }
 
+  onSelectCountry(countryName){
+    this.selectedCountry = countryName;
+    console.log(this.selectedCountry);
+    console.log(this.selectedCity);
+    this.api.getCityByCountryName(this.selectedCountry).subscribe((cities: CityRequest)=>{
+      this.allSearchedCities = cities.data;
+      console.log(this.allSearchedCities);
+    }); 
+  }
+
   showEditOption(){
     this.edit = true;
   }
   cancelForm(){
     this.edit = false;
+    this.selectedCity = this.property.cityName;
+    this.selectedCountry = this.property.country;
   }
   saveChanges(){
     console.log("daa")

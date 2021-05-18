@@ -145,6 +145,13 @@ namespace VacayCheck.Controllers
             }
             return IUserRepository.Update(model);
         }
+
+        [HttpGet("forgotPassword/{email}")]
+        public IActionResult forgotPassword(string email)
+        {
+            return Ok(IUserRepository.forgotPassword(email));
+        }
+
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest regRequest)
         {

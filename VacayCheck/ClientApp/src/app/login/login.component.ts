@@ -5,6 +5,7 @@ import { User } from "../shared/user.model";
 import { ApiService } from "../../services/api.service";
 import { LoginRequest } from "../shared/loginRequest";
 import { RequestResponse } from "../shared/requestResponse";
+import { faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 
 import {
   FormBuilder,
@@ -32,6 +33,10 @@ export class LoginComponent implements OnInit {
   users: User[] = [];
   triedWithoutLogin = JSON.parse(sessionStorage.getItem('triedWithoutLogin'));
   mailNotVerificated: string;
+  forgotPassword = false;
+  resetPasswordEmail: string;
+  successMessage: string;
+  faCheckCircle = faCheckCircle;
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -126,6 +131,17 @@ export class LoginComponent implements OnInit {
       } else if (control instanceof FormGroup) {
         this.validateAllFormFields(control);
       }
+    });
+  }
+
+  toEmailSubmition(){
+    this.forgotPassword = true;
+  }
+
+  sendEmail(){
+    console.log(this.resetPasswordEmail);
+    this.api.getForgotPasswordResponse(this.resetPasswordEmail).subscribe(()=>{
+      this.successMessage = "Email was sent"
     });
   }
  

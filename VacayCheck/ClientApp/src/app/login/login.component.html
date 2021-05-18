@@ -1,6 +1,6 @@
 <app-header></app-header>
-<h1>Login</h1>
-<div class="container">
+<div *ngIf="forgotPassword == false" class="container">
+  <h1>Login</h1>
   <form class="form-container" [formGroup]="loginForm">
       <div class="form-group">
           <div class="col-sm-12">
@@ -39,11 +39,11 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="">
-        <button class="btn btn-dark" (click)="onSubmit()">Submit</button>
-      </div>
+      <button class="btn btn-dark" (click)="onSubmit()">Submit</button>
     </div>
-        
+    <div class="form-group">
+      <p id="forgotPassword" (click)="toEmailSubmition()">I forgot my password</p>
+    </div>
   </form>
   <p *ngIf="success" class="text-center" style="color: green; font-size: 22px; margin-top: 20px;">
     User found
@@ -54,4 +54,25 @@
   <p *ngIf="mailNotVerificated != null" class="text-center" style="color: red; font-size: 22px; margin-top: 20px;">
     The e-mail was not verificated
   </p>
+</div>
+
+<div *ngIf="forgotPassword && successMessage == null">
+    <p class="text-center h5 mt-5 mb-5">Enter your email address and we'll send you instructions on how to reset your password</p>
+    <div class="password-container">
+      <div class="form-group" style="width: 80%; margin: auto;">
+            <label for="email" class="control-label required">Email</label>
+            <input type="email"
+                  id="email"
+                  class="form-control"
+                  autocomplete="off"
+                  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
+                  [(ngModel)]="resetPasswordEmail"/>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-dark" (click)="sendEmail()">Submit</button>
+      </div>
+    </div>
+</div>
+<div *ngIf="successMessage != null">
+  <p id="successMessage"><fa-icon [icon]="faCheckCircle"></fa-icon> {{successMessage}}</p>
 </div>

@@ -38,6 +38,7 @@ import { AgmCoreModule } from "@agm/core";
 import { SelectApartmentComponent } from './select-apartment/select-apartment.component';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { EmailSentComponent } from './email-sent/email-sent.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { EmailSentComponent } from './email-sent/email-sent.component';
     ConfirmationModalComponent,
     SelectApartmentComponent,
     EmailVerificationComponent,
-    EmailSentComponent
+    EmailSentComponent,
+    PasswordResetComponent
   ],
   imports: [
     CommonModule,

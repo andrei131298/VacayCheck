@@ -82,7 +82,7 @@ export class ApartmentProfileComponent implements OnInit {
           this.api.getUser(reservation.userId).subscribe((user: User)=>{
             reservation.userFirstName = user.firstName;
             if(reservation.review != ""){
-              this.apartmentHasReviews = true;
+              this.apartmentHasReviews = true;  
             }
           });
         });
