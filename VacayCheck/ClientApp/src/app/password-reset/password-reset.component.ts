@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ApiService } from 'src/services/api.service';
 import { User } from '../shared/user.model';
+import { faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'password-reset',
@@ -11,12 +12,13 @@ import { User } from '../shared/user.model';
 })
 export class PasswordResetComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,public fb: FormBuilder, private api: ApiService) { }
+  constructor(private route: ActivatedRoute,public fb: FormBuilder, private api: ApiService, private router: Router) { }
   userId: string;
   resetPasswordForm: FormGroup;
   user = new User();
   success: boolean;
-
+  successMessage: string;
+  faCheckCircle = faCheckCircle;
 
 
   ngOnInit(): void {
@@ -53,7 +55,11 @@ export class PasswordResetComponent implements OnInit {
         console.log(this.resetPasswordForm.get('newPassword').value);
         console.log(this.user)
         this.api.updateUserDetails(this.user, this.userId).subscribe((response)=>{
-          console.log(response);  
+          console.log(response); 
+          this.successMessage = "Your password has been updated";
+          setTimeout(() => {
+            this.router.navigate(["/login"]);
+          }, 3000);
         });
       }
     }

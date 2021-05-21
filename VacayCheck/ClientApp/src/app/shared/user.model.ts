@@ -16,6 +16,7 @@ export class User {
   country: string;
   cityName: string;
   isMailVerificated: boolean;
+  cardHolderName: string;
   userPropertiesReservations?: Array<Reservation>;
   constructor(input?: any) {
     Object.assign(this, input);

@@ -124,29 +124,6 @@ export class ReservationComponent implements OnInit {
     this.selectedPaymentOption = event.target.value;
   }
 
-  reserveApartment(){
-
-    if(JSON.parse(sessionStorage.getItem('isLoggedIn')) == false ||
-    JSON.parse(sessionStorage.getItem('isLoggedIn')) == null){
-      this.error=true;
-      setTimeout(() => {
-        this.error=false;
-    }, 2000);
-    }
-    else{
-      this.reservation =
-        {price:this.apartment.pricePerNight*this.period,
-          review:"",checkIn:this.dateRange0Formatted,checkOut:this.dateRange1Formatted,
-        userId:this.userId,apartmentId:this.apartmentId, numberOfPersons:this.persons, paidWithCard: false, rating: 0}
-          console.log(this.reservation);
-       this.payment.initialize();
-      
-    }
-    this.api.addReservation(this.reservation).subscribe();
-      this.router.navigate(["user-profile", this.userId]).then(() => {
-        window.location.reload();
-      });
-  }
   cancelReservation(reservation: Reservation){
 
     this.confirmation.initialize();

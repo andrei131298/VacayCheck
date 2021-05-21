@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
   sendEmail(){
     console.log(this.resetPasswordEmail);
     this.api.getForgotPasswordResponse(this.resetPasswordEmail).subscribe(()=>{
-      this.successMessage = "Email was sent"
+      this.successMessage = "E-mail was sent"
     });
   }
  

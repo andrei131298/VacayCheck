@@ -4,6 +4,7 @@ import { Property } from "../shared/property.model";
 import { DetailModalComponent } from "./detail-modal/detail-modal.component";
 import { Router } from "@angular/router";
 import { formatDate } from "@angular/common";
+import { CityRequest } from "../shared/cityRequest.model";
 
 @Component({
   selector: "app-home",
@@ -20,16 +21,21 @@ export class HomeComponent {
   dateRange0Formatted:string;
   dateRange1Formatted:string;
   propertyId: string;
+  allCities;
 
 
   @ViewChild("detailModal") detailModal: DetailModalComponent;
   constructor(private api: ApiService, private router: Router) {}
 
   ngOnInit() {
-    this.api.getProperties().subscribe((properties: Property[]) => {
-      this.properties=properties;
-      console.log(this.properties);
-    });
+    this.api.getCityByCountryName("").subscribe((cities: CityRequest)=>{
+      this.allCities = cities.data;
+      console.log(this.allCities);
+    }); 
+    // this.api.getProperties().subscribe((properties: Property[]) => {
+    //   this.properties=properties;
+    //   console.log(this.properties);
+    // });
     this.maxDate.setFullYear(this.maxDate.getFullYear()+1);
     
   }

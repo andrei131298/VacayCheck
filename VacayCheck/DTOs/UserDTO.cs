@@ -22,6 +22,8 @@ namespace VacayCheck.DTOs
         public string country { get; set; }
         public string cityName { get; set; }
         public bool isMailVerificated { get; set; }
+        public string cardHolderName { get; set; }
+
         public List<Reservation> userPropertiesReservations { get; set; }
 
     }

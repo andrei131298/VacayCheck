@@ -14,12 +14,7 @@
                     <p>Total Price: {{ apartment.pricePerNight*period}}$</p>
                 </div>
                 <div class="rightHalf">
-                    <p>Please select payment method: </p>
-                    <div *ngFor="let option of paymentOptions">
-                        <input type="radio" name="option" [value]="option" (change)="radioChange($event)"><i>{{option}}</i>
-                    </div>
-                    <button *ngIf="selectedPaymentOption == 'Pay now with card'" class="btn btn-primary" (click)="goToPayment()">Go to payment</button>
-                    <button *ngIf="selectedPaymentOption == 'Pay with cash at property'" class="btn btn-primary" (click)="reserveApartment()">Confirm and reserve</button>
+                    <button class="btn btn-primary" (click)="goToPayment()">Go to payment</button>
                 </div>
             </div>
             <p style="color: red; font-size: 24px;" *ngIf="error == true">You need to login</p>

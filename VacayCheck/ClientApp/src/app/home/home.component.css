@@ -69,12 +69,16 @@ input {
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  height: 79px;
-  max-height: 79px;
+  height: 60px;
+  max-height: 60  px;
   margin-bottom: 0;
   background-color: rgb(23, 87, 143);
   color: whitesmoke;
-  border-radius: 7%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  
 }
 #p1:hover {
   text-decoration: underline;

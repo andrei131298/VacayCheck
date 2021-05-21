@@ -59,7 +59,8 @@ namespace VacayCheck.Controllers
                 phoneNumber = user.phoneNumber,
                 country = user.country,
                 cityName = user.cityName,
-                isMailVerificated = user.isMailVerificated
+                isMailVerificated = user.isMailVerificated,
+                cardHolderName = user.cardHolderName
 
             };
             List<Reservation> allReservations = new List<Reservation>();
@@ -139,9 +140,11 @@ namespace VacayCheck.Controllers
             {
                 model.isOwner = true;
             }
-            if (value.isOwner == false)
+          
+            
+            if( value.cardHolderName != null)
             {
-                model.isOwner = false;
+                model.cardHolderName = value.cardHolderName;
             }
             return IUserRepository.Update(model);
         }

@@ -10,16 +10,21 @@ h1 {
   width: 100%;
   border: 1px solid #dee2e6;
 }
-
+.image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+}
 .form-container {
   max-width: 50%;
   text-align: center;
   margin: auto;
   padding-bottom: 1rem;
-  background-color: black;
+  /* background-color: black;
   border-radius: 10px;
   border-bottom: 12px solid rgb(23, 87, 143);
-  border-top: 12px solid rgb(23, 87, 143);
+  border-top: 12px solid rgb(23, 87, 143); */
   
 }
 .form-flex{
@@ -31,8 +36,8 @@ input {
 }
 
 label {
-  color: white;
-  font-size: 20px;
+  color: black;
+  font-size: 22px;
 }
 button {
   background-color: rgb(23, 87, 143);

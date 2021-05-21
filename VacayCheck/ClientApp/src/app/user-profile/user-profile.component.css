@@ -23,6 +23,13 @@
   flex-direction: column;
   margin-right: 150px;
 }
+.accountData{
+  width: 20%;
+  margin:auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
 .editData {
   display: flex;
   flex-direction: column;
@@ -32,6 +39,11 @@
   font-weight: bold;
   margin-bottom: 10px;
   width: 130%;
+}
+.accountDetails{
+  font-weight: bold;
+  margin-bottom: 10px;
+
 }
 .span {
   font-weight: lighter;
@@ -157,6 +169,13 @@ input[type="file"] {
 }
 hr {
   width: 130%;
+  background-color: rgb(175, 175, 175);
+  border: 0 none;
+  height: 2px;
+  margin-bottom: 30px;
+}
+.hr{
+  width: 80%;
   background-color: rgb(175, 175, 175);
   border: 0 none;
   height: 2px;
@@ -298,4 +317,19 @@ hr {
   display: flex;
   flex-direction: row;
   width: 60%;
+}
+.bankAccountForm{
+  max-width: 30%;
+  text-align: center;
+  margin: auto;
+  padding-bottom: 1rem;
+  margin-top: 30px;
+
+}
+.ibanText{
+  color: rgb(23, 87, 143);
+  cursor: pointer;
+}
+.ibanText:hover{
+  text-decoration: underline;
 }

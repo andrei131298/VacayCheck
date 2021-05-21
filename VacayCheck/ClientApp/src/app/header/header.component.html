@@ -8,11 +8,8 @@
       <button type="button" class="btn" routerLink="">
         <fa-icon [icon]="faHome" ></fa-icon> HOME
       </button>
-      <!-- <div class="firstName" (click)="openProfile()">
-        <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName }}
-      </div> -->
       <button type="button" class="firstName btn" (click)="openProfile()">
-        <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName }}
+        <fa-icon [icon]="faUserCircle" ></fa-icon> {{ firstName.toUpperCase() }}
       </button>
       <button type="button" class="btn" (click)="logout()">
         <fa-icon [icon]="faSignOutAlt" ></fa-icon> LOGOUT
@@ -20,25 +17,11 @@
     </div>
   </div>
   <div *ngIf="loggedIn == 'false' || loggedIn==null">
-    <div>
-      <ul class="nav navbar">
-        <button type="button" class="btn" routerLink="">
-          <fa-icon [icon]="faHome" ></fa-icon> HOME
-        </button>
-        <a class="nav-link" routerLink="/signUp">
-          <button type="button" class="btn"><fa-icon [icon]="faUserPlus" ></fa-icon> SIGN UP</button>
-        </a>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login">
-            <button type="button" class="btn"><fa-icon [icon]="faSignInAlt" ></fa-icon> LOGIN</button>
-          </a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/owner-login">
-            <button type="button" class="btn btn-primary">Owner's page</button>
-          </a>
-        </li> -->
-      </ul>
+    <div class="container">
+        <button type="button" class="btn" routerLink=""><fa-icon [icon]="faHome" ></fa-icon> HOME</button>
+        <button type="button" class="firstName btn" routerLink="/signUp"><fa-icon [icon]="faUserPlus" ></fa-icon> SIGN UP</button>
+        <button type="button" class="btn" routerLink="/login"><fa-icon [icon]="faSignInAlt" ></fa-icon> LOGIN</button>
+        
     </div>
   </div>
 </nav>

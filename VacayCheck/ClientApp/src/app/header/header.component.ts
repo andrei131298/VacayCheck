@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
 import { faUserCircle, faGlobeEurope, faSignInAlt, faUserPlus, faSignOutAlt, faHome} from '@fortawesome/free-solid-svg-icons';
+import { RedirectService } from "src/services/redirect.service";
 
 @Component({
   selector: "app-header",
@@ -19,13 +20,14 @@ export class HeaderComponent implements OnInit {
   faSignOutAlt= faSignOutAlt;
   faHome = faHome;
 
+  constructor(public authService: AuthService, private router: Router, public redirect: RedirectService) {}
+
   logout(): void {
     console.log("Logout");
     this.authService.logout();
-    this.router.navigate(["/home"]);
+    this.redirect.redirectTo("home");
   }
 
-  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.firstName = sessionStorage.getItem("firstName");

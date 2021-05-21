@@ -1,6 +1,7 @@
 .navbar {
   background-color: rgb(47, 45, 66);
-  border-bottom: 6px solid black;
+  border-bottom: 2px solid black;
+  height: 90px;
 }
 .logo {
   padding: 10px;
@@ -12,16 +13,13 @@
   justify-content: flex-start;
   margin-left: 100px;
 }
-
-ul {
-  border: none !important;
-  font-size: 20px;
-}
 .btn {
   background-color: rgb(47, 45, 66);
   color: white;
 }
-
+.container{
+  font-size: 22px;
+}
 .btn:hover {
   color: red;
   background: #fff;
@@ -32,8 +30,7 @@ ul {
 .firstName {
   background-color: rgb(47, 45, 66);
   color: white;
-  margin-right: 30px;
-  margin-left: 30px;
-  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 

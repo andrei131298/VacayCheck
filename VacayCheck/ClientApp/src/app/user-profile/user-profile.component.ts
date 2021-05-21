@@ -14,6 +14,7 @@ import { ApartmentProfileComponent } from '../apartment-profile/apartment-profil
 import { HttpErrorResponse } from '@angular/common/http';
 import { CityRequest } from '../shared/cityRequest.model';
 import { Country } from '../shared/country.model';
+import { FormValidation } from '../util/formValidation';
 
 
 @Component({
@@ -23,15 +24,16 @@ import { Country } from '../shared/country.model';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private api:ApiService, private router:Router, private fb: FormBuilder) {
+  constructor(private route:ActivatedRoute, private api:ApiService, private router:Router, 
+    private fb: FormBuilder, private fv: FormValidation) {
    }
 
   editUserForm: FormGroup;
+  bankAccountForm: FormGroup;
   userId:string;
   activeUser:User;
   isLoaded=false;
-  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','My properties', 'Travel Requests'];
-  allCurrencies = ['AED', 'ARS', 'AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'JPY', 'KRW', 'MAD', 'MXN', 'MYR', 'NOK', 'NZD', 'PEN', 'PHP', 'PLN', 'RON', 'RUB', 'SAR', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'UAH', 'USD', 'UYU', 'VND', 'ZAR']
+  options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','Hosting', 'Travel Requests'];
   requestsOptions = ["Your requests", "Requests on your properties"];
   selectedOption='Profile';
   selectedRequest = "Your requests";
@@ -39,7 +41,7 @@ export class UserProfileComponent implements OnInit {
   selectedStatus = 'All statuses';
   reservationsStatuses = ['All reservations', 'Completed', 'Upcoming', 'Current']
   selectedReservationsStatus = "All reservations"
-  propertiesOptions = ["Properties list", "Reservations"];
+  propertiesOptions = ["Properties list", "Reservations", "Payments"];
   selectedPropertyOption = 'Properties list'
   savedProperties:Favourite[]=[];
   userReservations:Reservation[]=[];
@@ -62,6 +64,7 @@ export class UserProfileComponent implements OnInit {
   currentPropertyReservations: Reservation[]=[];
   allReservedApartments: Apartment[]=[];
   edit = false;
+  editAccount = false;
   success: boolean;
   exchangesRequested: ExchangeRequest[]=[];
   exchangesToRespond: ExchangeRequest[]=[];
@@ -171,6 +174,11 @@ export class UserProfileComponent implements OnInit {
         phoneNumber: [this.activeUser.phoneNumber, Validators.required],
         country: [this.activeUser.country, Validators.required],
         cityName: [this.activeUser.cityName, Validators.required]
+  
+      });
+      this.bankAccountForm = this.fb.group({
+        fullName: [this.activeUser.cardHolderName, Validators.required],
+        iban: [this.activeUser.bankAccount, Validators.required]
   
       });
 
@@ -294,6 +302,9 @@ export class UserProfileComponent implements OnInit {
   showEditOption(){
     this.edit = true;
   }
+  showEditOptionForAccount(){
+    this.editAccount = true;
+  }
   toReviewPage(reservation:Reservation){
     this.router.navigate(["/reservation"],
     {queryParams:{reservation:reservation.id, reservationHistory:true,apartmentId:reservation.apartmentId}});
@@ -313,6 +324,31 @@ export class UserProfileComponent implements OnInit {
   goToProperty(property:Property){
     console.log(property);
     this.router.navigate(["my-property", property.id]);
+  }
+  updateBankAccount(){
+    if(this.bankAccountForm.valid){
+      this.activeUser.bankAccount = this.bankAccountForm.controls.iban.value;
+      this.activeUser.cardHolderName = this.bankAccountForm.controls.fullName.value;
+      console.log(this.activeUser);
+      this.api.editUser(this.activeUser).subscribe(()=>{
+        this.getCurrentUser();
+        this.editAccount = false;
+      });
+    }
+    else{
+      this.fv.validateAllFormFields(this.bankAccountForm);
+    }
+    
+  }
+  displayFieldCss(field: string) {
+    return {
+      "has-error": this.isFieldValid(field, this.bankAccountForm),
+      "has-feedback": this.isFieldValid(field, this.bankAccountForm),
+    };
+  }
+
+  isFieldValid(field: string, form: FormGroup){
+    return this.fv.isFieldValid(field,form);
   }
 
   public setRow(_index: number) {

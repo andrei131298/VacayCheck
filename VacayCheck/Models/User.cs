@@ -21,6 +21,7 @@ namespace VacayCheck.Models
         public string country { get; set; }
         public string cityName { get; set; }
         public bool isMailVerificated { get; set; }
+        public string cardHolderName { get; set; }
 
         public List<Property> property { get; set; }//one to many
         public List<Reservation> reservation { get; set; }

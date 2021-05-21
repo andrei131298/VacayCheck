@@ -1,5 +1,5 @@
 <app-header class="header"></app-header>
-<img class="image" src="assets/poza.jpg" />
+<img class="image" src="assets/images/background.jpg" />
 <form class="container">
   <input
     id="searchBar"
@@ -46,19 +46,19 @@
 </form>
     <div *ngIf="searchText.length > 0" class="row">
       <ng-container
-        *ngFor="let property of properties | searchFilter: {cityName: searchText};let ind = index">
+        *ngFor="let city of allCities | searchFilter: {city: searchText};let ind = index">
         <div class="view col mb-2 mr-2 hoverable">
           <img
             class="pozeCazari"
-            src="{{ property.photo }}"
+            src="../../assets/images/travel.jpg"
             alt="hoverable"
-            (click)="searchText = property.name"
+            (click)="searchText = city.city"
           />
 
           <div class="detail">
-            <p id="p1" (click)="searchText = property.name"></p>
-              {{ property.name.toString() }}
-              <svg
+            <p id="p1" (click)="searchText = city.city"></p>
+              {{ city.city }}
+              <!-- <svg
                 width="1em"
                 height="1em"
                 viewBox="0 0 16 16"
@@ -71,7 +71,7 @@
                   fill-rule="evenodd"
                   d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
                 />
-              </svg>
+              </svg> -->
           </div>
         </div>
       </ng-container>
