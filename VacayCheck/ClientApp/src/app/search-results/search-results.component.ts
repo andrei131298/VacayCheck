@@ -55,46 +55,48 @@ export class SearchResult implements OnInit {
     this.api.getProperties().subscribe((properties: Property[]) => {
       this.properties=properties
       console.log(properties);
-    });
-
-    this.api.getApartments().subscribe((apartments: Apartment[]) => {
-      this.apartments=apartments;
-      this.allApartments = apartments
-      console.log(apartments);
-      this.api.getAlreadyReservedByDates(this.dateRange0Formatted,this.dateRange1Formatted).subscribe((reserved:Reservation[])=>{
-        this.alreadyReserved = reserved;
-        console.log(this.alreadyReserved);
-        // this.apartments.forEach((ap, index)=>{
-        //   if(ap.maxPersons < this.persons){
-        //     this.apartments.splice(index,1);
-        //   }
-        // })
-        // for(let res of this.alreadyReserved){
-        //   this.apartments.forEach((apartment, index) => {
-        //     if(apartment.id == res.apartmentId) {
-        //       this.apartments.splice(index,1);
-        //     }
-        //   });
-        // }
-
-        console.log(this.apartments);
-        this.allApartments.forEach((apartment) =>{
-          this.api.getProperty(apartment.propertyId).subscribe((property:Property)=>{
-            if (this.activeProperties.find((prop) => prop.name === property.name) === undefined) {
-              if (property.cityName.toLowerCase().includes(this.searchText.toLowerCase())) {
-                property.id = apartment.propertyId;
-                this.activeProperties.push(property);
+      this.api.getApartments().subscribe((apartments: Apartment[]) => {
+        this.apartments=apartments;
+        this.allApartments = apartments
+        console.log(apartments);
+        this.api.getAlreadyReservedByDates(this.dateRange0Formatted,this.dateRange1Formatted).subscribe((reserved:Reservation[])=>{
+          this.alreadyReserved = reserved;
+          console.log(this.alreadyReserved);
+          // this.apartments.forEach((ap, index)=>{
+          //   if(ap.maxPersons < this.persons){
+          //     this.apartments.splice(index,1);
+          //   }
+          // })
+          // for(let res of this.alreadyReserved){
+          //   this.apartments.forEach((apartment, index) => {
+          //     if(apartment.id == res.apartmentId) {
+          //       this.apartments.splice(index,1);
+          //     }
+          //   });
+          // }
+  
+          console.log(this.apartments);
+          this.allApartments.forEach((apartment) =>{
+            this.api.getProperty(apartment.propertyId).subscribe((property:Property)=>{
+              if (this.activeProperties.find((prop) => prop.name === property.name) === undefined) {
+                if (property.cityName.toLowerCase().includes(this.searchText.toLowerCase())) {
+                  property.id = apartment.propertyId;
+                  console.log(property)
+                  this.activeProperties.push(property);
+                }
               }
-            }
+            });
+  
           });
-
+          console.log(this.activeProperties);
+  
+          this.isLoaded=true;
         });
-        console.log(this.activeProperties);
-
-        this.isLoaded=true;
+        
       });
-      
     });
+
+    
 
     
   }

@@ -82,6 +82,7 @@ export class UserProfileComponent implements OnInit {
   allSearchedCities;
   allCountries: Country[] = [];
   selectedCity: string;
+  selectedExchange: number;
 
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
@@ -382,8 +383,9 @@ export class UserProfileComponent implements OnInit {
     this.calendarIsShown = false;
     this.bsRangeValue = null;
   }
-  openCalendar(){
+  openCalendar(i: number){
     this.calendarIsShown = true;
+    this.selectedExchange = i;
   }
   confirmExchange(request: ExchangeRequest){
     this.acceptRequest(request);

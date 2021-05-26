@@ -35,6 +35,7 @@ export class ApartmentProfileComponent implements OnInit {
   show = false;
   apartmentsReservations: Reservation[] = [];
   edit = false;
+  editPhotos = false;
   success: boolean;
   editApartmentForm: FormGroup;
   newPhotos=[];
@@ -56,6 +57,14 @@ export class ApartmentProfileComponent implements OnInit {
     this.getApartmentDetails();
   }
 
+  enableEditPhotos(){
+    this.editPhotos = true;
+    this.edit = false;
+  }
+  cancelEditPhotos(){
+    this.editPhotos = false;
+
+  }
   getApartmentDetails(){
     this.api.getApartment(this.apartmentId).subscribe((apartment: Apartment) =>{
       this.activeApartment = apartment;
@@ -104,6 +113,8 @@ export class ApartmentProfileComponent implements OnInit {
 
   showEditOption(){
     this.edit = true;
+    this.editPhotos = false;
+
   }
   
   saveChanges(){

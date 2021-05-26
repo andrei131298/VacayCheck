@@ -76,9 +76,12 @@ export class SelectApartmentComponent implements OnInit {
     this.newRequest.checkIn = this.dateRange0Formatted;
     this.newRequest.checkOut = this.dateRange1Formatted
 
-    this.api.addExchangeRequest(this.newRequest).subscribe();
+    this.api.addExchangeRequest(this.newRequest).subscribe(()=>{
+      this.router.navigate(["user-profile", this.userId]).then(() => {
+        window.location.reload();
+      });
+    });
 
-    this.router.navigate(["user-profile", this.userId]);
   }
 
 }

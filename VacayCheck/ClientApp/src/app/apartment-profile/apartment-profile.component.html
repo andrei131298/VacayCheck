@@ -9,7 +9,7 @@
     <div class="apartmentProfile">
       <div class="leftHalf">
         <div class="img-wrap">
-          <fa-icon *ngIf="edit == true" (click) = "deletePhoto(mainPhoto)" class="delete" [icon] = "faTimes"></fa-icon>
+          <fa-icon *ngIf="editPhotos == true" (click) = "deletePhoto(mainPhoto)" class="delete" [icon] = "faTimes"></fa-icon>
           <img class="mainPhoto" src={{mainPhoto.path}}>
         </div>
         <div class="details">
@@ -18,9 +18,12 @@
                 [ngClass]="{'highlight': selectedIndex === i}">
             </div>
         </div>
-        <label *ngIf="edit == true" class="custom-file-upload">
+        <p *ngIf="editPhotos == false" class="editPhotos" (click)="enableEditPhotos()"><fa-icon [icon]="faPen" ></fa-icon> Edit photos</p>
+        <p *ngIf="editPhotos == true" id="cancelText" (click)="cancelEditPhotos()">Close<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
+
+        <label *ngIf="editPhotos == true" class="custom-file-upload">
           <input type="file" (change)="onSelectFile($event)" multiple/>
-          Add Photos
+          Select new photos
       </label>
       </div>
       <div *ngIf="edit == false" class="rightHalf">

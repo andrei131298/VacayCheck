@@ -437,7 +437,7 @@
             <option value="" disabled selected>Status</option>
             <option *ngFor = "let status of statuses" value="{{status}}">{{status}}</option>
           </select>
-          <div *ngFor = "let request of exchangesToRespond">
+          <div *ngFor = "let request of exchangesToRespond; let i = index">
             <div *ngIf = "request.status == selectedStatus || selectedStatus == 'All statuses' " class= "pageFlex">
               <div class="container">
                 <div class="reservation">
@@ -454,7 +454,7 @@
                 <fa-icon [ngClass]="{'exchangePending' : request.status=='Pending', 'exchangeDeclined' : request.status=='Declined', 'exchangeAccepted' : request.status=='Accepted' }"
                 [icon]="faExchangeAlt" ></fa-icon>
                 <button *ngIf="request.status == 'Pending' " type="button" style="background-color: rgb(4, 180, 63); color: white;" 
-                  class="btn" (click) = "openCalendar()">Check availability</button>
+                  class="btn" (click) = "openCalendar(i)">Check availability</button>
                 <button *ngIf="request.status == 'Pending' " type="button" style="margin-top: 10px; background-color: crimson; color: white;"
                   class="btn" (click) = "declineRequest(request)">Decline</button>
               </div>
@@ -466,15 +466,15 @@
                       <p>{{request.checkIn | date:'longDate'}} - {{request.checkOut | date:'longDate'}}</p>
                       <p>Number of persons: {{request.numberOfPersons}}</p>
                     </div> -->
-                    <div class="inputs">
+                    <div *ngIf="selectedExchange == i" class="inputs">
                       <input *ngIf = "calendarIsShown == true" id="checkin" type="datetime" bsDaterangepicker class="form-control" placeholder="Check-in  -  Check-out" [bsConfig]="{ rangeInputFormat: 'DD-MM-YYYY' }"
                         autocomplete="off" [(ngModel)]="bsRangeValue" (ngModelChange)="checkAvailibility(request.requesterApartmentId, request.checkIn, request.checkOut)" [minDate]="minDate" [maxDate]="maxDate" [ngModelOptions]="{ standalone: true }" onKeyDown="return false"/>
                       <input *ngIf = "calendarIsShown == true" id="numberOfPersons" class="form-control" style="margin-left: 5px;" type="number" min="1" max="10"
                         (change)="checkAvailibility(request.requesterApartmentId, request.checkIn, request.checkOut)" onKeyDown="return false" placeholder="Number of persons" [(ngModel)]="nrOfPersons" />
                     </div>
-                    <p *ngIf = "availabilityMessage" id = "availabilityMessage" [ngClass]="{'available' : availabilityMessage == 'Available', 'overlayed' : availabilityMessage == 'Overlayed', 
+                    <p *ngIf = "availabilityMessage && selectedExchange == i" id = "availabilityMessage" [ngClass]="{'available' : availabilityMessage == 'Available', 'overlayed' : availabilityMessage == 'Overlayed', 
                       'notAvailable' : availabilityMessage == 'Not available'}">{{availabilityMessage}}</p>
-                    <div class="buttons">
+                    <div *ngIf="selectedExchange == i" class="buttons">
                       <button *ngIf = "bsRangeValue && availabilityMessage == 'Available'" type="button" class="btn" style="margin-right: 10px; background-color: rgb(4, 180, 63); color: white;"
                         (click) = "confirmExchange(request)">Confirm</button>
                       <button *ngIf="bsRangeValue" type="button" style="background-color: crimson; color: white;" class="btn" (click) = "cancelCheck()">Cancel</button>

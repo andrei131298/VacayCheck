@@ -59,7 +59,6 @@ namespace VacayCheck.Controllers
                     mapLatitude = p.mapLatitude,
                     mapLongitude = p.mapLongitude
                 };
-                PropertiesDTO.Add(MyProperty);
                 int numberOfReservations = 0;
                 int allRatings = 0;
 
@@ -69,8 +68,12 @@ namespace VacayCheck.Controllers
                     IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
                     foreach (Reservation res in reservations)
                     {
-                        allRatings += res.rating;
-                        numberOfReservations++;
+                        if(res.rating != 0)
+                        {
+                            allRatings += res.rating;
+                            numberOfReservations++;
+                        }
+                        
                     }
                 }
                 if(numberOfReservations != 0)
@@ -78,6 +81,7 @@ namespace VacayCheck.Controllers
                     MyProperty.averageRating = allRatings / numberOfReservations;
 
                 }
+                PropertiesDTO.Add(MyProperty);
             }
 
             return PropertiesDTO;
