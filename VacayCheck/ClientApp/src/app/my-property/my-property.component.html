@@ -19,6 +19,16 @@
         <div class="editing">
           <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="showEditOption()"><fa-icon [icon]="faPen"></fa-icon> Edit Property</button>
           <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="goToAddApartment()"><fa-icon [icon]="faPlus"></fa-icon> Add an apartment</button>
+          <div class="toggleButton">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="toggleButton" (click)="toggle()">
+              <span class="slider round"></span>
+  
+            </label>
+            <p *ngIf="toggleButton == true" id="isPublicMessage">Public</p>
+            <p *ngIf="toggleButton == false" id="isPublicMessage">Not public</p>
+          </div>
+          
         </div>
         <div class="mapContainer">
           <agm-map [zoom]="9" [latitude]="property.mapLatitude" [longitude]="property.mapLongitude">

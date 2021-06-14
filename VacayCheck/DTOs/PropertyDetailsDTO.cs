@@ -18,6 +18,7 @@ namespace VacayCheck.DTOs
         public double mapLongitude { get; set; }
         public double averageRating { get; set; }
         public double startingPrice { get; set; }
+        public bool isPublic { get; set; }
 
         public Guid userId { get; set; }
         public string photo { get; set; }

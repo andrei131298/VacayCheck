@@ -256,4 +256,9 @@ export class ApiService {
         headers: this.header,
       });
     }
+    updateIsPublic(property: Property, propertyId: string){
+      return this.http.put(this.baseUrl + "/Property/changeAvailability/"+ propertyId, property, {
+        headers: this.header,
+      });
+    }
 }

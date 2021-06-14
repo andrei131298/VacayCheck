@@ -61,7 +61,9 @@ namespace VacayCheck.Controllers
                     userId = p.userId,
                     photo = p.photo,
                     mapLatitude = p.mapLatitude,
-                    mapLongitude = p.mapLongitude
+                    mapLongitude = p.mapLongitude,
+                    isPublic = p.isPublic
+
                 };
                 int numberOfReservations = 0;
                 int allRatings = 0;
@@ -109,7 +111,8 @@ namespace VacayCheck.Controllers
                 userId = Property.userId,
                 photo = Property.photo,
                 mapLatitude = Property.mapLatitude,
-                mapLongitude = Property.mapLongitude
+                mapLongitude = Property.mapLongitude,
+                isPublic = Property.isPublic
             };
 
             int numberOfReservations = 0;
@@ -156,7 +159,9 @@ namespace VacayCheck.Controllers
                     photo = p.photo,
                     userId = p.userId,
                     mapLatitude = p.mapLatitude,
-                    mapLongitude = p.mapLongitude
+                    mapLongitude = p.mapLongitude,
+                    isPublic = p.isPublic
+
                 };
                 
                 PropertiesDTO.Add(propertyDTO);
@@ -185,40 +190,45 @@ namespace VacayCheck.Controllers
                     photo = p.photo,
                     userId = p.userId,
                     mapLatitude = p.mapLatitude,
-                    mapLongitude = p.mapLongitude
+                    mapLongitude = p.mapLongitude,
+                    isPublic = p.isPublic
                 };
-                int numberOfReservations = 0;
-                int allRatings = 0;
-                List<Apartment> apartments = IApartmentRepository.GetAll().Where(x => x.propertyId == propertyDTO.id).ToList();
-                int minimumPrice = apartments[0].pricePerNight;
-
-                foreach (Apartment ap in apartments)
+                if(propertyDTO.isPublic == true)
                 {
-                    if (ap.pricePerNight < minimumPrice)
+                    int numberOfReservations = 0;
+                    int allRatings = 0;
+                    List<Apartment> apartments = IApartmentRepository.GetAll().Where(x => x.propertyId == propertyDTO.id).ToList();
+                    int minimumPrice = apartments[0].pricePerNight;
+
+                    foreach (Apartment ap in apartments)
                     {
-                        minimumPrice = ap.pricePerNight;
-                    }
-                    IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
-                    foreach (Reservation res in reservations)
-                    {
-                        if (res.rating != 0)
+                        if (ap.pricePerNight < minimumPrice)
                         {
-                            allRatings += res.rating;
-                            numberOfReservations++;
+                            minimumPrice = ap.pricePerNight;
                         }
-                        
-                    }
-                }
-                if(minimumPrice != 0)
-                {
-                    propertyDTO.startingPrice = minimumPrice;
-                }
-                if (numberOfReservations != 0)
-                {
-                    propertyDTO.averageRating = allRatings / numberOfReservations;
+                        IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
+                        foreach (Reservation res in reservations)
+                        {
+                            if (res.rating != 0)
+                            {
+                                allRatings += res.rating;
+                                numberOfReservations++;
+                            }
 
+                        }
+                    }
+                    if (minimumPrice != 0)
+                    {
+                        propertyDTO.startingPrice = minimumPrice;
+                    }
+                    if (numberOfReservations != 0)
+                    {
+                        propertyDTO.averageRating = allRatings / numberOfReservations;
+
+                    }
+                    PropertiesDTO.Add(propertyDTO);
                 }
-                PropertiesDTO.Add(propertyDTO);
+                
             }
 
             return PropertiesDTO;
@@ -256,7 +266,6 @@ namespace VacayCheck.Controllers
             }
             return ApartmentsDTO;
         }
-
         // POST: api/Property
         [HttpPost]
         public Property Post(PropertyDTO value)
@@ -279,6 +288,15 @@ namespace VacayCheck.Controllers
             return model;
         }
 
+        [HttpPut("changeAvailability/{id}")]
+        public Property PutAvailability(Guid id, PropertyDTO value)
+        {
+            Property model = IPropertyRepository.Get(id);
+            
+            model.isPublic = value.isPublic;
+            
+            return IPropertyRepository.Update(model);
+        }
         // PUT: api/Property/5
         [HttpPut("{id}")]
         public Property Put(Guid id, PropertyDTO value)

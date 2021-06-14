@@ -21,5 +21,7 @@ namespace VacayCheck.DTOs
         public double averageRating { get; set; }
         public double startingPrice { get; set; }
         public Guid userId { get; set; }
+        public bool isPublic { get; set; }
+
     }
 }

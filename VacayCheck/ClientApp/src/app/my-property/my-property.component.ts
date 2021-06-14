@@ -49,6 +49,7 @@ export class MyPropertyComponent implements OnInit {
   selectedCountry: string;
   allSearchedCities;
   selectedCity: string;
+  toggleButton;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
 
@@ -59,7 +60,6 @@ export class MyPropertyComponent implements OnInit {
     console.log(this.userId);
     
   }
-
   getProperty(){
     this.api.getProperty(this.propertyId).subscribe((property:Property)=>{
       this.property = property;
@@ -80,10 +80,30 @@ export class MyPropertyComponent implements OnInit {
       });
       this.selectedCountry = this.property.country;
       this.selectedCity = this.property.cityName;
+      this.toggleButton = this.property.isPublic;
+      console.log(this.toggleButton);
     });
     
     this.api.getCountries().subscribe((countries: Country[])=>{
       this.allCountries = countries;
+    });
+  }
+
+  toggle(){
+    if(this.toggleButton == true){
+      this.toggleButton = false;
+      console.log(this.toggleButton);
+
+    }
+    else{
+      this.toggleButton = true;
+      console.log(this.toggleButton);
+
+    }
+
+    this.property.isPublic = this.toggleButton;
+    this.api.updateIsPublic(this.property, this.propertyId).subscribe(()=>{
+      this.getProperty();
     });
   }
 

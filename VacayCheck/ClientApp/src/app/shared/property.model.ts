@@ -13,9 +13,10 @@ export class Property {
   userId: string;
   mapLatitude: number;
   mapLongitude: number;
+  isPublic: boolean;
   startingPrice?: number;
   averageRating?: number;
-
+  
   constructor(input?: any) {
     Object.assign(this, input);
   }

@@ -17,6 +17,7 @@ namespace VacayCheck.Models
         public string cityName { get; set; }
         public double mapLatitude { get; set; }
         public double mapLongitude { get; set; }
+        public bool isPublic { get; set; }
 
         public Guid userId { get; set; }
 
