@@ -12,6 +12,8 @@ using VacayCheck.Repositories.OwnerRepository;
 using VacayCheck.Repositories.UserRepository;
 using VacayCheck.Repositories.ApartmentRepository;
 using VacayCheck.Repositories.ReservationRepository;
+using VacayCheck.Repositories.PhotoRepository;
+
 
 namespace VacayCheck.Controllers
 {
@@ -24,15 +26,17 @@ namespace VacayCheck.Controllers
         public IUserRepository IUserRepository { get; set; }
         public IApartmentRepository IApartmentRepository { get; set; }
         public IReservationRepository IReservationRepository { get; set; }
+        public IPhotoRepository IPhotoRepository { get; set; }
 
         public PropertyController(IPropertyRepository propertyrepository, ICityRepository cityrepository, IUserRepository userrepository, 
-            IApartmentRepository apartmentrepository, IReservationRepository reservationrepository)
+            IApartmentRepository apartmentrepository, IReservationRepository reservationrepository, IPhotoRepository photoRepository)
         {
             IPropertyRepository = propertyrepository;
             ICityRepository = cityrepository;
             IUserRepository = userrepository;
             IApartmentRepository = apartmentrepository;
             IReservationRepository = reservationrepository;
+            IPhotoRepository = photoRepository;
 
         }
         // GET: api/Property
@@ -117,8 +121,12 @@ namespace VacayCheck.Controllers
                 IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
                 foreach (Reservation res in reservations)
                 {
-                    allRatings += res.rating;
-                    numberOfReservations++;
+                    if (res.rating != 0)
+                    {
+                        allRatings += res.rating;
+                        numberOfReservations++;
+                    }
+
                 }
             }
             if (numberOfReservations != 0)
@@ -150,10 +158,103 @@ namespace VacayCheck.Controllers
                     mapLatitude = p.mapLatitude,
                     mapLongitude = p.mapLongitude
                 };
+                
                 PropertiesDTO.Add(propertyDTO);
             }
             
             return PropertiesDTO;
+        }
+
+        [HttpGet("GetAvailableProperties/{searchText}/{checkin}/{checkout}/{persons}")]
+        public IEnumerable<PropertyDTO> GetAvailableProperties(string searchText, DateTime checkin, DateTime checkout, int persons)
+        {
+
+            IEnumerable<Property> availableProperties = IPropertyRepository.GetAvailableProperties(searchText, checkin, checkout, persons);
+            List<PropertyDTO> PropertiesDTO = new List<PropertyDTO>();
+            foreach (Property p in availableProperties)
+            {
+                PropertyDTO propertyDTO = new PropertyDTO()
+                {
+                    id = p.id,
+                    cityName = p.cityName,
+                    name = p.name,
+                    type = p.type,
+                    description = p.description,
+                    numberOfStars = p.numberOfStars,
+                    street = p.street,
+                    photo = p.photo,
+                    userId = p.userId,
+                    mapLatitude = p.mapLatitude,
+                    mapLongitude = p.mapLongitude
+                };
+                int numberOfReservations = 0;
+                int allRatings = 0;
+                List<Apartment> apartments = IApartmentRepository.GetAll().Where(x => x.propertyId == propertyDTO.id).ToList();
+                int minimumPrice = apartments[0].pricePerNight;
+
+                foreach (Apartment ap in apartments)
+                {
+                    if (ap.pricePerNight < minimumPrice)
+                    {
+                        minimumPrice = ap.pricePerNight;
+                    }
+                    IEnumerable<Reservation> reservations = IReservationRepository.GetAll().Where(x => x.apartmentId == ap.id);
+                    foreach (Reservation res in reservations)
+                    {
+                        if (res.rating != 0)
+                        {
+                            allRatings += res.rating;
+                            numberOfReservations++;
+                        }
+                        
+                    }
+                }
+                if(minimumPrice != 0)
+                {
+                    propertyDTO.startingPrice = minimumPrice;
+                }
+                if (numberOfReservations != 0)
+                {
+                    propertyDTO.averageRating = allRatings / numberOfReservations;
+
+                }
+                PropertiesDTO.Add(propertyDTO);
+            }
+
+            return PropertiesDTO;
+        }
+
+        [HttpGet("GetAvailableApartments/{propertyId}/{checkin}/{checkout}/{persons}")]
+        public List<ApartmentDTO> GetAvailableApartments(Guid propertyId, DateTime checkin, DateTime checkout, int persons)
+        {
+
+            IEnumerable<Apartment> availableApartments = IPropertyRepository.GetAvailableApartments(propertyId, checkin, checkout, persons);
+            List<ApartmentDTO> ApartmentsDTO = new List<ApartmentDTO>();
+            foreach (Apartment ap in availableApartments)
+            {
+                IEnumerable<Photo> Photos = IPhotoRepository.GetAll().Where(x => x.apartmentId == ap.id);
+                if (Photos != null)
+                {
+                    List<string> PhotosPathsList = new List<string>();
+                    foreach (Photo Photo in Photos)
+                    {
+                        PhotosPathsList.Add(Photo.path);
+                    }
+                    ApartmentDTO apartmentDTO = new ApartmentDTO()
+                    {
+                        id = ap.id,
+                        apartmentName = ap.apartmentName,
+                        numberOfRooms = ap.numberOfRooms,
+                        description = ap.description,
+                        pricePerNight = ap.pricePerNight,
+                        maxPersons = ap.maxPersons,
+                        propertyId = ap.propertyId,
+                        photos = PhotosPathsList
+                    };
+                    ApartmentsDTO.Add(apartmentDTO);
+                }
+            }
+            return ApartmentsDTO;
         }
 
         // POST: api/Property

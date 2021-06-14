@@ -37,6 +37,16 @@ export class ApiService {
     });
   }
 
+  getAvailableProperties(searchText: string, checkin: string, checkout: string, persons: number){
+    return this.http.get(this.baseUrl + "/Property/GetAvailableProperties/" + searchText + "/" + checkin + "/" + checkout + "/" + persons, {
+      headers: this.header,
+    });
+  }
+  getAvailableApartments(propertyId: string, checkin: string, checkout: string, persons: number){
+    return this.http.get(this.baseUrl + "/Property/GetAvailableApartments/" + propertyId + "/" + checkin + "/" + checkout + "/" + persons, {
+      headers: this.header,
+    });
+  }
   getCityByCountryName(countryName: string){
     return this.http.post(this.citiesUrl, {
       "order": "asc",

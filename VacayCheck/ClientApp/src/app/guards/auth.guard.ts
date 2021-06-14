@@ -11,17 +11,22 @@ import {
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
-  userId = sessionStorage.getItem('userId');
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if(this.userId != route.params.id){
-      this.router.navigate(["/user-profile", this.userId]);
+    var userId = sessionStorage.getItem('userId');
+    if(userId == null){
+      this.router.navigate(["/home"]);
+    }
+    if(userId != route.params.id){
+      console.log(userId);
+      this.router.navigate(["/user-profile", userId]);
       return false;
     }
     else{
       return true;
     }
+    
   }
   
   verifyLogin(url): boolean {

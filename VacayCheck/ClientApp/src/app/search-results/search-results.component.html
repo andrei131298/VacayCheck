@@ -6,8 +6,8 @@
   <p id="p3" *ngIf="period > 1 ">Your results for {{period}} days</p>
 </div>
 <div class="container">
-    <p class="nullMessage" *ngIf="activeProperties.length == 0">There is no results to show</p>
-    <div *ngFor="let property of activeProperties">
+    <!-- <p class="nullMessage" *ngIf="properties.length == 0">There is no results to show</p> -->
+    <div *ngFor="let property of properties">
       <div class="view mb-3 mr-3 p-0">
         <img class="pozeCazari" src="{{ property.photo }}" />
         <div class="detaliiProp">
@@ -19,7 +19,9 @@
           </p>
           <p *ngIf = "property.averageRating != 0" style="font-weight: bold; font-size: 22px; margin-top: 10px;">{{property.averageRating}} average Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
           <p *ngIf = "(property.averageRating == 0 || property.averageRating == null) && property.userId != userId" style="font-weight: bold; font-size: 22px; margin-top: 10px;color: rgb(40, 150, 40);">Become the first guest</p>
-
+          <p id="price">
+            With prices starting from {{ property.startingPrice }}$ per night
+          </p>
         </div>
       </div>
     </div>

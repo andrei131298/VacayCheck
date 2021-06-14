@@ -253,7 +253,7 @@ export class UserProfileComponent implements OnInit {
       }, 3000);
       this.api.updateUserDetails(this.editUserForm.value, this.activeUser.id).subscribe(()=>{
         console.log(this.editUserForm.value);
-        this.getCurrentUser()
+        this.getCurrentUser();
       });
 
       this.edit = false;

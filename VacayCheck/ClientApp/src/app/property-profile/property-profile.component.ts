@@ -23,8 +23,8 @@ export class PropertyProfileComponent implements OnInit {
   propertyId=this.route.snapshot.queryParamMap.get('propertyId');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
   dateRange1=new Date(this.route.snapshot.queryParamMap.get('dateRange1'));
-  dateRange0Formatted=formatDate(this.dateRange0,'MM/dd/yyyy','en-US');
-  dateRange1Formatted=formatDate(this.dateRange1,'MM/dd/yyyy','en-US');
+  dateRange0Formatted=formatDate(this.dateRange0,'yyyy-MM-dd','en-US');
+  dateRange1Formatted=formatDate(this.dateRange1,'yyyy-MM-dd','en-US');
   persons=parseInt(this.route.snapshot.queryParamMap.get('persons'));
   period=parseInt(this.route.snapshot.queryParamMap.get('period'));
   loggedIn = sessionStorage.getItem("isLoggedIn");
@@ -56,19 +56,10 @@ export class PropertyProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.api.getApartmentsByPropertyId(this.propertyId).subscribe((apartments:Apartment[])=>{
-      this.apartments=apartments;
-      this.api.getAlreadyReservedByDates(this.dateRange0Formatted,this.dateRange1Formatted).subscribe((reserved:Reservation[])=>{
-        this.alreadyReserved=reserved;
-        console.log(this.alreadyReserved);
-        for(let res of this.alreadyReserved){
-          this.apartments.forEach((apartment, index) => {
-            if(apartment.id === res.apartmentId || apartment.maxPersons<this.persons) this.apartments.splice(index,1);
-          });
-        }
-        console.log(this.apartments);
-        this.isLoaded=true;
-      });
+    this.api.getAvailableApartments(this.propertyId, this.dateRange0Formatted, this.dateRange1Formatted, this.persons).subscribe((apartments: Apartment[])=>{
+      this.apartments = apartments;
+      this.isLoaded=true;
+      console.log(apartments)
     });
     this.api.getFavouriteByUserAndProperty(this.userId,this.propertyId).subscribe((fav:Favourite)=>{
       this.activeFavourite=fav;
@@ -83,7 +74,6 @@ export class PropertyProfileComponent implements OnInit {
     });
     
   }
-  
   openApartmentModal(id: string){
     console.log(this.apartmentModal);
     this.apartmentModal.initialize(id);
@@ -93,23 +83,13 @@ export class PropertyProfileComponent implements OnInit {
     return new Array(i);
   }
 
-  check(){
-    if(JSON.parse(sessionStorage.getItem('isLoggedIn')) == false){
-      sessionStorage.setItem("triedWithoutLogin", "true");
-      console.log(sessionStorage.getItem("triedWithoutLogin"));
-      this.router.navigate(["/login"]);
-      setTimeout(() => {
-        sessionStorage.setItem("triedWithoutLogin", "false");
-    }, 1000);
-    }
-  }
   addToFavourites(){
     if(this.activeFavourite == null){
       this.favourite.propertyId=this.propertyId;
       this.favourite.userId=this.userId;
       this.api.addFavourite(this.favourite).subscribe(()=>{
         this.api.getFavouriteByUserAndProperty(this.userId,this.propertyId).subscribe((fav:Favourite)=>{
-          this.activeFavourite=fav;
+          this.activeFavourite = fav;
           console.log(this.activeFavourite);
         });
       });
@@ -117,7 +97,7 @@ export class PropertyProfileComponent implements OnInit {
     else{
       this.api.deleteFavourite(this.propertyId,this.userId).subscribe(() => {
         this.api.getFavouriteByUserAndProperty(this.userId,this.propertyId).subscribe((fav:Favourite)=>{
-          this.activeFavourite=fav;
+          this.activeFavourite = fav;
           console.log(this.activeFavourite);
         });
       });

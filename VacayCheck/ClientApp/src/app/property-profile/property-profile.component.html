@@ -62,10 +62,10 @@
                 <fa-icon *ngFor="let person of counter(apartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
               </div>
               <p *ngIf="property.userId != userId" id="totalPrice" >
-                Total price: {{apartment.pricePerNight*period}}$
+                Total price for {{period}} nights: {{apartment.pricePerNight*period}}$
               </p>
               <div class="optionsButtons">
-                <button *ngIf="property.userId != userId" type="button" class="btn" (click)="check();set(apartment.id);">Reserve</button>
+                <button *ngIf="property.userId != userId && userId" type="button" class="btn" (click)="set(apartment.id);">Reserve</button>
                 <button *ngIf="property.userId != userId && currentUser.isOwner == true" type="button" class="btn ml-3" (click)="goToSelectApartmentPage(apartment)">Travel Request <fa-icon [icon]="faInfoCircle" 
                   (mouseover)="showInfo = true; hoveredApartmentIndex = i" (mouseout)="showInfo = false; hoveredApartmentIndex = null"></fa-icon></button>
                 <button *ngIf="property.userId != userId && currentUser.isOwner == false" type="button" class="disabledButton btn ml-3">

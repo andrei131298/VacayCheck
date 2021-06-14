@@ -33,6 +33,73 @@ namespace VacayCheck.Repositories.PropertyRepository
         {
             return _context.Properties.ToList().Where(res => res.userId == userId);
         }
+        public IEnumerable<Property> GetAvailableProperties(string searchText, DateTime checkin, DateTime checkout, int persons)
+        {
+            IEnumerable<Property> searchedProperties = _context.Properties.ToList().Where(p => p.cityName.ToLower().Contains(searchText.ToLower()));
+            List<Property> availableProperties = new List<Property>(); 
+            foreach (Property property in searchedProperties)
+            {
+
+                IEnumerable<Apartment> apartments = _context.Apartments.ToList().Where(ap => ap.propertyId == property.id);
+                foreach(Apartment apartment in apartments)
+                {
+                    if(apartment.maxPersons >= persons)
+                    {
+                        IEnumerable<Reservation> reservations = _context.Reservations.ToList().Where(res => res.apartmentId == apartment.id);
+                        Reservation overlayedReservation = null; 
+                        foreach (Reservation reservation in reservations)
+                        {
+                            if (checkin >= reservation.checkIn && checkin < reservation.checkOut ||
+                                checkout > reservation.checkIn && checkout <= reservation.checkOut ||
+                                checkin <= reservation.checkIn && checkout >= reservation.checkOut)
+                            {
+                                overlayedReservation = reservation;
+                                break;
+                            }
+                        }
+                        if(overlayedReservation == null)
+                        {
+                            availableProperties.Add(property);
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+            return availableProperties;
+        }
+
+        public IEnumerable<Apartment> GetAvailableApartments(Guid propertyId, DateTime checkin, DateTime checkout, int persons)
+        {
+            List<Apartment> availableApartments = new List<Apartment>();
+            IEnumerable<Apartment> apartments = _context.Apartments.ToList().Where(ap => ap.propertyId == propertyId);
+            foreach (Apartment apartment in apartments)
+            {
+                if (apartment.maxPersons >= persons)
+                {
+                    IEnumerable<Reservation> reservations = _context.Reservations.ToList().Where(res => res.apartmentId == apartment.id);
+                    Reservation overlayedReservation = null;
+                    foreach (Reservation reservation in reservations)
+                    {
+                        if (checkin >= reservation.checkIn && checkin < reservation.checkOut ||
+                            checkout > reservation.checkIn && checkout <= reservation.checkOut ||
+                            checkin <= reservation.checkIn && checkout >= reservation.checkOut)
+                        {
+                            overlayedReservation = reservation;
+                            break;
+                        }
+                    }
+                    if (overlayedReservation == null)
+                    {
+                        availableApartments.Add(apartment);
+                    }
+                }
+
+            }
+            return availableApartments;
+        }
+
+
         public Property Update(Property property)
         {
             _context.Entry(property).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

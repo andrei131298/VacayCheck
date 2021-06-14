@@ -18,8 +18,8 @@
                 [ngClass]="{'highlight': selectedIndex === i}">
             </div>
         </div>
-        <p *ngIf="editPhotos == false" class="editPhotos" (click)="enableEditPhotos()"><fa-icon [icon]="faPen" ></fa-icon> Edit photos</p>
-        <p *ngIf="editPhotos == true" id="cancelText" (click)="cancelEditPhotos()">Close<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
+        <p *ngIf="editPhotos == false && userId == activeProperty.userId" class="editPhotos" (click)="enableEditPhotos()"><fa-icon [icon]="faPen" ></fa-icon> Edit photos</p>
+        <p *ngIf="editPhotos == true && userId == activeProperty.userId" id="cancelText" (click)="cancelEditPhotos()">Close<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
 
         <label *ngIf="editPhotos == true" class="custom-file-upload">
           <input type="file" (change)="onSelectFile($event)" multiple/>
@@ -52,8 +52,8 @@
             </div>
           </div>
 
-          <p id="seeComments" *ngIf="apartmentsReservations.length > 3 && show == false" (click)="show = true; showNumber = apartmentsReservations.length">See more comments</p>
-          <p id="seeComments" *ngIf="show == true" (click)="show = false; showNumber = 3">See less comments</p>
+          <p id="seeComments" *ngIf="apartmentsReservations.length > 3 && show == false" (click)="show = true; showNumber = apartmentsReservations.length">See more reviews</p>
+          <p id="seeComments" *ngIf="show == true" (click)="show = false; showNumber = 3">See less reviews</p>
           <div *ngIf="apartmentsReservations.length == 0 || apartmentHasReviews == false">
             This apartment doesn't have reviews yet
           </div>  

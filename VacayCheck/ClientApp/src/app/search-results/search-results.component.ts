@@ -27,9 +27,9 @@ export class SearchResult implements OnInit {
   period: number;
   searchText=this.route.snapshot.queryParamMap.get('searchText');
   dateRange0=new Date(this.route.snapshot.queryParamMap.get('dateRange0'));
-  dateRange0Formatted=formatDate(this.dateRange0,'MM/dd/yyyy','en-US');
+  dateRange0Formatted=formatDate(this.dateRange0,'yyyy-MM-dd','en-US');
   dateRange1=new Date(this.route.snapshot.queryParamMap.get('dateRange1'));
-  dateRange1Formatted=formatDate(this.dateRange1,'MM/dd/yyyy','en-US');
+  dateRange1Formatted=formatDate(this.dateRange1,'yyyy-MM-dd','en-US');
   persons=parseInt(this.route.snapshot.queryParamMap.get('persons'));
   isLoaded=false;
   alreadyReserved:Reservation[]=[];
@@ -52,52 +52,11 @@ export class SearchResult implements OnInit {
   
   ngOnInit() {
     this.period = Math.floor((Date.UTC(this.dateRange1.getFullYear(), this.dateRange1.getMonth(), this.dateRange1.getDate()) - Date.UTC(this.dateRange0.getFullYear(), this.dateRange0.getMonth(), this.dateRange0.getDate()) ) /(1000 * 60 * 60 * 24));
-    this.api.getProperties().subscribe((properties: Property[]) => {
-      this.properties=properties
+    this.api.getAvailableProperties(this.searchText, this.dateRange0Formatted, this.dateRange1Formatted, this.persons).subscribe((properties: Property[])=>{
+      this.properties = properties;
+      this.isLoaded=true;
       console.log(properties);
-      this.api.getApartments().subscribe((apartments: Apartment[]) => {
-        this.apartments=apartments;
-        this.allApartments = apartments
-        console.log(apartments);
-        this.api.getAlreadyReservedByDates(this.dateRange0Formatted,this.dateRange1Formatted).subscribe((reserved:Reservation[])=>{
-          this.alreadyReserved = reserved;
-          console.log(this.alreadyReserved);
-          // this.apartments.forEach((ap, index)=>{
-          //   if(ap.maxPersons < this.persons){
-          //     this.apartments.splice(index,1);
-          //   }
-          // })
-          // for(let res of this.alreadyReserved){
-          //   this.apartments.forEach((apartment, index) => {
-          //     if(apartment.id == res.apartmentId) {
-          //       this.apartments.splice(index,1);
-          //     }
-          //   });
-          // }
-  
-          console.log(this.apartments);
-          this.allApartments.forEach((apartment) =>{
-            this.api.getProperty(apartment.propertyId).subscribe((property:Property)=>{
-              if (this.activeProperties.find((prop) => prop.name === property.name) === undefined) {
-                if (property.cityName.toLowerCase().includes(this.searchText.toLowerCase())) {
-                  property.id = apartment.propertyId;
-                  console.log(property)
-                  this.activeProperties.push(property);
-                }
-              }
-            });
-  
-          });
-          console.log(this.activeProperties);
-  
-          this.isLoaded=true;
-        });
-        
-      });
     });
-
-    
-
     
   }
 }

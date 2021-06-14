@@ -5,6 +5,8 @@
   object-fit: cover;
   height: 300px;
   width: 300px;
+  border-radius: 10px;
+
 }
 #p1 {
   font-size: 26px;
@@ -79,6 +81,8 @@
   object-fit: cover;
   height: 200px;
   width: 200px;
+  border-radius: 7px;
+
 }
 #apName {
   font-size: 22px;

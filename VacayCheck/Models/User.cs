@@ -23,7 +23,7 @@ namespace VacayCheck.Models
         public bool isMailVerificated { get; set; }
         public string cardHolderName { get; set; }
 
-        public List<Property> property { get; set; }//one to many
+        public List<Property> property { get; set; }
         public List<Reservation> reservation { get; set; }
     }
 }

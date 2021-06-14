@@ -89,19 +89,16 @@ export class LoginComponent implements OnInit {
             }, 3000);
             sessionStorage.setItem("isLoggedIn", "true");
             sessionStorage.setItem("userId", this.requestResponse.id);
+            console.log(this.requestResponse.id);
+            console.log(sessionStorage);
+            console.log(sessionStorage.getItem('userId'));
             this.api.getUser(this.requestResponse.id).subscribe((user: User) => {
               sessionStorage.setItem('firstName',user.firstName);
             });
-            if(this.triedWithoutLogin == true){
-              sessionStorage.setItem("token", this.requestResponse.token);
-              this.router.navigate(["/reservation"]);
-            }
-            else{
-              sessionStorage.setItem("token", this.requestResponse.token);
-              setTimeout(() => {
-                this.router.navigate(["/home"]);
-              }, 3000);
-            }
+            sessionStorage.setItem("token", this.requestResponse.token);
+            setTimeout(() => {
+              this.router.navigate(["/home"]);
+            }, 3000);
           }
           else{
             this.mailNotVerificated = "Verificate your mail"

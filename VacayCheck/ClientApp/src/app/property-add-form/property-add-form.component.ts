@@ -8,6 +8,7 @@ import { User } from '../shared/user.model';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgZone } from '@angular/core';
 import { Country } from '../shared/country.model';
+import { CityRequest } from '../shared/cityRequest.model';
 
 
 @Component({
@@ -36,6 +37,9 @@ export class PropertyAddFormComponent implements OnInit {
   markerLat: number;
   markerLng: number;
   markerAlpha = 1;
+  selectedCountry: string;
+  allSearchedCities;
+  selectedCity: string;
 
   map: google.maps.Map<Element>;
   mapClickListener: google.maps.MapsEventListener;
@@ -67,6 +71,8 @@ export class PropertyAddFormComponent implements OnInit {
     this.api.getCountries().subscribe((countries: Country[])=>{
       this.allCountries = countries;
     });
+
+    this.selectedCity = "";
   }
 
 addMarker(lat: number, lng: number) {
@@ -87,6 +93,21 @@ public mapReadyHandler(map: google.maps.Map): void {
   deletePhoto(){
     this.mainPhoto = null;   
     
+  }
+  
+  onSelectCountry(countryName){
+    this.selectedCountry = countryName;
+    console.log(this.selectedCountry);
+    this.selectedCity = "";
+    this.api.getCityByCountryName(this.selectedCountry).subscribe((cities: CityRequest)=>{
+      if(cities == null){
+        this.allSearchedCities = []
+      }
+      else{
+        this.allSearchedCities = cities.data;
+
+      }
+    }); 
   }
 
   onSelectFile(event) {

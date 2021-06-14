@@ -22,6 +22,7 @@
   display: flex;
   flex-direction: column;
   margin-right: 150px;
+  font-size: larger;
 }
 .accountData{
   width: 20%;
@@ -102,6 +103,7 @@
   border-radius: 7px;
   background-color: rgb(180, 220, 255);
   box-shadow: 0 2px 3px rgb(37, 37, 37);
+  font-size: larger;
 }
 .btn {
   background-color: rgb(23, 87, 143);

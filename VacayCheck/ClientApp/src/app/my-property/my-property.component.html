@@ -62,7 +62,7 @@
                 
                 <label class="control-label mt-2">Country</label>
                 <select class="form-control" formControlName="country" [(ngModel)] = "selectedCountry" (ngModelChange)= "onSelectCountry(selectedCountry)">
-                  <option value="activeUser.country" disabled>Country</option>
+                  <option value="property.country" disabled>Country</option>
                   <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
                 </select>
 

@@ -58,6 +58,7 @@ export class SignUpComponent implements OnInit {
   onSelectCountry(countryName){
     console.log(countryName);
     this.selectedCountry = countryName;
+    this.selectedCity = ""
     this.api.getCityByCountryName(this.selectedCountry).subscribe((cities: CityRequest)=>{
       if(cities == null){
         this.allSearchedCities = []
