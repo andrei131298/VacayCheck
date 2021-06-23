@@ -11,13 +11,13 @@
                      class="form-control"
                      formControlName="email"
                      autocomplete="off"
-                     pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+                     pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
+                     maxlength="50"/>
+                     
               <app-field-error-display [displayError]="isFieldValid('email')"
                                        errorMsg="Please inform your email">
               </app-field-error-display>
-              <!-- <div *ngIf="addUserForm.controls['email'].errors?.pattern">
-          Email not valid.
-        </div> -->
+              
           </div>
       </div>
 
@@ -31,6 +31,7 @@
           formControlName="password"
           autocomplete="off"
           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+          maxlength="20"
         />
         <app-field-error-display
           [displayError]="isFieldValid('password')"

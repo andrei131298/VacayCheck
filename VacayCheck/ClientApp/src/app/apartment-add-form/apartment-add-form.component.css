@@ -18,7 +18,8 @@
   border: 5px solid black;
   border-radius: 10px;
   padding-top: 50px;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
+
 }
 .formHalfs {
   display: flex;
@@ -36,6 +37,7 @@
 .form-group {
   width: 110%;
 }
+
 .btn {
   background-color: rgb(20, 182, 20);
   color: white;
@@ -48,12 +50,17 @@ input {
 input[type="file"] {
   display: none;
 }
+textarea{
+  resize: none;
+  border: 2px solid rgb(34, 33, 33);
+  border-radius: 4px;
+}
 .custom-file-upload {
   border: 1px solid rgb(167, 167, 167);
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
-  margin-bottom: 30px;
+  color: rgb(23, 87, 143);
 }
 #numberOfRooms {
   width: 100%;

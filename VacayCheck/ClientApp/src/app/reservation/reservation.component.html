@@ -2,16 +2,17 @@
 <div *ngIf="isLoaded == true">
     <app-header></app-header>
     <div *ngIf="reservationHistory == null && futureReservation == null && ownerReservation == null" class="container">
-        <div class="reservation2">
+        <div class="reservation">
             <h2 id="title">Reservation details</h2>
             <img id="apPhoto" src={{apartment.photos[0]}}>
-            <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
+            <p class="apartmentName" (click)="openApartmentModal(apartment.id)">{{apartment.apartmentName}}</p>
             <div class="reservationDetails">
                 <div class="leftHalf">
-                    <p>Check-in: {{dateRange0Formatted | date:'longDate'}}</p>
-                    <p>Check-out: {{dateRange1Formatted | date:'longDate'}}</p>
-                    <p>Number of persons: {{persons}}</p>
-                    <p>Total Price: {{ apartment.pricePerNight*period}}$</p>
+                    <label class="features">Check-in: <span class="span"> {{dateRange0Formatted | date:'longDate'}}</span></label>
+                    <label class="features">Check-out: <span class="span"> {{dateRange1Formatted | date:'longDate'}}</span></label>
+                    <label class="features">Number of persons: <span class="span"> {{persons}}</span></label>
+                    <label class="features">Total Price: <span class="span"> {{ apartment.pricePerNight*period}}$</span></label>
+
                 </div>
                 <div class="rightHalf">
                     <button class="btn btn-primary" (click)="goToPayment()">Go to payment</button>
@@ -26,11 +27,11 @@
             <div class="leftHalfDetails">
                 <h2 id="title">Reservation details</h2>
                 <img id="apPhoto" src={{apartment.photos[0]}}>
-                <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
-                <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
-                <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
-                <p>Number of persons: {{reservation.numberOfPersons}}</p>
-                <p>Total Price: {{ reservation.price}}$</p>
+                <p class="apartmentName" (click)="openApartmentModal(apartment.id)">{{apartment.apartmentName}}</p>
+                <label class="features">Check-in: <span class="span"> {{reservation.checkIn | date:'longDate'}}</span></label>
+                <label class="features">Check-out: <span class="span"> {{reservation.checkOut | date:'longDate'}}</span></label>
+                <label class="features">Number of persons: <span class="span"> {{reservation.numberOfPersons}}</span></label>
+                <label class="features">Total Price: <span class="span"> {{ reservation.price}}$</span></label>
             </div>
             <div class="rightHalfDetails">
                 <div *ngIf="details == null && (reservation.review == null || reservation.review == '') " class="review">
@@ -40,8 +41,13 @@
                     <fa-icon *ngIf="rating >= 4 && rating < 8" class="meh" [icon]="faMeh"></fa-icon>
                     <fa-icon *ngIf="rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
                     <p style="font-weight: bold; font-size: 22px; margin-top: 10px;">{{rating}} Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
+                    <p style="color: #a94442;">{{errorMessageRating}}</p>
                     <div style="font-weight: bold; font-size: 26px; margin-top: 30px;">Add Review </div>
-                    <textarea style="margin-top: 30px;" rows="7" cols="40" placeholder="How it was your vacation here?" [(ngModel)]="review"></textarea>
+                    <div>
+                        <textarea style="margin-top: 30px;" rows="7" cols="40" placeholder="How it was your vacation here?" maxlength="500" [(ngModel)]="review"></textarea>
+                        <p class="descriptionLength">{{review.length}}/500</p>
+                    </div>
+                    <p style="color: #a94442;">{{errorMessage}}</p>
                     <button class="btn btn-primary" (click)="addReview()">Add review</button>
                 </div> 
                 <div *ngIf="details == true" class="review">
@@ -51,29 +57,34 @@
                     <fa-icon *ngIf="reservation.rating >= 8" class="smile" [icon]="faSmile"></fa-icon>
                     <p style="font-weight: bold; font-size: 22px; margin-top: 10px;">{{reservation.rating}} Travel points <fa-icon [icon]="faGlobe"></fa-icon></p>
                     <div style="font-weight: bold; font-size: 26px; margin-top: 30px;">Review</div>
-                    <textarea readonly style="margin-top: 30px;" rows="7" cols="40">{{reservation.review}}</textarea>
+                    <div class="reviewDescription">
+                        {{reservation.review}}
+                    </div>
                 </div> 
             </div>       
         </div>
     </div>
 
     <div *ngIf="futureReservation == true" class="container">
-        <div class="reservation2">
+        <div class="reservation">
             <h2 id="title">Reservation details</h2>
             <img id="apPhoto" src={{apartment.photos[0]}}>
-            <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
+            <p class="apartmentName" (click)="openApartmentModal(apartment.id)">{{apartment.apartmentName}}</p>
             <div class="reservationDetails">
                 <div class="leftHalf">
-                    <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
-                    <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
-                    <p>Number of persons: {{reservation.numberOfPersons}}</p>
-                    <p>Total Price: {{ reservation.price}}$</p>
+                    <label class="features">Check-in: <span class="span"> {{reservation.checkIn | date:'longDate'}}</span></label>
+                    <label class="features">Check-out: <span class="span"> {{reservation.checkOut | date:'longDate'}}</span></label>
+                    <label class="features">Number of persons: <span class="span"> {{reservation.numberOfPersons}}</span></label>
+                    <label class="features">Total Price: <span class="span"> {{ reservation.price}}$</span></label>
+                    
                 </div>
                 <div class="rightHalf">
                     <p class="font-weight-bold">Contact owner </p>
                     <p>{{owner.firstName}} {{owner.lastName}}</p>
-                    <p>Phone number: {{owner.phoneNumber}}</p>
-                    <p>E-mail: {{owner.email}}</p>
+                    <label class="features">Phone number: <span class="span"> {{owner.phoneNumber}}</span></label>
+                    <label class="features">E-mail: <span class="span"> {{owner.email}}</span></label>
+                    
+                   
                 </div>
             </div>
             <button *ngIf="cancellationDateLimit.getTime() > currentDate.getTime() " class="btn btn-primary" style="margin-top: 20px;" (click)="cancelReservation(reservation)">Cancel reservation</button>
@@ -83,22 +94,23 @@
     </div>
 
     <div *ngIf="ownerReservation == true" class="container">
-        <div class="reservation2">
+        <div class="reservation">
             <h2 id="title">Reservation details</h2>
             <img id="apPhoto" src={{apartment.photos[0]}}>
-            <p style="font-weight: bold; font-size: 26px;">{{apartment.apartmentName}}</p>
+            <p class="apartmentName" (click)="openApartmentModal(apartment.id)">{{apartment.apartmentName}}</p>
             <div class="reservationDetails">
                 <div class="leftHalf">
-                    <p>Check-in: {{reservation.checkIn | date:'longDate'}}</p>
-                    <p>Check-out: {{reservation.checkOut | date:'longDate'}}</p>
-                    <p>Number of persons: {{reservation.numberOfPersons}}</p>
-                    <p>Total Price: {{ reservation.price}}$</p>
+                    <label class="features">Check-in: <span class="span"> {{reservation.checkIn | date:'longDate'}}</span></label>
+                    <label class="features">Check-out: <span class="span"> {{reservation.checkOut | date:'longDate'}}</span></label>
+                    <label class="features">Number of persons: <span class="span"> {{reservation.numberOfPersons}}</span></label>
+                    <label class="features">Total Price: <span class="span"> {{ reservation.price}}$</span></label>
                 </div>
                 <div class="rightHalf">
                     <p class="font-weight-bold">Contact guest </p>
                     <p>{{guest.firstName}} {{guest.lastName}}</p>
-                    <p>Phone number: {{guest.phoneNumber}}</p>
-                    <p>E-mail: {{guest.email}}</p>
+                    <label class="features">Phone number: <span class="span"> {{guest.phoneNumber}}</span></label>
+                    <label class="features">E-mail: <span class="span">{{guest.email}}</span></label>
+                   
                 </div>
             </div>
 
@@ -107,3 +119,4 @@
 </div>
 <payment #payment [reservationToPay] = "reservation"></payment>
 <confirmation-modal #confirmation [reservationToCancel] = "reservation"></confirmation-modal>
+<apartment-profile #apartmentModal></apartment-profile>

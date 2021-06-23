@@ -31,7 +31,7 @@ export class UserProfileComponent implements OnInit {
   editUserForm: FormGroup;
   bankAccountForm: FormGroup;
   userId:string;
-  activeUser:User;
+  activeUser = new User();
   isLoaded=false;
   options = ['Profile', 'Saved properties', 'Future reservations', 'Reservations history','Current reservations','Hosting', 'Travel Requests'];
   requestsOptions = ["Your requests", "Requests on your properties"];

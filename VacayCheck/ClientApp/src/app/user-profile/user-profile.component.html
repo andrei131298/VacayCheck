@@ -114,7 +114,7 @@
           <div class="secondView" >
             <img class="apPhoto" src={{favourite.property.photo}} />
             <div class="apDetail">
-                  <p id="apName" >
+                  <p id="propertyName" (click)="goToProperty(favourite.property)">
                     {{favourite.propertyName}}
                   </p>
                   <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="deleteFavourite(favourite.propertyId)">Remove from favourites</button>
@@ -200,6 +200,8 @@
                   <p id="totalPrice" >
                     Price: {{ currentReservation.price}}
                   </p>
+                  <button type="button" style="margin-top: 20px;" class="btn btn-primary" (click)="toReservationDetails(currentReservation)">See details</button>
+
             </div>  
           </div>
         </div>

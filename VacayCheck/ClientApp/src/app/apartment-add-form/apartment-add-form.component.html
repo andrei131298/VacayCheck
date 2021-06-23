@@ -8,39 +8,44 @@
             <div class="form-group">
                 <label for="inputAddress">Apartment name:</label>
                 <input type="text" class="form-control" formControlName="apartmentName">
-                
+                <app-field-error-display [displayError]="isFieldValid('apartmentName')"
+                                            errorMsg="Please inform the apartment name">
+                </app-field-error-display>
             </div>
             <div class="form-group">
                 <label>Number of Rooms: </label><br>
-                <input id="numberOfRooms" type="number" min="1" max="6" onKeyDown="return false" formControlName="numberOfRooms"/>
+                <input id="numberOfRooms" class="form-control" type="number" min="1" max="6" onKeyDown="return false" formControlName="numberOfRooms"/>
+                <app-field-error-display [displayError]="isFieldValid('numberOfRooms')"
+                                            errorMsg="Please inform the number of rooms">
+                </app-field-error-display>
             </div>
             <div class="form-group">
-                <label>Price per night:</label>
-                <input type="text" name="city" class="form-control" id="city" formControlName="pricePerNight" autocomplete="off">
+                <label>Price per night (in dollars):</label>
+                <input type="number" class="form-control" min="1" max="1000" onkeypress="if(this.value.length==3) return false;" id="city" formControlName="pricePerNight" autocomplete="off">
+                <app-field-error-display [displayError]="isFieldValid('pricePerNight')"
+                                            errorMsg="Please inform the price per night">
+                </app-field-error-display>
             </div>
             <div class="form-group">
                 <label>Number of persons allowed: </label><br>
-                <input id="numberOfRooms" type="number" min="1" max="10" onKeyDown="return false" formControlName="numberOfPersons"/>
+                <input id="numberOfRooms" class="form-control" type="number" min="1" max="10" onKeyDown="return false" formControlName="numberOfPersons"/>
+                <app-field-error-display [displayError]="isFieldValid('numberOfPersons')"
+                                            errorMsg="Please inform the number of persons">
+                </app-field-error-display>
             </div>
-            <!-- <div class="form-group col-md-9">
-                <input id="notes" placeholder="Notes" formControlName="notes" (focus)="isDivHidden = true" (blur)="isDivHidden = false"/>
-                <div id="another-div" *ngIf="!isDivHidden">Test div which is hidden when notes input is in focus
-                </div>
-            </div> -->
+           
             
         </div>
         <div class="rightHalf">
             <div class="form-group">
-                <label for="description">Description: </label>
+                <label for="description" style="  margin-top: 50px;">Description: </label>
                 <br>
-                <textarea id="propertyDescription" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
-                <!-- <app-field-error-display [displayError]="isFieldValid('description')"
-                                            errorMsg="Please inform the description">
-                </app-field-error-display> -->
+                <textarea id="propertyDescription" class="form-control" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
+                <app-field-error-display [displayError]="isFieldValid('description')"
+                                            errorMsg="Please complete the description">
+                </app-field-error-display>
             </div>
-            <!-- <div class="form-group">
-                <input type='file' (change)="onSelectFile($event)">
-            </div> -->
+            
             <label class="custom-file-upload">
                 <input type="file" (change)="onSelectFile($event)" multiple/>
                 Upload Photos
@@ -51,6 +56,8 @@
                     <img class="photoToAdd" src={{photo}}>
                 </div>
             </div>
+            <p style="color: #a94442;">{{errorMessage}}</p>
+
         </div>
     </div>
 

@@ -47,11 +47,12 @@
   flex-direction: column;
   justify-content: center;
   margin-left: 70px;
-  width: 120%;
+  width: 50%;
 }
 .leftHalf {
   margin-left: 50px;
-  width: 115%;
+  width: 50%;
+
 }
 .features {
   font-weight: bold;
@@ -66,12 +67,15 @@
   margin-left: 5px;
   margin-bottom: 10px;
 }
-.issueDescription {
+.apartmentDescription {
   background-color: rgb(230, 236, 240);
-  min-height: 200px;
+  min-height: 150px;
+  max-height: fit-content;
   border-bottom: 5px solid rgb(87, 37, 37);
   border-radius: 10px;
   padding: 20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .reviews {
   display: flex;
@@ -86,7 +90,9 @@
   padding: 15px;
   margin-bottom: 10px;
   position: relative;
-  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: fit-content;
 }
 #seeComments {
   color: rgb(23, 87, 143);
@@ -96,9 +102,15 @@
   cursor: pointer;
 }
 .form-control {
-  width: 60%;
-  max-width: 60%;
   margin-bottom: 5px;
+}
+.leftHalfForm{
+  width: 70%;
+  max-width: 70%;
+}
+textarea{
+  resize: none;
+  overflow: hidden;
 }
 #cancel {
   color: rgb(180, 4, 4);
@@ -157,4 +169,9 @@ input[type="file"] {
 .editPhotos{
   color: rgb(40, 154, 253);
   cursor: pointer;
+}
+.descriptionLength{
+  text-align: right;
+  font-size: 14px;
+  margin-bottom: 0;
 }

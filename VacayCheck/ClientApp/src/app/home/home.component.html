@@ -29,7 +29,7 @@
     id="numberOfPersons"
     type="number"
     min="1"
-    max="30"
+    max="10"
     onKeyDown="return false"
     placeholder="Number of persons"
     [(ngModel)]="maxPers"
@@ -47,7 +47,7 @@
     <div *ngIf="searchText.length > 0" class="row">
       <ng-container
         *ngFor="let city of allCities | searchFilter: {city: searchText};let ind = index">
-        <div class="view col mb-2 mr-2 hoverable">
+        <div class="view   mb-2 mr-2 hoverable">
           <img
             class="pozeCazari"
             src="../../assets/images/travel.jpg"

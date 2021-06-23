@@ -5,7 +5,7 @@
 .reservation {
   display: flex;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   border-radius: 10px;
   border-bottom: 12px solid black;
@@ -16,8 +16,9 @@
 }
 .reservation2{
   display: flex;
+  flex-direction: row;
   align-items: center;
-  flex-direction: column;
+  justify-content: space-evenly;
   border-radius: 10px;
   border-bottom: 12px solid black;
   border-top: 12px solid black;
@@ -54,6 +55,8 @@
 .reservationDetails {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   padding-right: 30px;
   padding-left: 30px;
   margin-top: 30px;
@@ -61,17 +64,15 @@
 .leftHalf {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-right: 100px;
-  border: 2px solid black;
-  border-radius: 10px;
   padding: 10px;
+  width: 50%;
+  text-align: center;
 }
 .rightHalf{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 50%;
 }
 .slider {
   -webkit-appearance: none;
@@ -124,10 +125,48 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 .rightHalfDetails{
   margin-top:70px;
 }
 textarea {
   resize: none;
+  overflow: hidden;
+}
+.descriptionLength{
+  text-align: right;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.reviewDescription {
+  background-color: rgb(230, 236, 240);
+  min-height: 200px;
+  max-height: fit-content;
+  border: 2px solid black;
+  border-bottom: 5px solid rgb(87, 37, 37);
+  border-radius: 10px;
+  padding: 2px;
+  margin-top: 25px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  width: 400px;
+  
+}
+.features {
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 130%;
+}
+.span {
+  font-weight: lighter;
+}
+.apartmentName{
+  font-weight: bold; 
+  font-size: 26px;
+ 
+}
+.apartmentName:hover{
+  cursor: pointer;
+  text-decoration: underline;
 }

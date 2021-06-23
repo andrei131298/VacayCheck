@@ -35,7 +35,7 @@
           <fa-icon *ngFor="let person of counter(activeApartment.maxPersons)" id="persoana" [icon]="faUser" ></fa-icon>    
         </div>
         <label class="features">Description: </label>
-        <div class="issueDescription">
+        <div class="apartmentDescription">
               {{activeApartment.description}}
         </div>
         <div class="reviews">
@@ -61,24 +61,43 @@
       </div>
       <div *ngIf="edit == true" class="rightHalf">
         <h3>Edit apartment details </h3>
-        <!-- <p id="cancelText" (click)="cancelForm()">Done editing<fa-icon [icon]="faCheck" id = "cancel" ></fa-icon></p> -->
+
         <p id="cancelText" (click)="cancelForm()">Cancel<fa-icon [icon]="faTimes" id = "cancel" ></fa-icon></p>
         <form class="form-container" [formGroup]="editApartmentForm">
           <div class="leftHalfForm">
             <label for="apartmentName" class="control-label required">Apartment Name</label>
-            <input type="text" class="form-control" formControlName="apartmentName"/>
+            <input type="text" class="form-control" formControlName="apartmentName" maxlength="50" [(ngModel)] = "apartmentName"/>
+            <p class="descriptionLength">{{apartmentName.length}}/50</p>
 
-            <label for="pricePerNight" class="control-label required">Price per night</label>
-            <input type="text" class="form-control" formControlName="pricePerNight"/>
+            <app-field-error-display [displayError]="isFieldValid('apartmentName')"
+                                            errorMsg="Please inform the apartment name">
+            </app-field-error-display>
+
+            <label>Price per night (in dollars):</label>
+            <input type="number" class="form-control" min="1" max="1000" onkeypress="if(this.value.length==3) return false;" id="city" formControlName="pricePerNight" autocomplete="off">
+            <app-field-error-display [displayError]="isFieldValid('pricePerNight')"
+                                        errorMsg="Please inform the price per night">
+            </app-field-error-display>
 
             <label for="description" class="control-label required">Description</label>
-            <textarea class="form-control" style="resize: none;" rows="8" formControlName="description" autocomplete="off"></textarea>
+            <textarea class="form-control" style="resize: none;" rows="8" formControlName="description" autocomplete="off" maxlength="500" [(ngModel)] = "apartmentDescription"></textarea>
+            <p class="descriptionLength">{{apartmentDescription.length}}/500</p>
 
-            <label for="maxPersons" class="control-label required">Maximum capacity</label>
-            <input type="number" class="form-control" min="1" max="30" onKeyDown="return false" formControlName="maxPersons"/>
+            <app-field-error-display [displayError]="isFieldValid('description')"
+                                            errorMsg="Please complete a description">
+                </app-field-error-display>
+
+            <label for="maxPersons" class="control-label required">Maximum capacity of persons</label>
+            <input type="number" class="form-control" min="1" max="10" onKeyDown="return false" formControlName="maxPersons"/>
+            <app-field-error-display [displayError]="isFieldValid('maxPersons')"
+                                            errorMsg="Please inform the number of persons">
+                </app-field-error-display>
             
             <label for="numberOfRooms" class="control-label required">Number of rooms</label>
-            <input type="number" class="form-control" min="1" max="5" onKeyDown="return false" formControlName="numberOfRooms"/>
+            <input type="number" class="form-control" min="1" max="6" onKeyDown="return false" formControlName="numberOfRooms"/>
+            <app-field-error-display [displayError]="isFieldValid('numberOfRooms')"
+                                      errorMsg="Please inform the number of rooms">
+            </app-field-error-display>
 
             <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
 

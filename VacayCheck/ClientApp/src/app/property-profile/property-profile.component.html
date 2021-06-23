@@ -42,8 +42,9 @@
             {{property.street}}, {{property.cityName}}, {{property.country}}</p>
             <!-- <p class="h4 font-weight-bold">Description</p> -->
             <div class="propertyDescription">
-                {{property.description}}
-            </div>
+              {{property.description}}
+          </div>
+
           </div>
         </div>
         
@@ -72,7 +73,7 @@
                   Travel Request <fa-icon [icon]="faInfoCircle" (mouseover)="showInfoForDisabled = true; hoveredApartmentIndex = i" (mouseout)="showInfoForDisabled = false; hoveredApartmentIndex = null"></fa-icon></button>
               </div>
               <p class="infoForDisabled" *ngIf="showInfo == true && hoveredApartmentIndex == i">Travel Request is a new feature through which you can request an exchange of accommodation</p>
-              <div class="infoForDisabled" *ngIf="showInfoForDisabled == true && hoveredApartmentIndex == i">You need to be an owner with at least 5 reservations on our website to be able to use this feature</div>
+              <div class="infoForDisabled" *ngIf="showInfoForDisabled == true && hoveredApartmentIndex == i">You need to be an owner of a property on this website to be able to use this feature</div>
             </div>  
           </div>
           <div *ngIf="apartments.length == 0 ">

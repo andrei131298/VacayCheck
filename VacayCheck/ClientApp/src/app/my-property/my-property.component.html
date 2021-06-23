@@ -7,7 +7,7 @@
         <img class="pozeCazari" src="{{ property.photo }}"/>
         <div class="detaliiProp">
           <p id="p1" >
-            <fa-icon *ngIf="property.userId == userId" [icon]="faBuilding" id="faBuilding"></fa-icon>{{ property.name.toString() }}
+            <fa-icon *ngIf="property.userId == userId" [icon]="faBuilding" id="faBuilding"></fa-icon>{{ property.name }}
           </p>
           <p id="p2">
             {{ property.cityName }}
@@ -19,7 +19,7 @@
         <div class="editing">
           <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="showEditOption()"><fa-icon [icon]="faPen"></fa-icon> Edit Property</button>
           <button *ngIf="property.userId == userId" class="btn btn-primary mb-2" (click)="goToAddApartment()"><fa-icon [icon]="faPlus"></fa-icon> Add an apartment</button>
-          <div class="toggleButton">
+          <div class="toggleButton" *ngIf="property.userId == userId">
             <label class="switch">
               <input type="checkbox" [(ngModel)]="toggleButton" (click)="toggle()">
               <span class="slider round"></span>
@@ -57,17 +57,28 @@
 
 
                 <label class="control-label mt-2">Property name</label>
-                <input type="text" id="firstName2" class="form-control" formControlName="name"/>
+                <input type="text" id="firstName2" class="form-control" formControlName="name" maxlength="50" [(ngModel)] = "propertyName"/>
+                <p class="descriptionLength">{{propertyName.length}}/50</p>
+                <app-field-error-display [displayError]="isFieldValid('name')"
+                                        errorMsg="Please inform the property name">
+                </app-field-error-display>
     
                 <label class="control-label mt-2">Type</label>
                 <select class="form-control" formControlName="type">
                   <option value="" disabled>Type</option>
                   <option *ngFor="let type of propertyTypes" value="{{type}}">{{type}}</option>
                 </select>
+                <app-field-error-display [displayError]="isFieldValid('type')"
+                                        errorMsg="Please inform the property type">
+                </app-field-error-display>
     
                 
                 <label class="control-label mt-2">Description</label>
-                <textarea class="form-control" formControlName="description" rows="5"></textarea>
+                <textarea class="form-control" formControlName="description" rows="6" maxlength="1000" [(ngModel)] = "descriptionText"></textarea>
+                <p class="descriptionLength">{{descriptionText.length}}/1000</p>
+                <app-field-error-display [displayError]="isFieldValid('description')"
+                                        errorMsg="Please inform the property description">
+                </app-field-error-display>
               
                 
                 <label class="control-label mt-2">Country</label>
@@ -75,15 +86,25 @@
                   <option value="property.country" disabled>Country</option>
                   <option *ngFor="let country of allCountries" value="{{country.name}}">{{country.name}}</option>
                 </select>
+                <app-field-error-display [displayError]="isFieldValid('country')"
+                                        errorMsg="Please inform the country">
+                </app-field-error-display>
 
                 <label class="control-label mt-2">City</label>
-                          <select class="form-control" formControlName="cityName" [(ngModel)]="selectedCity">
-                            <option disabled>City</option>
-                            <option *ngFor="let city of allSearchedCities" [ngValue]="city.city">{{city.city}}</option>
-                          </select>
+                <select class="form-control" formControlName="cityName" [(ngModel)]="selectedCity">
+                    <option disabled>City</option>
+                    <option *ngFor="let city of allSearchedCities" [ngValue]="city.city">{{city.city}}</option>
+                </select>
+                <app-field-error-display [displayError]="isFieldValid('cityName')"
+                          errorMsg="Please inform the property cityName">
+                </app-field-error-display>
     
-                <label class="control-label mt-2">Street</label>
-                <input type="text" id="country" class="form-control" formControlName="street" autocomplete="off"/>
+                <label class="control-label mt-2">Address</label>
+                <input type="text" id="country" class="form-control" formControlName="street" autocomplete="off" maxlength="100" [(ngModel)] = "propertyAddress"/>
+                <p class="descriptionLength">{{propertyAddress.length}}/100</p>
+                <app-field-error-display [displayError]="isFieldValid('street')"
+                                        errorMsg="Please inform the property address">
+                </app-field-error-display>
                             
                 <button class="btn" style="background-color: rgb(4, 180, 63); margin-top: 30px; color: white;" (click)="saveChanges()">Save changes</button>
 

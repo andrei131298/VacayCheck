@@ -45,11 +45,15 @@ export class MyPropertyComponent implements OnInit {
   faTimes = faTimes;
   faMapMarkerAlt = faMapMarkerAlt;
   faList = faList;
-  propertyTypes=["Vila","House","Hotel","Flat"];
+  propertyTypes=["Villa", "House", "Hotel", "Block of flats", "Motel", "Hostel"];
   selectedCountry: string;
   allSearchedCities;
   selectedCity: string;
   toggleButton;
+  numberOfCharacters: number;
+  descriptionText: string;
+  propertyName:string;
+  propertyAddress: string;
 
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
 
@@ -78,6 +82,9 @@ export class MyPropertyComponent implements OnInit {
         mapLongitude: [this.property.mapLongitude, Validators.required],
         mapLatitude: [this.property.mapLatitude, Validators.required],
       });
+      this.propertyName = this.property.name
+      this.propertyAddress = this.property.street;
+      this.descriptionText = this.property.description;
       this.selectedCountry = this.property.country;
       this.selectedCity = this.property.cityName;
       this.toggleButton = this.property.isPublic;
@@ -160,5 +167,16 @@ export class MyPropertyComponent implements OnInit {
         this.success = null;
       }, 3000);
     }
+  }
+
+  isFieldValid(field: string) {
+    return (
+      !this.editPropertyForm.get(field).valid && this.editPropertyForm.get(field).touched
+    );
+  }
+
+  descriptionCounter(field){
+    this.numberOfCharacters = field.value.length;
+    console.log(this.numberOfCharacters);
   }
 }

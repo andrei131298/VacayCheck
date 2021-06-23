@@ -23,7 +23,7 @@ export class PropertyAddFormComponent implements OnInit {
   latitude = 44.439663;
   longitude = 26.096306;
   mainPhoto:string;
-  propertyTypes=["Vila","House","Hotel","Flat"];
+  propertyTypes=["Villa", "House", "Hotel", "Block of flats", "Motel", "Hostel"];
   cities:City[]=[];
   citySearchText:string="";
   isDivShown:boolean;
@@ -40,6 +40,7 @@ export class PropertyAddFormComponent implements OnInit {
   selectedCountry: string;
   allSearchedCities;
   selectedCity: string;
+  errorMessage: string;
 
   map: google.maps.Map<Element>;
   mapClickListener: google.maps.MapsEventListener;
@@ -48,6 +49,7 @@ export class PropertyAddFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem("userId");
+
     this.addPropertyForm = this.fb.group({
       propertyName:[null, Validators.required],
       type: [null, Validators.required],
@@ -55,6 +57,7 @@ export class PropertyAddFormComponent implements OnInit {
       streetName: [null, Validators.required],
       country: [null, Validators.required],
       description: [null, Validators.required],
+      mainPhoto: [this.mainPhoto, Validators.required],
 
     });
     this.addPropertyForm2 = this.fb.group({
@@ -92,7 +95,7 @@ public mapReadyHandler(map: google.maps.Map): void {
 
   deletePhoto(){
     this.mainPhoto = null;   
-    
+    this.f.mainPhoto.setValue(null);
   }
   
   onSelectCountry(countryName){
@@ -118,6 +121,7 @@ public mapReadyHandler(map: google.maps.Map): void {
 
                 reader.onload = (event:any) => {
                   this.mainPhoto = event.target.result;
+                  this.f.mainPhoto.setValue(this.mainPhoto);
                   console.log(this.mainPhoto);
                    
                 }
@@ -148,40 +152,52 @@ public mapReadyHandler(map: google.maps.Map): void {
     };
   }
   onSubmit() {
-    console.log(this.f.country.value);
-    if (this.addPropertyForm.valid && this.markerLat && this.markerLng) {
-      this.success = true;
+    console.log(this.mainPhoto);
+    console.log(this.f.mainPhoto.value);
+    if(this.markerLat && this.markerLng){
+      if (this.addPropertyForm.valid) {
+        this.success = true;
+        setTimeout(() => {
+          this.success = null;
+        }, 3000);
+        console.log("addUserForm submitted");
+        
+        this.newProperty.name=this.f.propertyName.value;
+        this.newProperty.type=this.f.type.value;
+        this.newProperty.description=this.f.description.value;
+        this.newProperty.street=this.f.streetName.value;
+        this.newProperty.photo=this.mainPhoto;
+        this.newProperty.cityName=this.f.cityName.value;
+        this.newProperty.userId=this.userId;
+        this.newProperty.mapLatitude = this.markerLat;
+        this.newProperty.mapLongitude = this.markerLng;
+        this.newProperty.country = this.f.country.value;
+        console.log(this.newProperty);
+        
+        this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{
+          if(this.activeUser.isOwner == false){
+            this.activeUser.isOwner = true;
+            this.api.editUser(this.activeUser).subscribe();
+          }
+          this.router.navigate(["/apartment-add-form",createdProperty.id]);
+        });
+      } else {
+        this.success = false;
+        setTimeout(() => {
+          this.success = null;
+        }, 3000);
+        this.validateAllFormFields(this.addPropertyForm);
+      }
+    }
+    else {
+      this.errorMessage = "Please indicate the localization";
       setTimeout(() => {
-        this.success = null;
-      }, 3000);
-      console.log("addUserForm submitted");
-      
-      this.newProperty.name=this.f.propertyName.value;
-      this.newProperty.type=this.f.type.value;
-      this.newProperty.description=this.f.description.value;
-      this.newProperty.street=this.f.streetName.value;
-      this.newProperty.photo=this.mainPhoto;
-      this.newProperty.cityName=this.f.cityName.value;
-      this.newProperty.userId=this.userId;
-      this.newProperty.mapLatitude = this.markerLat;
-      this.newProperty.mapLongitude = this.markerLng;
-      this.newProperty.country = this.f.country.value;
-      console.log(this.newProperty);
-      
-      this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{
-        if(this.activeUser.isOwner == false){
-          this.activeUser.isOwner = true;
-          this.api.editUser(this.activeUser).subscribe();
-        }
-        this.router.navigate(["/apartment-add-form",createdProperty.id]);
-      });
-    } else {
-      this.success = false;
-      setTimeout(() => {
-        this.success = null;
+        this.errorMessage = null;
       }, 3000);
       this.validateAllFormFields(this.addPropertyForm);
     }
+
+ 
   }
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {

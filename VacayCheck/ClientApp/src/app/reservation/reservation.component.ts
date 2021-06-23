@@ -8,6 +8,7 @@ import { PaymentComponent } from "./payment/payment.component";
 import { User } from "../shared/user.model";
 import { Property } from "../shared/property.model";
 import { faGlobe, faFrown, faMeh, faSmile } from '@fortawesome/free-solid-svg-icons';
+import { ApartmentProfileComponent } from "../apartment-profile/apartment-profile.component";
 
 
 @Component({
@@ -17,6 +18,10 @@ import { faGlobe, faFrown, faMeh, faSmile } from '@fortawesome/free-solid-svg-ic
 })
 export class ReservationComponent implements OnInit {
   apartment:Apartment;
+  errorMessage: string;
+  errorMessageRating: string;
+  modalOpened = false;
+  
   constructor(private api: ApiService,
     private router:Router,
     private route: ActivatedRoute,
@@ -36,7 +41,7 @@ export class ReservationComponent implements OnInit {
   futureReservation = JSON.parse(this.route.snapshot.queryParamMap.get('futureReservation'));
   details = JSON.parse(this.route.snapshot.queryParamMap.get('details'));
   ownerReservation = JSON.parse(this.route.snapshot.queryParamMap.get('owner'));
-  review:string;
+  review = "";
   reservation=new Reservation();
   isLoaded=false;
   error:boolean;
@@ -54,6 +59,8 @@ export class ReservationComponent implements OnInit {
   faSmile = faSmile;
   @ViewChild("payment") payment: PaymentComponent;
   @ViewChild("confirmation") confirmation: PaymentComponent;
+  @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
+
 
 
   ngOnInit(): void {
@@ -103,21 +110,36 @@ export class ReservationComponent implements OnInit {
     console.log(this.rating);
   }
   addReview(){
-    if((this.review != null && this.review != "") && this.rating != 0){
-      const editedReservation = new Reservation(this.reservation);
-      editedReservation.review = this.review;
-      editedReservation.rating = this.rating;
-
-      this.api.editReservation(editedReservation)
-        .subscribe(() => {
-          console.log(editedReservation);
-          this.router.navigate(["user-profile", this.userId]);
-        },
-          (error: Error) => {
-            console.log('err', error);
-          });
-
+    if(this.rating != 0){
+      if(this.review != null && this.review != ""){
+        const editedReservation = new Reservation(this.reservation);
+        editedReservation.review = this.review;
+        editedReservation.rating = this.rating;
+  
+        this.api.editReservation(editedReservation)
+          .subscribe(() => {
+            console.log(editedReservation);
+            this.router.navigate(["user-profile", this.userId]);
+          },
+            (error: Error) => {
+              console.log('err', error);
+            });
+  
       }
+      else{
+        this.errorMessage = "Please complete the review";
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 3000);
+      }
+    }
+    else{
+      this.errorMessageRating = "Please select a rating";
+      setTimeout(() => {
+        this.errorMessageRating = null;
+      }, 3000);
+    }
+    
   }
 
   radioChange(event: any) {
@@ -132,6 +154,10 @@ export class ReservationComponent implements OnInit {
     //     window.location.reload();
     //   });
     // });
+  }
+  openApartmentModal(id: string){
+    this.modalOpened = true;
+    this.apartmentModal.initialize(id);
   }
   
 }

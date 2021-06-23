@@ -10,6 +10,8 @@
 }
 #p1 {
   font-size: 26px;
+  max-width: 300px;
+
 }
 #p2 {
   font-size: 22px;
@@ -100,11 +102,14 @@
 .propertyDescription {
   background-color: rgb(230, 236, 240);
   min-height: 200px;
-  max-height: 300px;
+  max-height: fit-content;
+  border: 2px solid black;
   border-bottom: 5px solid rgb(87, 37, 37);
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   margin-top: 25px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .description {
   width: 45%;

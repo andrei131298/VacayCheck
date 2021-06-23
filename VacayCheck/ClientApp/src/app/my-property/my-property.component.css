@@ -8,6 +8,7 @@
 }
 #p1 {
   font-size: 26px;
+  max-width: 300px;
 }
 #p2 {
   font-size: 22px;
@@ -94,14 +95,17 @@
 .propertyDescription {
   background-color: rgb(230, 236, 240);
   min-height: 200px;
-  max-height: 300px;
+  max-height: fit-content;
+  border: 2px solid black;
   border-bottom: 5px solid rgb(87, 37, 37);
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   margin-top: 25px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .description {
-  width: 45%;
+  width: 50%;
 }
 .detailsFlex {
   display: flex;
@@ -116,7 +120,7 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 60%;
   margin: auto;
   margin-top: 20px;
 }
@@ -221,4 +225,9 @@ input:checked + .slider:before {
 #isPublicMessage{
   margin-left: 10px;
   font-size: 20px;
+}
+.descriptionLength{
+  text-align: right;
+  font-size: 14px;
+  margin-bottom: 0;
 }

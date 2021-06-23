@@ -43,6 +43,8 @@ export class ApartmentProfileComponent implements OnInit {
   newPath: string;
   userId = sessionStorage.getItem('userId');
   apartmentHasReviews = false;
+  apartmentDescription: string;
+  apartmentName: string;
 
 
 
@@ -77,6 +79,8 @@ export class ApartmentProfileComponent implements OnInit {
         description: [this.activeApartment.description, Validators.required]
   
       });
+      this.apartmentName = this.activeApartment.apartmentName;
+      this.apartmentDescription = this.activeApartment.description;
       this.mainPhoto = this.activeApartment.photoObjects[0];
       this.selectedIndex = 0;
       this.api.getProperty(this.activeApartment.propertyId).subscribe((property:Property)=>{
@@ -101,10 +105,13 @@ export class ApartmentProfileComponent implements OnInit {
   }
 
   deletePhoto(photo: Photo){
-    console.log(photo);
-    this.api.deletePhoto(photo).subscribe(()=>{
-      this.getApartmentDetails();
-    });
+    if(this.activeApartment.photoObjects.length > 1){
+      console.log(photo);
+      this.api.deletePhoto(photo).subscribe(()=>{
+        this.getApartmentDetails();
+      });
+    }
+    
   }
 
   counter(i: number) {
@@ -167,6 +174,12 @@ export class ApartmentProfileComponent implements OnInit {
                 reader.readAsDataURL(event.target.files[i]);
         }
     }
+  }
+
+  isFieldValid(field: string) {
+    return (
+      !this.editApartmentForm.get(field).valid && this.editApartmentForm.get(field).touched
+    );
   }
 
 }
