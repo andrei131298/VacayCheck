@@ -88,7 +88,7 @@
                 </div>
             </div>
             <button *ngIf="cancellationDateLimit.getTime() > currentDate.getTime() " class="btn btn-primary" style="margin-top: 20px;" (click)="cancelReservation(reservation)">Cancel reservation</button>
-            <p *ngIf="cancellationDateLimit.getTime() <= currentDate.getTime() " style="color: red; margin-top: 20px;"> The deadline for free cancellation has passed</p>
+            <p *ngIf="cancellationDateLimit.getTime() <= currentDate.getTime() " style="color: red; margin-top: 20px;"> The deadline for cancellation has passed</p>
 
         </div>
     </div>
@@ -111,8 +111,13 @@
                     <label class="features">Phone number: <span class="span"> {{guest.phoneNumber}}</span></label>
                     <label class="features">E-mail: <span class="span">{{guest.email}}</span></label>
                    
-                </div>
+                </div>  
             </div>
+            <div *ngIf = "checkin.getTime() > currentDate.getTime()">
+                <button *ngIf="cancellationDateLimit.getTime() > currentDate.getTime() " class="btn btn-primary" style="margin-top: 20px;" (click)="cancelReservation(reservation)">Cancel reservation</button>
+                <p *ngIf="cancellationDateLimit.getTime() <= currentDate.getTime() " style="color: red; margin-top: 20px;"> The deadline for cancellation has passed</p>
+            </div>
+            
 
         </div>
     </div>

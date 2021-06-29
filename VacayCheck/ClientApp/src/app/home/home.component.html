@@ -8,6 +8,8 @@
     placeholder="Search a place..."
     autocomplete="off"
     [(ngModel)]="searchText"
+    maxlength="30"
+    (keypress)="onlyAlphaNumeric($event)"
   />
 
   <input
@@ -56,22 +58,12 @@
           />
 
           <div class="detail">
-            <p id="p1" (click)="searchText = city.city"></p>
+            <p id="p1" (click)="searchText = city.city">
               {{ city.city }}
-              <!-- <svg
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                class="bi bi-three-dots-vertical"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                (click)="showDM(property.id)"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
-                />
-              </svg> -->
+            </p>
+            <span style="font-size: 14px;">{{city.country}}</span>
+
+              
           </div>
         </div>
       </ng-container>

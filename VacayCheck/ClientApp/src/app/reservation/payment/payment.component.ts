@@ -34,20 +34,15 @@ export class PaymentComponent implements OnInit {
       monthExpirationDate: [null, Validators.required],
       yearExpirationDate: [null, Validators.required],
       securityCode: [null, Validators.required],
-
     });
   }
 
   backCard(){
-    
     this.flipped = true;
-    
   }
   frontCard(){
     this.flipped = false;
-
   }
-
   initialize(): void {
     this.payment.show();
   }
@@ -75,8 +70,31 @@ export class PaymentComponent implements OnInit {
     }
   }
 
+  onlyAlphaNumeric(e){
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+
+    e.preventDefault();
+    return false;
+  }
+
   // isFieldValid(field: string){
   //   return this.formValidation.isFieldValid(field,this.creditCardForm);
   // }
 
+  onlyNumeric(e){
+    var regex = new RegExp("^[0-9 ]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+
+    e.preventDefault();
+    return false;
+  }
+
+ 
 }

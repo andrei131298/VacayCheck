@@ -37,7 +37,7 @@ export class UserProfileComponent implements OnInit {
   requestsOptions = ["Your requests", "Requests on your properties"];
   selectedOption='Profile';
   selectedRequest = "Your requests";
-  statuses = ['All statuses','Pending', 'Accepted', 'Declined'];
+  statuses = ['All statuses','Pending', 'Accepted', 'Declined', 'Overtime'];
   selectedStatus = 'All statuses';
   reservationsStatuses = ['All reservations', 'Completed', 'Upcoming', 'Current']
   selectedReservationsStatus = "All reservations"
@@ -120,16 +120,22 @@ export class UserProfileComponent implements OnInit {
           reservation.apartment = apartment;
         
           if(new Date(reservation.checkIn) > this.currentDate && new Date(reservation.checkOut) > this.currentDate ){
-            this.futureReservations.push(reservation)
+            this.futureReservations.push(reservation);
+            this.futureReservations.sort((a, b) => new Date(b.checkIn).getTime() - new Date(a.checkIn).getTime());
+
           }
           if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) < this.currentDate){
-            this.reservationsHistory.push(reservation)
+            this.reservationsHistory.push(reservation);
+            this.reservationsHistory.sort((a, b) => new Date(b.checkIn).getTime() - new Date(a.checkIn).getTime());
           }
           if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) > this.currentDate){
-            this.currentReservations.push(reservation)
+            this.currentReservations.push(reservation);
+            this.currentReservations.sort((a, b) => new Date(b.checkIn).getTime() - new Date(a.checkIn).getTime());
+
           }
         });
       });
+      
     });
 
     this.api.getPropertiesByUser(this.userId).subscribe((myProperties: Property[])=>{
@@ -138,7 +144,7 @@ export class UserProfileComponent implements OnInit {
 
     this.api.getExchangeRequestByRequester(this.userId).subscribe((requests: ExchangeRequest[])=>{
       this.exchangesRequested = requests;
-      console.log(this.exchangesRequested);
+      this.exchangesRequested.sort((a, b) => new Date(b.checkIn).getTime() - new Date(a.checkIn).getTime());
       this.exchangesRequested.forEach((request: ExchangeRequest)=>{
         this.api.getApartment(request.requesterApartmentId).subscribe((apartment: Apartment)=>{
           request.requesterApartmentName = apartment.apartmentName;
@@ -185,19 +191,22 @@ export class UserProfileComponent implements OnInit {
 
       this.selectedCountry = this.activeUser.country;
       this.selectedCity = this.activeUser.cityName;
+      this.futurePropertyReservations = [];
+      this.propertyReservationsHistory = [];
+      this.currentPropertyReservations = [];
+      this.activeUser.userPropertiesReservations.sort((a, b) => new Date(b.checkIn).getTime() - new Date(a.checkIn).getTime());
       this.activeUser.userPropertiesReservations.forEach(reservation =>{
         this.api.getApartment(reservation.apartmentId).subscribe((apartment:Apartment)=>{
+          console.log(reservation);
           reservation.apartment = apartment;
-          this.futurePropertyReservations = [];
-          this.propertyReservationsHistory = [];
-          this.currentPropertyReservations = [];
           this.api.getProperty(apartment.propertyId).subscribe((property: Property)=>{
             reservation.propertyName = property.name;
             
             if(new Date(reservation.checkIn) > this.currentDate && new Date(reservation.checkOut) > this.currentDate ){
               reservation.status = "Upcoming";
-              this.futurePropertyReservations.push(reservation)
-              console.log(this.futurePropertyReservations);
+              this.futurePropertyReservations.push(reservation);
+              console.log("upcoming");
+
             }
             if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) < this.currentDate){
               reservation.status = "Completed";
@@ -205,9 +214,14 @@ export class UserProfileComponent implements OnInit {
             }
             if(new Date(reservation.checkIn) < this.currentDate && new Date(reservation.checkOut) > this.currentDate){
               reservation.status = "Current";
-              this.currentPropertyReservations.push(reservation)
+              this.currentPropertyReservations.push(reservation);
+              console.log("current");
+
+
             }
+            // console.log(this.futurePropertyReservations)
           });
+          
         
         });
       });
@@ -222,7 +236,7 @@ export class UserProfileComponent implements OnInit {
   getExchangeRequestsByResponder(){
     this.api.getExchangeRequestByResponder(this.userId).subscribe((requests: ExchangeRequest[])=>{
       this.exchangesToRespond = requests;
-      console.log(this.exchangesToRespond);
+      this.exchangesToRespond.sort((a, b) => new Date(b.checkIn).getTime() - new Date(a.checkIn).getTime());
       this.exchangesToRespond.forEach((request: ExchangeRequest)=>{
         this.api.getApartment(request.requesterApartmentId).subscribe((apartment: Apartment)=>{
           request.requesterApartmentName = apartment.apartmentName;
@@ -280,6 +294,7 @@ export class UserProfileComponent implements OnInit {
   }
   selectReservationStatus(value: string){
     this.selectedReservationsStatus = value;
+    console.log(this.selectedReservationsStatus);
   }
   cancelForm(){
     this.edit = false;
@@ -294,6 +309,11 @@ export class UserProfileComponent implements OnInit {
     this.api.deleteFavourite(propertyId,this.activeUser.id).subscribe(() => {
       this.api.getFavouritesByUser(this.userId).subscribe((data: Favourite[]) => {
         this.savedProperties=data;
+        this.savedProperties.forEach(favourite=>{
+          this.api.getProperty(favourite.propertyId).subscribe((property: Property)=>{
+            favourite.property = property;
+          });
+        });
       });
     },
       (error: Error) => {
@@ -391,10 +411,10 @@ export class UserProfileComponent implements OnInit {
     this.acceptRequest(request);
     this.requesterReservation =
         {price:0,review:"",checkIn: request.checkIn, checkOut:request.checkOut,
-        userId:request.responderId, apartmentId: request.requesterApartmentId, numberOfPersons: request.numberOfPersons, rating: 0}
+        userId:request.requesterId, apartmentId: request.responderApartmentId, numberOfPersons: request.numberOfPersons, rating: 0}
     this.responderReservation =
         {price:0,review:"",checkIn: new Date(this.dateRange0Formatted), checkOut: new Date(this.dateRange1Formatted),
-        userId:request.requesterId, apartmentId: request.responderApartmentId, numberOfPersons: this.nrOfPersons, rating: 0}
+        userId:request.responderId, apartmentId: request.requesterApartmentId, numberOfPersons: this.nrOfPersons, rating: 0}
     this.api.addReservation(this.requesterReservation).subscribe(()=>{
       this.api.addReservation(this.responderReservation).subscribe(()=>{
         this.refreshPage();
@@ -442,6 +462,28 @@ export class UserProfileComponent implements OnInit {
           });
         }, 2000 );
     }
+  }
+
+  onlyAlphaNumeric(e){
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+
+    e.preventDefault();
+    return false;
+  }
+
+  onlyNumeric(e){
+    var regex = new RegExp("^[0-9A-Z ]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+
+    e.preventDefault();
+    return false;
   }
   
 }

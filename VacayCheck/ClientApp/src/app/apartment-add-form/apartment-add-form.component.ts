@@ -27,6 +27,7 @@ export class ApartmentAddFormComponent implements OnInit {
   faTimes = faTimes;
   currentPhoto: string;
   errorMessage: string;
+  descriptionText = "";
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.propertyId = params['propertyId']);

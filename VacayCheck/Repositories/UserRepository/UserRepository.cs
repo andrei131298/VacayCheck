@@ -54,6 +54,7 @@ namespace VacayCheck.Repositories.UserRepository
 
         public User Register(RegisterRequest request)
         {
+            request.birthDate = request.birthDate.ToLocalTime();
             var entity = request.ToUserExtension();
             var userAlreadyExists = _context.Users.Any(x => x.email == request.email);
             if (userAlreadyExists)

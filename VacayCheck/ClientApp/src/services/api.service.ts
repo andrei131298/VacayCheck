@@ -261,4 +261,9 @@ export class ApiService {
         headers: this.header,
       });
     }
+    updateIsOwner(user: User, userId: string){
+      return this.http.put(this.baseUrl + "/User/changeOwnerStatus/"+ userId, user, {
+        headers: this.header,
+      });
+    }
 }

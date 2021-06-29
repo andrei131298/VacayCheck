@@ -41,6 +41,7 @@ namespace VacayCheck.Controllers
 
             IEnumerable<ExchangeRequest> MyRequests = IExchangeRequestRepository.GetRequestsByRequester(requesterId);
             List<ExchangeRequestDTO> RequestsDTO = new List<ExchangeRequestDTO>();
+            DateTime now = DateTime.Now;
             foreach (ExchangeRequest e in MyRequests)
             {
                 ExchangeRequestDTO requestDTO = new ExchangeRequestDTO()
@@ -56,6 +57,11 @@ namespace VacayCheck.Controllers
                     status = e.status
 
                 };
+                if (requestDTO.checkIn.AddDays(-1) < now)
+                {
+                    requestDTO.status = "Overtime";
+                    Put(requestDTO.id, requestDTO);
+                }
                 RequestsDTO.Add(requestDTO);
             }
             return RequestsDTO;
@@ -67,6 +73,7 @@ namespace VacayCheck.Controllers
 
             IEnumerable<ExchangeRequest> MyRequests = IExchangeRequestRepository.GetRequestsByResponder(responderId);
             List<ExchangeRequestDTO> RequestsDTO = new List<ExchangeRequestDTO>();
+            DateTime now = DateTime.Now;
             foreach (ExchangeRequest e in MyRequests)
             {
                 ExchangeRequestDTO requestDTO = new ExchangeRequestDTO()
@@ -82,6 +89,11 @@ namespace VacayCheck.Controllers
                     status = e.status
 
                 };
+                if (requestDTO.checkIn.AddDays(-1) < now)
+                {
+                    requestDTO.status = "Overtime";
+                    Put(requestDTO.id, requestDTO);
+                }
                 RequestsDTO.Add(requestDTO);
             }
             return RequestsDTO;

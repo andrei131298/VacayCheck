@@ -41,6 +41,7 @@ export class PropertyAddFormComponent implements OnInit {
   allSearchedCities;
   selectedCity: string;
   errorMessage: string;
+  descriptionText = "";
 
   map: google.maps.Map<Element>;
   mapClickListener: google.maps.MapsEventListener;
@@ -177,7 +178,8 @@ public mapReadyHandler(map: google.maps.Map): void {
         this.api.addProperty(this.newProperty).subscribe((createdProperty: Property)=>{
           if(this.activeUser.isOwner == false){
             this.activeUser.isOwner = true;
-            this.api.editUser(this.activeUser).subscribe();
+            //this.api.editUser(this.activeUser).subscribe();
+            this.api.updateIsOwner(this.activeUser, this.activeUser.id).subscribe();
           }
           this.router.navigate(["/apartment-add-form",createdProperty.id]);
         });

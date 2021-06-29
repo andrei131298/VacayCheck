@@ -57,6 +57,7 @@ export class ReservationComponent implements OnInit {
   faFrown = faFrown;
   faMeh = faMeh;
   faSmile = faSmile;
+  checkin = new Date();
   @ViewChild("payment") payment: PaymentComponent;
   @ViewChild("confirmation") confirmation: PaymentComponent;
   @ViewChild("apartmentModal",{static: true}) apartmentModal: ApartmentProfileComponent;
@@ -77,8 +78,10 @@ export class ReservationComponent implements OnInit {
     if(this.reservationHistory != null || this.futureReservation != null || this.ownerReservation != null){
       this.api.getReservation(this.reservationId).subscribe((res:Reservation)=>{
         this.reservation=res;
-        console.log(this.reservation);
-        this.cancellationDateLimit.setDate(new Date(formatDate(this.reservation.checkIn,'MM/dd/yyyy','en-US')).getDate() - 3);
+        this.checkin = new Date(this.reservation.checkIn);
+        var dateOffset = (24*60*60*1000) * 2; // 2 days
+        this.cancellationDateLimit.setTime(this.checkin.getTime() - dateOffset);
+        
         this.api.getUser(this.reservation.userId).subscribe((user: User)=>{
           this.guest = user;
         });

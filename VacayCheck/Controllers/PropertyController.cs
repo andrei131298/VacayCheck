@@ -134,7 +134,8 @@ namespace VacayCheck.Controllers
             }
             if (numberOfReservations != 0)
             {
-                MyProperty.averageRating = allRatings / numberOfReservations;
+                float average = (float)allRatings / (float)numberOfReservations;
+                MyProperty.averageRating = average;
 
             }
             return MyProperty;
@@ -223,7 +224,8 @@ namespace VacayCheck.Controllers
                     }
                     if (numberOfReservations != 0)
                     {
-                        propertyDTO.averageRating = allRatings / numberOfReservations;
+                        float average = (float)allRatings / (float)numberOfReservations;
+                        propertyDTO.averageRating = average;
 
                     }
                     PropertiesDTO.Add(propertyDTO);

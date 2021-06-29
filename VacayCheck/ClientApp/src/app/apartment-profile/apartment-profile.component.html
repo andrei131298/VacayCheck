@@ -4,7 +4,8 @@
   #apartmentModal="bs-modal"
 >
   <div id="modal">
-    <h2 class="title">{{activeApartment.apartmentName}} 
+    <h1 class="text-center">{{activeProperty.name}} </h1>
+    <h2 class="title">{{activeApartment.apartmentName}}
       <fa-icon *ngIf="edit == false && userId == activeProperty.userId" [icon]="faPen" id ="edit" (click)="showEditOption()" ></fa-icon></h2>
     <div class="apartmentProfile">
       <div class="leftHalf">

@@ -84,6 +84,10 @@ namespace VacayCheck.Controllers
         public User Put(Guid id, UserDTO value)
         {
             User model = IUserRepository.Get(id);
+            if (model == null)
+            {
+                return null;
+            }
             if (value.firstName != null)
             {
                 model.firstName = value.firstName;
@@ -96,7 +100,7 @@ namespace VacayCheck.Controllers
             {
                 model.sex = value.sex;
             }
-            if (value.birthDate.ToLocalTime() != null)
+            if (value.birthDate != default(DateTime))
             {
                 model.birthDate = value.birthDate.ToLocalTime();
             }
@@ -136,16 +140,18 @@ namespace VacayCheck.Controllers
             {
                 model.isMailVerificated = value.isMailVerificated;
             }
-            if (value.isOwner == true)
-            {
-                model.isOwner = true;
-            }
-          
-            
             if( value.cardHolderName != null)
             {
                 model.cardHolderName = value.cardHolderName;
             }
+            return IUserRepository.Update(model);
+        }
+
+        [HttpPut("changeOwnerStatus/{id}")]
+        public User changeOwnerState(Guid id, UserDTO value)
+        {
+            User model = IUserRepository.Get(id);
+            model.isOwner = value.isOwner;
             return IUserRepository.Update(model);
         }
 

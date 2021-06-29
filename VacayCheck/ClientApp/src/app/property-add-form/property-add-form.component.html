@@ -6,7 +6,7 @@
         <div class="leftHalf">
             <div class="form-group">
                 <label for="inputAddress">Property name:</label>
-                <input type="text" class="form-control" formControlName="propertyName">
+                <input type="text" class="form-control" formControlName="propertyName" maxlength="50" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$">
                 <app-field-error-display
                     [displayError]="isFieldValid('propertyName')"
                     errorMsg="Please inform the property name"
@@ -54,7 +54,7 @@
             
             <div class="form-group">
                 <label for="streetName">Address:</label>
-                <input type="text" name="streetName" class="form-control" formControlName="streetName" >
+                <input type="text" name="streetName" class="form-control" formControlName="streetName" maxlength="50" >
                 <app-field-error-display
                     [displayError]="isFieldValid('streetName')"
                     errorMsg="Please inform the address"
@@ -66,7 +66,7 @@
         <div class="rightHalf">
             <div class="form-group">
                 <div class="mapContainer">
-                    <agm-map [zoom]="8" [latitude]="latitude" [longitude]="longitude" (mapReady)="mapReadyHandler($event)">
+                    <agm-map [zoom]="3" [latitude]="latitude" [longitude]="longitude" (mapReady)="mapReadyHandler($event)">
                         <agm-marker
                                 [latitude]="markerLat"
                                 [longitude]="markerLng"
@@ -82,7 +82,8 @@
             
                 <label for="description">Description: </label>
                 <br>
-                <textarea id="propertyDescription" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
+                <textarea id="propertyDescription" name="propertyDescription" formControlName="description" maxlength="1000" rows="6" cols="50" [(ngModel)] = "descriptionText"></textarea>
+                <p class="descriptionLength">{{descriptionText.length}}/1000</p>
                 <app-field-error-display [displayError]="isFieldValid('description')"
                                             errorMsg="Please complete a description">
                 </app-field-error-display>

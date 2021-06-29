@@ -82,7 +82,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     BsDatepickerModule.forRoot(),
     FontAwesomeModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCoBIRiecH77ZZoNFT529FW9Z6W0uHPIec'
+      apiKey: 'AIzaSyBbU30Mn4OMu3RpkGKMRlUs3HCEUNDtt6Y'
     }),
   ],
   exports: [],

@@ -37,16 +37,24 @@
 .formHalfs {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
 }
 .rightHalf {
   margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 35%;
 }
-.form-group {
-  width: 65%;
-  max-width: 65%;
+.mapContainer{
+  width: 15%;
+
+}
+.leftHalf {
+  width: 35%;
+}
+.form-group{
+  width: 95%;
 }
 .btn {
   background-color: rgb(20, 182, 20);
@@ -105,5 +113,5 @@ textarea{
   margin-bottom: 15px;
 }
 agm-map {
-  height: 200px;
+  height: 250px;
 }

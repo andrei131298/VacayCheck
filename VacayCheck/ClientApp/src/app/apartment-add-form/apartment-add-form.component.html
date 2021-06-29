@@ -2,12 +2,12 @@
 <h1 class="title">Add an apartment</h1>
 <form id="addForm" action="" [formGroup]="addApartmentForm">
     <h3 class="title2">Apartment details</h3>
+    <p class="h3">{{activeProperty.name}}</p>
     <div class="formHalfs">
         <div class="leftHalf">
-            <p class="h3">{{activeProperty.name}}</p>
             <div class="form-group">
                 <label for="inputAddress">Apartment name:</label>
-                <input type="text" class="form-control" formControlName="apartmentName">
+                <input type="text" class="form-control" formControlName="apartmentName" maxlength="50" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$">
                 <app-field-error-display [displayError]="isFieldValid('apartmentName')"
                                             errorMsg="Please inform the apartment name">
                 </app-field-error-display>
@@ -38,9 +38,10 @@
         </div>
         <div class="rightHalf">
             <div class="form-group">
-                <label for="description" style="  margin-top: 50px;">Description: </label>
+                <label for="description" style="  margin-top: 20px;">Description: </label>
                 <br>
-                <textarea id="propertyDescription" class="form-control" name="propertyDescription" formControlName="description" rows="4" cols="50"></textarea>
+                <textarea id="propertyDescription" class="form-control" name="propertyDescription" formControlName="description" rows="6" cols="50" [(ngModel)] = "descriptionText"></textarea>
+                <p class="descriptionLength">{{descriptionText.length}}/1000</p>
                 <app-field-error-display [displayError]="isFieldValid('description')"
                                             errorMsg="Please complete the description">
                 </app-field-error-display>

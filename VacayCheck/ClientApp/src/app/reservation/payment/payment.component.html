@@ -109,18 +109,18 @@
     <div class="form-container">
         <div class="field-container">
             <label for="name">Name</label>
-            <input id="name" pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" formControlName="fullName" type="text" (focus)="frontCard()">
+            <input id="name" pattern="^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$" maxlength="40" (keypress)="onlyAlphaNumeric($event)" formControlName="fullName" type="text" (focus)="frontCard()">
             
         </div>
         
         <div class="field-container">
             <label for="cardnumber">Card Number</label>
-            <input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric" minlength="10" maxlength="22" formControlName="cardNumber" (focus)="frontCard()" credit-card>
+            <input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric" minlength="10" maxlength="22" (keypress)="onlyNumeric($event)"
+             (focus)="frontCard()" credit-card>
             
         </div>
         <div class="field-container">
             <label for="expirationdate">Expiration (mm/yy)</label>
-            <!-- <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric" (focus)="frontCard()"> -->
             <select name='expireMM' id='expireMM' formControlName="monthExpirationDate"  (focus)="frontCard()">
                 <option value='' disabled selected>Month</option>
                 <option *ngFor="let month of months" value={{month}}>{{month}}</option>
@@ -134,7 +134,7 @@
         
         <div class="field-container">
             <label for="securitycode">Security Code</label>
-            <input id="securitycode" type="text" pattern="^[0-9]{3,4}$" maxlength='4' formControlName="securityCode" (focus)="backCard()">
+            <input id="securitycode" type="text" pattern="^[0-9]{3,4}$" (keypress)="onlyNumeric($event)" maxlength='4'  formControlName="securityCode" (focus)="backCard()">
             
         </div>
     </div>

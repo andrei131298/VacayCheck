@@ -15,12 +15,16 @@ export class EmailVerificationComponent implements OnInit {
   verificatedUserId: string;
   verificatedUser = new User();
   faCheckCircle = faCheckCircle;
-  timeLeft: number = 5;
+  timeLeft: number = 3;
   interval;
 
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => this.verificatedUserId = params['id']);
+    this.api.getUser(this.verificatedUserId).subscribe((user: User)=>{
+      this.verificatedUser = user;
+      console.log(this.verificatedUser);
+    });
     console.log(this.verificatedUserId);
     this.startTimer();
     this.verificatedUser.isMailVerificated = true;
@@ -35,6 +39,8 @@ export class EmailVerificationComponent implements OnInit {
         this.timeLeft--;
       } else {
         this.router.navigate(["/login"]);
+        clearInterval(this.interval);
+        console.log("dadad")
       }
     },1000)
   }
